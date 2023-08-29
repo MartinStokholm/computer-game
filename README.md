@@ -2,40 +2,46 @@
 
 The game is a rouge like game.
 
-## Storie
+## Story
 
 We are on a mission for the great kingdom of Aarhus University
 
 ## Design is 2D
 
-## Roles
+## Switchable characters
 
-* Four different roles
-  * Melee
-  * Mage
-  * Range
-  * Summoner
+During the game the player is able to switch between the characters
 
-## Combat types
+## Roles/Combat types
 
-* Attack
-* Block
-* Dashing
-* Steah
-* Health System
-* Mana or Energi
+- Four different roles
+  - Melee
+  - Mage
+  - Range
+  - Summoner
+
+## Combat mechanics
+
+- Main Attack
+- Block
+- Dashing
+- Stealth
+- Health System
+- Mana or Energi
 
 ## Inverntory system
 
-* Main weapon
-* Off hand dependt on class
-* Armour - Each of one
-* Equipment
-* Weapons
-* Consumabels
+- Main weapon
+- Off hand dependt on class
+- Armour - Each of one
+- Equipment
+- Weapons
+- Consumabels
 
 ## Movement
 
-* Movement "A" "S" "D" "W"
-* Jump/Dashing - "Space"
-* Attack - "k"
+Movement in 2D with diagonal movement
+
+- Movement "A" "S" "D" "W"
+- Jump/Dashing - "Space"
+- Attack - "k"
