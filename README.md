@@ -1,27 +1,34 @@
 # Game
-
-The game is a rouge like game.
+This game is a 2D rouge game made by sdoftware engineer students of Aarhus University.
 
 ## Story
 
-We are on a mission for the great kingdom of Aarhus University
+We are on a mission for the great kingdom of Aarhus University. For becoming a Software Engineer, we have to defeat serveal boss of each semester. 
+(Notes for the story! )
+- Want are the purpose of the game
+- Why are we figthning each boss? To get to next semester and becoming a software engineer
 
 ## Scenes
 
-- Outer Area
-  - Katrinebjerg/Finlandsgade
-- Levels
-  - Lokaler
-- Shop
-  - Katrines Kælder
+The game take place in Aarhus University, where we studie. There should be different areas. 
 
-## Design is 2D
+### Outer Area
+What is the purpose? // Need a description
+Katrinebjerg/Finlandsgade
 
-## Switchable characters
+### Levels
 
-- During the game the player is able to switch between the character
+Each level is in one of the building in Aarhus University
+    
+### Shop - Katrines Kælder
 
-## Roles
+Where the player can buy new armour
+
+## Player
+
+The player can be four different types  of roles and can switch between each roles.
+
+### Roles
 
 - Four different roles
   - Melee
@@ -29,7 +36,11 @@ We are on a mission for the great kingdom of Aarhus University
   - Range
   - Summoner
 
-## Combat types
+### Switchable characters
+
+- During the game the player is able to switch between the character
+
+### Combat types
 
 - Attack
 - Block
@@ -38,11 +49,11 @@ We are on a mission for the great kingdom of Aarhus University
 - Health System
 - Mana or Energi
 
-## Player features
+### Player features
 
 - No Level
 
-## Inventory system
+### Inventory system
 
 - Main weapon
 - Off hand dependt on class
@@ -52,8 +63,16 @@ We are on a mission for the great kingdom of Aarhus University
 - Consumabels
 - Coins
 
-## Movement
+### Movement
 
-- Movement "A" "S" "D" "W"
-- Jump/Dashing - "Space"
-- Attack - "k"
+- Movement 
+- Jump/Dashing 
+- Attack Move
+
+### Shop
+
+- What can the player buy? it should be here
+
+## Boss
+
+### Boss Types
