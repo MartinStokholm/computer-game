@@ -6,13 +6,22 @@ The game is a rouge like game.
 
 We are on a mission for the great kingdom of Aarhus University
 
+## Scenes
+
+- Outer Area
+  - Katrinebjerg/Finlandsgade
+- Levels
+  - Lokaler
+- Shop
+  - Katrines Kælder
+
 ## Design is 2D
 
 ## Switchable characters
 
-During the game the player is able to switch between the characters
+- During the game the player is able to switch between the character
 
-## Roles/Combat types
+## Roles
 
 - Four different roles
   - Melee
@@ -20,16 +29,20 @@ During the game the player is able to switch between the characters
   - Range
   - Summoner
 
-## Combat mechanics
+## Combat types
 
-- Main Attack
+- Attack
 - Block
 - Dashing
-- Stealth
+- Steah
 - Health System
 - Mana or Energi
 
-## Inverntory system
+## Player features
+
+- No Level
+
+## Inventory system
 
 - Main weapon
 - Off hand dependt on class
@@ -37,10 +50,9 @@ During the game the player is able to switch between the characters
 - Equipment
 - Weapons
 - Consumabels
+- Coins
 
 ## Movement
-
-Movement in 2D with diagonal movement
 
 - Movement "A" "S" "D" "W"
 - Jump/Dashing - "Space"
