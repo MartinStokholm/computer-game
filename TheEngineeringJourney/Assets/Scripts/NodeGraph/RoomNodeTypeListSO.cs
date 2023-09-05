@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,7 +19,6 @@ public class RoomNodeTypeListSO : ScriptableObject
     # if UNITY_EDITOR
     private void OnValidate()
     {
-
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(list), list);
     }
 #endif

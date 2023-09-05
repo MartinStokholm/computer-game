@@ -1,5 +1,7 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class RoomNodeSO : ScriptableObject
@@ -10,4 +12,52 @@ public class RoomNodeSO : ScriptableObject
     [HideInInspector] public RoomNodeGraphSO roomNodeGraph;
     public RoomNodeTypeSO roomNodeType;
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
+
+    #region Editor 
+#if UNITY_EDITOR
+    [HideInInspector] public Rect rect;
+    public void Initialise(Rect rect, RoomNodeGraphSO roomNodeGraph, RoomNodeTypeSO roomNodeType)
+    {
+        this.rect = rect;
+        this.id = Guid.NewGuid().ToString();
+        this.name = "RoomNode";
+        this.roomNodeGraph = roomNodeGraph;
+        this.roomNodeType = roomNodeType;
+        
+        // Load RoomNode Type List
+        roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
+    }
+
+    public void Draw(GUIStyle nodeStyle)
+    {
+        // Draw Node Box Using Begin Area
+        GUILayout.BeginArea(rect, nodeStyle);
+        
+        // Start Region To Detect Popup Selection Changes
+        EditorGUI.BeginChangeCheck();
+        
+        // Display a PopUp Using the RoomNodeType Name Values, that can be selected from (default to the currently set roomNodeType
+        var selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+        var selection = EditorGUILayout.Popup("", selected,GetRoomTypesToDisplay());
+
+        roomNodeType = roomNodeTypeList.list[selection];
+        
+        if(EditorGUI.EndChangeCheck())
+            EditorUtility.SetDirty(this);
+        
+        GUILayout.EndArea();
+    }
+
+    /// <summary>
+    /// Populate a string array with the RoomNodeTypes To Display That Can Be Selected
+    /// </summary>
+    private string[] GetRoomTypesToDisplay() =>
+        roomNodeTypeList.list
+            .Where(nodeType => nodeType.displayInNodeGraphEditor)
+            .Select(nodeType => nodeType.roomNodeTypeName)
+            .ToArray();
+
+#endif
+    #endregion
+
 }
