@@ -9,7 +9,14 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-~/TheEngineeringJourney/Library/
+/TheEngineeringJourney/[Bb]uild/
+/TheEngineeringJourney/[Ll]ibrary/
+/TheEngineeringJourney/[Tt]emp/
+/TheEngineeringJourney/[Oo]bj/
+/TheEngineeringJourney/[Bb]uild/
+/TheEngineeringJourney/[Bb]uilds/
+/TheEngineeringJourney/[Ll]ogs/
+/TheEngineeringJourney/[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
