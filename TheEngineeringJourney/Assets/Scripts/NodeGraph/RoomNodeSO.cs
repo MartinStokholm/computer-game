@@ -16,6 +16,8 @@ public class RoomNodeSO : ScriptableObject
     #region Editor 
 #if UNITY_EDITOR
     [HideInInspector] public Rect rect;
+    [HideInInspector] public bool isLeftClickDragging;
+    [HideInInspector] public bool isSelected;
     public void Initialise(Rect rect, RoomNodeGraphSO roomNodeGraph, RoomNodeTypeSO roomNodeType)
     {
         this.rect = rect;
@@ -57,6 +59,75 @@ public class RoomNodeSO : ScriptableObject
             .Select(nodeType => nodeType.roomNodeTypeName)
             .ToArray();
 
+    public void ProcessEvents(Event currentEvent)
+    {
+        switch (currentEvent.type)
+        {
+            case EventType.MouseDown:
+                ProcessMouseDownEvent(currentEvent);
+                break;
+            case EventType.MouseUp:
+                ProcessMouseUpEvent(currentEvent);
+                break;
+            case EventType.MouseDrag:
+                ProcessMouseDragEvent(currentEvent);
+                break;
+        }
+    }
+
+    private void ProcessMouseDownEvent(Event currentEvent)
+    {
+        if (IsLeftClicked(currentEvent))
+        {
+            ProcessLeftClickDownEvent();
+        }
+    }
+
+    private void ProcessLeftClickDownEvent()
+    {
+        Selection.activeObject = this;
+        
+        // Toggle Mode Selected
+        isSelected = !isSelected;
+    }
+    
+    private void ProcessMouseUpEvent(Event currentEvent)
+    {
+        if (IsLeftClicked(currentEvent))
+        {
+            ProcessLeftClickUpEvent();
+        }
+    }
+
+    private void ProcessLeftClickUpEvent()
+    {
+        if (isLeftClickDragging) isLeftClickDragging = false;
+    }
+    
+    private void ProcessMouseDragEvent(Event currentEvent)
+    {
+        if (IsLeftClicked(currentEvent))
+        {
+            ProcessLeftClickDragEvent(currentEvent);
+        }
+    }
+
+    private void ProcessLeftClickDragEvent(Event currentEvent)
+    {
+        isLeftClickDragging = true;
+
+        DragNode(currentEvent.delta);
+        GUI.changed = true;
+    }
+
+    private static bool IsLeftClicked(Event currentEvent) => currentEvent.button == 0;
+    private static bool IsRightClicked(Event currentEvent) => currentEvent.button == 1;
+
+    private void DragNode(Vector2 delta)
+    {
+        rect.position += delta;
+        EditorUtility.SetDirty(this);
+    }
 #endif
     #endregion
 

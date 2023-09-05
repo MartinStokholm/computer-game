@@ -1,4 +1,4 @@
-using Unity.VisualScripting.IonicZip;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -7,6 +7,7 @@ public class RoomNodeGraphEditor : EditorWindow
 {
     private GUIStyle _roomNodeStyle;
     private static RoomNodeGraphSO _currentRoomNodeGraph;
+    private RoomNodeSO _currentRoomNode;
     private RoomNodeTypeListSO _roomNodeTypeList;
     
     // Node layout values
@@ -41,13 +42,16 @@ public class RoomNodeGraphEditor : EditorWindow
     /// Open the room node graph editor window if a room node graph scriptable object asset is double clicked in the inspector
     /// </summary>
     [OnOpenAsset(0)] // Callbacks see docs OnOpenAssetAttribute
-    public static bool OnDoubleClockAsset(int instanceId, int line)
+    public static bool OnDoubleClickAsset(int instanceId, int line)
     {
-        if (EditorUtility.InstanceIDToObject(instanceId) is not RoomNodeGraphSO roomNodeGraph) return false;
-        
-        OpenWindow();
-        _currentRoomNodeGraph = roomNodeGraph;
-        return true;
+        if (EditorUtility.InstanceIDToObject(instanceId) is RoomNodeGraphSO roomNodeGraph)
+        {
+            OpenWindow();
+            _currentRoomNodeGraph = roomNodeGraph;
+            return true;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -68,8 +72,34 @@ public class RoomNodeGraphEditor : EditorWindow
 
     private void ProcessEvents(Event currentEvent)
     {
-        ProcessRoomNodeGraphEvents(currentEvent);
+        // Get Room Node That Mouse Is Over If It Is Null Or Not Currently Being Dragged
+        if (_currentRoomNode == null || _currentRoomNode.isLeftClickDragging == false)
+        {
+            _currentRoomNode = IsMouseOverRoomNode(currentEvent);
+        }
+
+        // if mouse isn't over a room node or we are currently dragging a line from the room node then process graph events
+        if (_currentRoomNode == null)
+        {
+            Debug.Log("_currentRoomNode is null");
+            ProcessRoomNodeGraphEvents(currentEvent);
+        }
+        // else process room node events
+        {
+            Debug.Log("_currentRoomNode is not null");
+            _currentRoomNode.ProcessEvents(currentEvent);
+        }
+        
     }
+
+    /// <summary>
+    /// Check To See 
+    /// </summary>
+    /// <param name="currentEvent"></param>
+    /// <returns></returns>
+    private static RoomNodeSO IsMouseOverRoomNode(Event currentEvent) =>
+        _currentRoomNodeGraph.roomNodeList
+            .FirstOrDefault(x => x.rect.Contains(currentEvent.mousePosition));
 
     /// <summary>
     /// Process Room Node Graph Events
@@ -132,7 +162,6 @@ public class RoomNodeGraphEditor : EditorWindow
     private void DrawRoomNodes()
     {
         _currentRoomNodeGraph.roomNodeList.ForEach(x => x.Draw(_roomNodeStyle));
-
         GUI.changed = true;
     }
 }

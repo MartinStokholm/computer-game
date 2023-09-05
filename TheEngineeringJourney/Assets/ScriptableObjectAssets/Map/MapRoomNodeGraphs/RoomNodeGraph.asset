@@ -24,6 +24,8 @@ MonoBehaviour:
     y: 51
     width: 160
     height: 160
+  isLeftClickDragging: 0
+  isSelected: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,6 +44,7 @@ MonoBehaviour:
   - {fileID: 665876645106562785}
   - {fileID: 5333550922034237348}
   - {fileID: 4052000411099476551}
+  - {fileID: 6643415497610608090}
 --- !u!114 &665876645106562785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +69,8 @@ MonoBehaviour:
     y: 304
     width: 160
     height: 160
+  isLeftClickDragging: 0
+  isSelected: 0
 --- !u!114 &4052000411099476551
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,7 +87,7 @@ MonoBehaviour:
   parentRoomNodeIDList: []
   childRoomNodeIDList: []
   roomNodeGraph: {fileID: 11400000}
-  roomNodeType: {fileID: 11400000, guid: ad81e0261f174f047ae43fdcc171e379, type: 2}
+  roomNodeType: {fileID: 11400000, guid: 739da90e3af69a148a27a292eabc0561, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
@@ -90,6 +95,8 @@ MonoBehaviour:
     y: 389
     width: 160
     height: 160
+  isLeftClickDragging: 0
+  isSelected: 0
 --- !u!114 &5333550922034237348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,3 +121,31 @@ MonoBehaviour:
     y: 184
     width: 160
     height: 160
+  isLeftClickDragging: 0
+  isSelected: 0
+--- !u!114 &6643415497610608090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
+  m_Name: RoomNode
+  m_EditorClassIdentifier: 
+  id: 93053f6b-6163-44bd-8a98-da85b96c844f
+  parentRoomNodeIDList: []
+  childRoomNodeIDList: []
+  roomNodeGraph: {fileID: 11400000}
+  roomNodeType: {fileID: 11400000, guid: 1c14cdac42bdd3a4498889089ca69a9b, type: 2}
+  roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 624
+    y: 246
+    width: 160
+    height: 160
+  isLeftClickDragging: 0
+  isSelected: 0
