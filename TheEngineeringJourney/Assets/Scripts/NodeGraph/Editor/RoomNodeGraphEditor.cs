@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -18,6 +20,7 @@ public class RoomNodeGraphEditor : EditorWindow
     
     // Connecting line values
     private const float connectingLineWidth = 3f;
+    private const float connectingLineArraowSize = 6f;
     
     [MenuItem("Room Node Graph Editor", menuItem = "Window/Map Editor/Room Node Graph Editor")]
     private static void OpenWindow() => GetWindow<RoomNodeGraphEditor>("Room Node Graph Editor");
@@ -75,7 +78,7 @@ public class RoomNodeGraphEditor : EditorWindow
             Repaint();
     }
 
-    private void DrawDraggedLine()
+    private static void DrawDraggedLine()
     {
         if (_currentRoomNodeGraph.linePosition != Vector2.zero)
         {
@@ -173,7 +176,11 @@ public class RoomNodeGraphEditor : EditorWindow
         _currentRoomNodeGraph.roomNodeList.Add(roomNode);
         
         // Set RoomNode values
-        roomNode.Initialise(new Rect(mousePosition, new Vector2(NodeWidth, NodeWidth)), _currentRoomNodeGraph, _roomNodeTypeList.list.Find(x => x.isNone));
+        roomNode.Initialise(new Rect(
+            mousePosition, 
+            new Vector2(NodeWidth, NodeWidth)),
+            _currentRoomNodeGraph, 
+            _roomNodeTypeList.list.Find(x => x.isNone));
 
         // Add RoomNode To RoomNodeGraph Scriptable object asset database
         AssetDatabase.AddObjectToAsset(roomNode, _currentRoomNodeGraph);
@@ -212,17 +219,81 @@ public class RoomNodeGraphEditor : EditorWindow
         GUI.changed = true;
     }
 
-    private void DrawRoomConnections()
-    {
-        // _currentRoomNodeGraph.roomNodeList
-        //     .Where(x => x.childRoomNodeIDList.Count > 0)
-        //     .Select(x => _currentRoomNode.roomNodeGraph.ContainsKey(x.childRoomNodeIDList);
+    /// <summary>
+    /// Draw connections in the graph window between nodes
+    /// Find all room nodes, that haves children and use the dictionary to get the child and update them
+    /// </summary>
+    private static void DrawRoomConnections() {
+        var connectedRoomNodes = _currentRoomNodeGraph.roomNodeList
+            .Where(roomNodeSO => roomNodeSO.childRoomNodeIDList.Count > 0)
+            .SelectMany(x => x.childRoomNodeIDList)
+            .Select(childRoomNodeId => 
+            (
+                roomNodeSO: _currentRoomNodeGraph.roomNodeList.FindAll(x => x.childRoomNodeIDList.Contains(childRoomNodeId)),
+                childRoomNodeId
+            ))
+            .ToList();
 
-        // .Where(nodeType => nodeType.displayInNodeGraphEditor)
-        // .Select(nodeType => nodeType.roomNodeTypeName)
-        // .ToArray();
+        connectedRoomNodes
+            .ForEach(tuple =>
+            {
+                tuple.roomNodeSO
+                    .ForEach(roomNode =>
+                    {
+                        DrawConnectionLine(roomNode, _currentRoomNodeGraph.RoomNodeDictionary[tuple.childRoomNodeId]);
+                        GUI.changed = true;
+                    });
+            });
     }
 
+    /// <summary>
+    /// Draw connection line between the parent and child room node
+    /// </summary>
+    private static void DrawConnectionLine(RoomNodeSO parentRoomNode, RoomNodeSO childRoomNode)
+    {
+        var startPosition = parentRoomNode.rect.center;
+        var endPosition = childRoomNode.rect.center;
+
+        var midPosition = (endPosition + startPosition) / 2f;
+        var direction = endPosition - startPosition;
+        
+        // Calculate normalised perpendicular positions from the mid point
+        var perpendicular = new Vector2(-direction.y, direction.x).normalized;
+        var arrowTailPoint1 = midPosition - perpendicular * connectingLineArraowSize;
+        var arrowTailPoint2 = midPosition + perpendicular * connectingLineArraowSize;
+
+        var arrowHeadPoint = midPosition + direction.normalized * connectingLineArraowSize;
+        
+        Handles.DrawBezier(
+            arrowHeadPoint,
+            arrowTailPoint1,
+            arrowHeadPoint,
+            arrowTailPoint1,
+            Color.white,
+            null,
+            connectingLineWidth);
+        
+        Handles.DrawBezier(
+            arrowHeadPoint,
+            arrowTailPoint2,
+            arrowHeadPoint,
+            arrowTailPoint2,
+            Color.white,
+            null,
+            connectingLineWidth);
+
+        Handles.DrawBezier(
+            startPosition,
+            endPosition,
+            startPosition,
+            endPosition,
+            Color.white,
+            null,
+            connectingLineWidth);
+        
+        GUI.changed = true;
+    }
+    
     private static void ProcessMouseDragEvent(Event currentEvent)
     {
         if (currentEvent.button != 1) return;

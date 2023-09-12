@@ -7,8 +7,8 @@ using UnityEngine;
 public class RoomNodeSO : ScriptableObject
 {
     [HideInInspector] public string id;
-    [HideInInspector] public List<string> parentRoomNodeIDList = new();
-    [HideInInspector] public List<string> childRoomNodeIDList = new();
+    public List<string> parentRoomNodeIDList = new();
+    public List<string> childRoomNodeIDList = new();
     [HideInInspector] public RoomNodeGraphSO roomNodeGraph;
     public RoomNodeTypeSO roomNodeType;
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
@@ -139,14 +139,12 @@ public class RoomNodeSO : ScriptableObject
 
     public bool AddChildRoomNodeID(string id)
     {
-        if (childRoomNodeIDList.Contains(id)) return false;
         childRoomNodeIDList.Add(id);
         return true;
     }
     
     public bool AddParentRoomNodeID(string id)
     {
-        if (parentRoomNodeIDList.Contains(id)) return false;
         parentRoomNodeIDList.Add(id);
         return true;
     }

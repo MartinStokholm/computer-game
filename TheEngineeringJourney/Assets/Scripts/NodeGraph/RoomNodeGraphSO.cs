@@ -7,8 +7,8 @@ using UnityEngine;
 public class RoomNodeGraphSO : ScriptableObject
 {
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
-    [HideInInspector] public List<RoomNodeSO> roomNodeList = new List<RoomNodeSO>();
-    [HideInInspector] public Dictionary<string, RoomNodeSO> RoomNodeDictionary = new Dictionary<string, RoomNodeSO>();
+    [HideInInspector] public List<RoomNodeSO> roomNodeList = new();
+    [HideInInspector] public Dictionary<string, RoomNodeSO> RoomNodeDictionary = new();
 
     private void Awake()
     {
@@ -17,20 +17,20 @@ public class RoomNodeGraphSO : ScriptableObject
 
     private void LoadRoomNodeDictionary()
     {
-        // RoomNodeDictionary.Clear();
-
+        // RoomNodeDictionary = roomNodeList.ToDictionary(node => node.id, node => node);
+        RoomNodeDictionary.Clear();
         
-        RoomNodeDictionary = roomNodeList.ToDictionary(node => node.id, node => node);
-        // roomNodeList.ForEach(node => RoomNodeDictionary[node.id] = node);
-        // foreach (var node in roomNodeList)
-        // {
-        //     RoomNodeDictionary[node.id] = node;
-        // }
+        roomNodeList.ForEach(node => RoomNodeDictionary[node.id] = node);
+        foreach (var node in roomNodeList)
+        {
+            RoomNodeDictionary[node.id] = node;
+        }
     }
     
     #region  Editor Code
 
 #if  UNITY_EDITOR
+    
     [HideInInspector] public RoomNodeSO roomNodeToDrawLineFrom = null;
     [HideInInspector] public Vector2 linePosition;
 

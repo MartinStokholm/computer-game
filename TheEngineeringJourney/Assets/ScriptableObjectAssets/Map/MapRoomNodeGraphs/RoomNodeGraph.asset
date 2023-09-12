@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7580452674448169312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
+  m_Name: RoomNode
+  m_EditorClassIdentifier: 
+  id: 7ec1448b-b1e3-4b78-a001-6ce45289079d
+  parentRoomNodeIDList: []
+  childRoomNodeIDList: []
+  roomNodeGraph: {fileID: 11400000}
+  roomNodeType: {fileID: 11400000, guid: 9f2edf07ec5b16b4ab5f6b1056584dc5, type: 2}
+  roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 52
+    y: 299
+    width: 160
+    height: 160
+  isLeftClickDragging: 0
+  isSelected: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,11 +40,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomNodeTypeList: {fileID: 0}
   roomNodeList:
-  - {fileID: 256242235402008335}
-  - {fileID: 4977266133398979757}
+  - {fileID: 696392393831978226}
+  - {fileID: 5560461307737924046}
+  - {fileID: 7503593499080566953}
+  - {fileID: -7580452674448169312}
   roomNodeToDrawLineFrom: {fileID: 0}
   linePosition: {x: 0, y: 0}
---- !u!114 &256242235402008335
+--- !u!114 &696392393831978226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -30,21 +58,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: 
-  id: 280d6ae1-0e32-4219-b9a3-e1ec599239b3
-  parentRoomNodeIDList: []
-  childRoomNodeIDList: []
+  id: 3d50467e-d743-4849-aff2-596f235e33eb
+  parentRoomNodeIDList:
+  - faf11402-365d-4953-8b59-17786c5ec771
+  childRoomNodeIDList:
+  - 9abeef7f-fb29-4f6c-90ba-b71860f838ca
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: 739da90e3af69a148a27a292eabc0561, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 293
-    y: 185
+    x: 237
+    y: 124
     width: 160
     height: 160
   isLeftClickDragging: 0
-  isSelected: 1
---- !u!114 &4977266133398979757
+  isSelected: 0
+--- !u!114 &5560461307737924046
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,16 +86,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: 
-  id: 6bd9140f-3422-4442-b391-0e2235bc2a99
-  parentRoomNodeIDList: []
-  childRoomNodeIDList: []
+  id: 9abeef7f-fb29-4f6c-90ba-b71860f838ca
+  parentRoomNodeIDList:
+  - 3d50467e-d743-4849-aff2-596f235e33eb
+  childRoomNodeIDList:
+  - faf11402-365d-4953-8b59-17786c5ec771
+  roomNodeGraph: {fileID: 11400000}
+  roomNodeType: {fileID: 11400000, guid: ad81e0261f174f047ae43fdcc171e379, type: 2}
+  roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
+  rect:
+    serializedVersion: 2
+    x: 200
+    y: 530
+    width: 160
+    height: 160
+  isLeftClickDragging: 0
+  isSelected: 1
+--- !u!114 &7503593499080566953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
+  m_Name: RoomNode
+  m_EditorClassIdentifier: 
+  id: faf11402-365d-4953-8b59-17786c5ec771
+  parentRoomNodeIDList:
+  - 9abeef7f-fb29-4f6c-90ba-b71860f838ca
+  childRoomNodeIDList:
+  - 3d50467e-d743-4849-aff2-596f235e33eb
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: 9f2edf07ec5b16b4ab5f6b1056584dc5, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 649
-    y: 234
+    x: 482
+    y: 346
     width: 160
     height: 160
   isLeftClickDragging: 0
