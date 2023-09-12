@@ -16,6 +16,9 @@ public class RoomNodeGraphEditor : EditorWindow
     private const int NodePadding = 25;
     private const int NodeBorder = 12;
     
+    // Connecting line values
+    private const float connectingLineWidth = 3f;
+    
     [MenuItem("Room Node Graph Editor", menuItem = "Window/Map Editor/Room Node Graph Editor")]
     private static void OpenWindow() => GetWindow<RoomNodeGraphEditor>("Room Node Graph Editor");
 
@@ -62,12 +65,29 @@ public class RoomNodeGraphEditor : EditorWindow
         // If a scriptable object of type RoomNodeGraphSO has been selected then process
         if (_currentRoomNodeGraph is not null)
         {
+            DrawDraggedLine();
             ProcessEvents(Event.current);
+            DrawRoomConnections();
             DrawRoomNodes();
         }
         
         if (GUI.changed)
             Repaint();
+    }
+
+    private void DrawDraggedLine()
+    {
+        if (_currentRoomNodeGraph.linePosition != Vector2.zero)
+        {
+            Handles.DrawBezier(
+                _currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center,
+                _currentRoomNodeGraph.linePosition,
+                _currentRoomNodeGraph.roomNodeToDrawLineFrom.rect.center,
+                _currentRoomNodeGraph.linePosition,
+                Color.white,
+                null,
+                connectingLineWidth);
+        }
     }
 
     private void ProcessEvents(Event currentEvent)
@@ -79,7 +99,7 @@ public class RoomNodeGraphEditor : EditorWindow
         }
 
         // if mouse isn't over a room node or we are currently dragging a line from the room node then process graph events
-        if (_currentRoomNode is null)
+        if (_currentRoomNode is null || _currentRoomNodeGraph.roomNodeToDrawLineFrom is not null)
         {
             ProcessRoomNodeGraphEvents(currentEvent);
         }
@@ -108,6 +128,12 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             case EventType.MouseDown:
                 ProcessMouseDownEvent(currentEvent);
+                break;
+            case EventType.MouseUp:
+                ProcessMouseUpEvent(currentEvent);
+                break;
+            case EventType.MouseDrag:
+                ProcessMouseDragEvent(currentEvent);
                 break;
         }
     }
@@ -152,6 +178,65 @@ public class RoomNodeGraphEditor : EditorWindow
         // Add RoomNode To RoomNodeGraph Scriptable object asset database
         AssetDatabase.AddObjectToAsset(roomNode, _currentRoomNodeGraph);
         AssetDatabase.SaveAssets();
+        
+        // Refresh graph node dictionary
+        _currentRoomNodeGraph.OnValidate();
+    }
+
+    private static void ProcessMouseUpEvent(Event currentEvent)
+    {
+        if (currentEvent.button == 1 || _currentRoomNodeGraph.roomNodeToDrawLineFrom is null) return;
+        
+        // Get First room node
+        SetNodeRelationship(IsMouseOverRoomNode(currentEvent));
+        
+        ClearLineDrag();
+    }
+
+    private static void SetNodeRelationship(RoomNodeSO roomNode)
+    {
+        if (roomNode is null) return;
+        // Maybe muse a pipe here instead. Looks really bad
+        // Set the it as a child of the parent room node 
+        if (_currentRoomNodeGraph.roomNodeToDrawLineFrom.AddChildRoomNodeID(roomNode.id))
+        {
+            // Set parent ID in child room node
+            roomNode.AddParentRoomNodeID(_currentRoomNodeGraph.roomNodeToDrawLineFrom.id);
+        }
+    }
+
+    private static void ClearLineDrag()
+    {
+        _currentRoomNodeGraph.roomNodeToDrawLineFrom = null;
+        _currentRoomNodeGraph.linePosition = Vector2.zero;
+        GUI.changed = true;
+    }
+
+    private void DrawRoomConnections()
+    {
+        // _currentRoomNodeGraph.roomNodeList
+        //     .Where(x => x.childRoomNodeIDList.Count > 0)
+        //     .Select(x => _currentRoomNode.roomNodeGraph.ContainsKey(x.childRoomNodeIDList);
+
+        // .Where(nodeType => nodeType.displayInNodeGraphEditor)
+        // .Select(nodeType => nodeType.roomNodeTypeName)
+        // .ToArray();
+    }
+
+    private static void ProcessMouseDragEvent(Event currentEvent)
+    {
+        if (currentEvent.button != 1) return;
+        ProcessRightMouseDragEvent(currentEvent);
+    }
+
+    /// <summary>
+    /// Draw the line
+    /// </summary>
+    private static void ProcessRightMouseDragEvent(Event currentEvent)
+    {
+        if (_currentRoomNodeGraph.roomNodeToDrawLineFrom is null) return;
+        _currentRoomNodeGraph.linePosition += currentEvent.delta;
+        GUI.changed = true;
     }
 
     /// <summary>
