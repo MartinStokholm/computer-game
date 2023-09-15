@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RoomNodeType_MediumRoom
   m_EditorClassIdentifier: 
   roomNodeTypeName: Medium Room
-  displayInNodeGraphEditor: 0
+  displayInNodeGraphEditor: 1
   isCorridor: 0
   isCorridorNS: 0
   isCorridorEW: 0

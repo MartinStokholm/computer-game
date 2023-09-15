@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: RoomNodeTypeListSO
   m_EditorClassIdentifier: 
   list:
-  - {fileID: 11400000, guid: 1c14cdac42bdd3a4498889089ca69a9b, type: 2}
   - {fileID: 11400000, guid: 739da90e3af69a148a27a292eabc0561, type: 2}
-  - {fileID: 11400000, guid: ad81e0261f174f047ae43fdcc171e379, type: 2}
   - {fileID: 11400000, guid: 92d311acf0513da4292bd90ec5ca0b2e, type: 2}
   - {fileID: 11400000, guid: 7343ec0a9947e364db9ce6cc6b3b42a4, type: 2}
   - {fileID: 11400000, guid: fa786913bbb265f4dab92e8f2aa91326, type: 2}
-  - {fileID: 11400000, guid: de56e56d7bf4d874c856c6d75d564313, type: 2}
   - {fileID: 11400000, guid: d1c429d6bbb23654fa495efed18f61ca, type: 2}
+  - {fileID: 11400000, guid: de56e56d7bf4d874c856c6d75d564313, type: 2}
   - {fileID: 11400000, guid: 30cd6aa8fdd02eb43bd1067169c7563e, type: 2}
   - {fileID: 11400000, guid: 9f2edf07ec5b16b4ab5f6b1056584dc5, type: 2}
+  - {fileID: 11400000, guid: 1c14cdac42bdd3a4498889089ca69a9b, type: 2}
+  - {fileID: 11400000, guid: ad81e0261f174f047ae43fdcc171e379, type: 2}

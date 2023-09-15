@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
@@ -8,6 +9,7 @@ using UnityEditor.Callbacks;
 public class RoomNodeGraphEditor : EditorWindow
 {
     private GUIStyle _roomNodeStyle;
+    private GUIStyle _roomNodeSelectedStyle;
     private static RoomNodeGraphSO _currentRoomNodeGraph;
     private RoomNodeSO _currentRoomNode;
     private RoomNodeTypeListSO _roomNodeTypeList;
@@ -28,6 +30,9 @@ public class RoomNodeGraphEditor : EditorWindow
     // Define node layout style
     private void OnEnable()
     {
+        // Subscribe to the inspector selection changed event
+        Selection.selectionChanged += InspectorSelectionChanged;
+        
         _roomNodeStyle = new GUIStyle
         {
             normal =
@@ -39,8 +44,24 @@ public class RoomNodeGraphEditor : EditorWindow
             border = new RectOffset(NodeBorder, NodeBorder, NodeBorder, NodeBorder)
         };
         
+        _roomNodeSelectedStyle = new GUIStyle
+        {
+            normal =
+            {
+                background = EditorGUIUtility.Load("node1 on") as Texture2D,
+                textColor = Color.white
+            },
+            padding = new RectOffset(NodePadding, NodePadding, NodePadding, NodePadding),
+            border = new RectOffset(NodeBorder, NodeBorder, NodeBorder, NodeBorder)
+        };
+        
         // Load Room node types
         _roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
+    }
+
+    private void OnDisable()
+    {
+        Selection.selectionChanged -= InspectorSelectionChanged;
     }
 
 
@@ -147,8 +168,15 @@ public class RoomNodeGraphEditor : EditorWindow
     /// <param name="currentEvent"></param>
     private void ProcessMouseDownEvent(Event currentEvent)
     {
-        if (currentEvent.button != 1) return;
-        ShowContextMenu(currentEvent.mousePosition);
+        if (currentEvent.button == 1)
+        {
+            ShowContextMenu(currentEvent.mousePosition);
+        }
+        else if (currentEvent.button == 0)
+        {
+            //ClearLineDrag();
+            ClearAllSelectedRoomNodes();
+        }
     }
 
     /// <summary>
@@ -163,16 +191,29 @@ public class RoomNodeGraphEditor : EditorWindow
     }
 
     /// <summary>
-    /// Create a room node at the mouse position
+    /// Create a room node at the mouse position or the entrance room node
     /// </summary>
     private void CreateRoomNode(object mousePositionObject)
+    {
+        if (_currentRoomNodeGraph.roomNodeList.Count.Equals(0))
+        {
+            CreateRoomNode(new Vector2(200f, 200f), _roomNodeTypeList.list.Find(x => x.isEntrance));
+        }
+        
+        CreateRoomNode(mousePositionObject, _roomNodeTypeList.list.Find(x => x.isNone));
+    }
+    
+    /// <summary>
+    /// Create a room node at the mouse position
+    /// </summary>
+    private void CreateRoomNode(object mousePositionObject, RoomNodeTypeSO roomNodeType)
     {
         var mousePosition = (Vector2)mousePositionObject;
         
         // Create RoomNode Scriptable Object Asset
         var roomNode = CreateInstance<RoomNodeSO>();
         
-        // Add RoomNode tp current RoomNodeGraphList
+        // Add RoomNode to current RoomNodeGraphList
         _currentRoomNodeGraph.roomNodeList.Add(roomNode);
         
         // Set RoomNode values
@@ -180,7 +221,7 @@ public class RoomNodeGraphEditor : EditorWindow
             mousePosition, 
             new Vector2(NodeWidth, NodeWidth)),
             _currentRoomNodeGraph, 
-            _roomNodeTypeList.list.Find(x => x.isNone));
+            roomNodeType);
 
         // Add RoomNode To RoomNodeGraph Scriptable object asset database
         AssetDatabase.AddObjectToAsset(roomNode, _currentRoomNodeGraph);
@@ -188,6 +229,17 @@ public class RoomNodeGraphEditor : EditorWindow
         
         // Refresh graph node dictionary
         _currentRoomNodeGraph.OnValidate();
+    }
+
+    private static void ClearAllSelectedRoomNodes()
+    {
+        _currentRoomNodeGraph.roomNodeList
+            .Where(x => x.isSelected)
+            .Select(x =>
+            {
+                GUI.changed = true;
+                return x.isSelected = false;
+            });
     }
 
     private static void ProcessMouseUpEvent(Event currentEvent)
@@ -315,7 +367,37 @@ public class RoomNodeGraphEditor : EditorWindow
     /// </summary>
     private void DrawRoomNodes()
     {
-        _currentRoomNodeGraph.roomNodeList.ForEach(x => x.Draw(_roomNodeStyle));
+        _currentRoomNodeGraph.roomNodeList.ForEach(x =>
+        {
+            switch (x.isSelected)
+            {
+                case true:
+                    x.Draw(_roomNodeSelectedStyle);
+                    break;
+                case false:
+                    x.Draw(_roomNodeStyle);
+                    break;
+            }
+        });
+        // foreach (var roomNode in _currentRoomNodeGraph.roomNodeList)
+        // {
+        //     if (roomNode.isSelected)
+        //     {
+        //         roomNode.Draw(_roomNodeSelectedStyle);
+        //     }
+        //     
+        //     roomNode.Draw(_roomNodeStyle);
+        // }
+        GUI.changed = true;
+    }
+
+    /// <summary>
+    /// Selection changed in the inspector
+    /// </summary>
+    private void InspectorSelectionChanged()
+    {
+        if (Selection.activeObject is not RoomNodeGraphSO roomNodeGraph) return;
+        _currentRoomNodeGraph = roomNodeGraph;
         GUI.changed = true;
     }
 }
