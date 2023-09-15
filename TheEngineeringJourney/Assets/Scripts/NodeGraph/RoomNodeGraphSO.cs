@@ -19,6 +19,10 @@ public class RoomNodeGraphSO : ScriptableObject
     {
         RoomNodeDictionary = roomNodeList.ToDictionary(node => node.id, node => node);
     }
+
+    public RoomNodeSO GetRoomNode(string roomNodeID) =>
+        RoomNodeDictionary.TryGetValue(roomNodeID, out var roomNode) ? roomNode : null;
+    
     
     #region  Editor Code
 
