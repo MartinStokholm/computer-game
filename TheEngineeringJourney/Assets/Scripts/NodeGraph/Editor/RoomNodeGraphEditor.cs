@@ -187,6 +187,8 @@ public class RoomNodeGraphEditor : EditorWindow
         var menu = new GenericMenu();
         
         menu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
+        menu.AddSeparator("");
+        menu.AddItem(new GUIContent("Select All Room Nodes"), false, SelectedAllRoomNodes);
         menu.ShowAsContext();
     }
 
@@ -240,6 +242,16 @@ public class RoomNodeGraphEditor : EditorWindow
                 GUI.changed = true;
                 return x.isSelected = false;
             });
+    }
+
+    /// <summary>
+    /// Select all room nodes
+    /// </summary>
+    private void SelectedAllRoomNodes()
+    {
+        // LINQ operations are usually evaluated lazily, ensure that the LINQ operation is executed immediately
+        _currentRoomNodeGraph.roomNodeList.Select(x => x.isSelected = true).ToList(); 
+        GUI.changed = true;
     }
 
     private static void ProcessMouseUpEvent(Event currentEvent)
