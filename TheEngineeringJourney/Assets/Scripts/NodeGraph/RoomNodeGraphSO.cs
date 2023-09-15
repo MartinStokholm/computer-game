@@ -17,14 +17,7 @@ public class RoomNodeGraphSO : ScriptableObject
 
     private void LoadRoomNodeDictionary()
     {
-        // RoomNodeDictionary = roomNodeList.ToDictionary(node => node.id, node => node);
-        RoomNodeDictionary.Clear();
-        
-        roomNodeList.ForEach(node => RoomNodeDictionary[node.id] = node);
-        foreach (var node in roomNodeList)
-        {
-            RoomNodeDictionary[node.id] = node;
-        }
+        RoomNodeDictionary = roomNodeList.ToDictionary(node => node.id, node => node);
     }
     
     #region  Editor Code
