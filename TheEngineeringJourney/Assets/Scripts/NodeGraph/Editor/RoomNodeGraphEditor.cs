@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEditor;
@@ -65,7 +66,7 @@ public class RoomNodeGraphEditor : EditorWindow
     /// <summary>
     /// Selection changed in the inspector
     /// </summary>
-    private void InspectorSelectionChanged()
+    private static void InspectorSelectionChanged()
     {
         if (Selection.activeObject is not RoomNodeGraphSO roomNodeGraph) return;
         _currentRoomNodeGraph = roomNodeGraph;
@@ -212,6 +213,9 @@ public class RoomNodeGraphEditor : EditorWindow
         menu.AddItem(new GUIContent("Create Room Node"), false, CreateRoomNode, mousePosition);
         menu.AddSeparator("");
         menu.AddItem(new GUIContent("Select All Room Nodes"), false, SelectedAllRoomNodes);
+        menu.AddSeparator("");
+        menu.AddItem(new GUIContent("Delete Select Room Nodes Links"), false, DeleteSelectedRoomNodeLinks);
+        menu.AddItem(new GUIContent("Delete Select Room Nodes"), false, DeleteSelectedRoomNodes);
         menu.ShowAsContext();
     }
 
@@ -254,6 +258,73 @@ public class RoomNodeGraphEditor : EditorWindow
         
         // Refresh graph node dictionary
         _currentRoomNodeGraph.OnValidate();
+    }
+
+    /// <summary>
+    /// Remove relationship between child and parent
+    /// Find all room nodes, that's selected and delete
+    /// First remove child from parent and then parent from child
+    /// </summary>
+    private static void DeleteSelectedRoomNodeLinks()
+    {
+        var connectedRoomNodes = _currentRoomNodeGraph.roomNodeList
+            .Where(roomNodeSO => roomNodeSO.isSelected && roomNodeSO.childRoomNodeIDList.Count > 0)
+            .SelectMany(x => x.childRoomNodeIDList)
+            .Select(childRoomNodeId => 
+            (
+                roomNodeSO: _currentRoomNodeGraph.roomNodeList.FindAll(x => x.childRoomNodeIDList.Contains(childRoomNodeId)),
+                childRoomNodeId
+            ))
+            .ToList();
+
+        connectedRoomNodes
+            .ForEach(tuple =>
+            {
+                tuple.roomNodeSO
+                    .ForEach(roomNode =>
+                    {
+                        roomNode.RemoveChildRoomNodeIDFromRoomNode(_currentRoomNodeGraph
+                            .GetRoomNode(tuple.childRoomNodeId).id);
+                        
+                        _currentRoomNodeGraph.GetRoomNode(tuple.childRoomNodeId)
+                            .RemoveParentRoomNodeIDFromRoomNode(roomNode.id);
+                    });
+            });
+        
+        ClearAllSelectedRoomNodes();
+    }
+
+    private static void DeleteSelectedRoomNodes()
+    {
+        var roomNodeDeletionQueue = new Queue<RoomNodeSO>();
+        
+        var roomsToDelete = _currentRoomNodeGraph.roomNodeList
+            .Where(roomNode => roomNode.isSelected && !roomNode.roomNodeType.isEntrance)
+            .ToList();
+
+        roomsToDelete.ForEach(roomNode =>
+        {
+            roomNodeDeletionQueue.Enqueue(roomNode);
+        
+            roomNode.childRoomNodeIDList
+                .ForEach(childRoomNodeID => _currentRoomNodeGraph
+                    .GetRoomNode(childRoomNodeID)?.RemoveParentRoomNodeIDFromRoomNode(roomNode.id));
+            
+            roomNode.parentRoomNodeIDList
+                .ForEach(parentRoomNodeID => _currentRoomNodeGraph
+                    .GetRoomNode(parentRoomNodeID)?.RemoveChildRoomNodeIDFromRoomNode(roomNode.id));
+        });
+  
+        while (roomNodeDeletionQueue.Count > 0)
+        {
+            var RoomNodeToDelete = roomNodeDeletionQueue.Dequeue();
+            _currentRoomNodeGraph.RoomNodeDictionary.Remove(RoomNodeToDelete.id);
+            _currentRoomNodeGraph.roomNodeList.Remove(RoomNodeToDelete);
+            
+            DestroyImmediate(RoomNodeToDelete, true);
+            
+            AssetDatabase.SaveAssets();
+        }
     }
 
     private static void ClearAllSelectedRoomNodes()
