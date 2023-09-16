@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NodeGraph;
 using UnityEditor;
 using UnityEngine;
 
@@ -67,6 +68,7 @@ public class RoomNodeSO : ScriptableObject
             .Select(nodeType => nodeType.roomNodeTypeName)
             .ToArray();
 
+    #region Events
     public void ProcessEvents(Event currentEvent)
     {
         switch (currentEvent.type)
@@ -135,9 +137,14 @@ public class RoomNodeSO : ScriptableObject
         DragNode(currentEvent.delta);
         GUI.changed = true;
     }
+    #endregion
+    #region Buttons
 
     private static bool IsLeftClicked(Event currentEvent) => currentEvent.button == 0;
     private static bool IsRightClicked(Event currentEvent) => currentEvent.button == 1;
+
+    #endregion
+
 
     private void DragNode(Vector2 delta)
     {
