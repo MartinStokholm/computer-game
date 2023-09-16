@@ -145,54 +145,16 @@ public class RoomNodeSO : ScriptableObject
         EditorUtility.SetDirty(this);
     }
 
-    public bool AddChildRoomNodeID(string id)
+    public bool AddChildRoomNodeID(string childId)
     {
-        if (!IsChildRoomValid(id)) return false;
+        if (!RoomNodeSOValidator.IsChildRoomValid(id, childId, roomNodeGraph, childRoomNodeIDList, roomNodeType)) 
+            return false;
         
-        childRoomNodeIDList.Add(id);
+        childRoomNodeIDList.Add(childId);
         return true;
     }
 
-    private bool IsChildRoomValid(string childId)
-    {
-        var isConnectedBoosNodeAlready = roomNodeGraph.roomNodeList
-            .Any(x => x.roomNodeType.isBossRoom && x.parentRoomNodeIDList.Count > 0);
-        
-        var childNode = roomNodeGraph.GetRoomNode(childId);
-        
-        // The child is a type boss room and there already is a boss room return false
-        if (childNode.roomNodeType.isBossRoom && isConnectedBoosNodeAlready) return false;
-        
-        // Can't connect child that does a type of none
-        if (childNode.roomNodeType.isNone) return false;
-
-        // Room Already added as a child
-        if (childRoomNodeIDList.Contains(childId)) return false;
-
-        // Don't connect a child to it self
-        if (id == childId) return false;
-
-        // Child node already has parent
-        if (childNode.parentRoomNodeIDList.Count > 0) return false;
-
-        // Child is a corridor and this node is a corridor
-        if (childNode.roomNodeType.isCorridor && roomNodeType.isCorridor) return false;
-        
-        // Child is a room and this node is a room
-        if (!childNode.roomNodeType.isCorridor && !roomNodeType.isCorridor) return false;
-        
-        // Adding a corridor checking for the maximum permitted children for the room 
-        if (childNode.roomNodeType.isCorridor 
-            && childRoomNodeIDList.Count >=  Settings.MaxChildCorridors) return false;
-
-        // Child room can't be a entrance - is top level parent node
-        if (childNode.roomNodeType.isEntrance) return false;
-        
-        // Adding a room to a corridor check if this corridor node doesn't have a room already 
-        if (!childNode.roomNodeType.isCorridor && childRoomNodeIDList.Count > 0) return false;
-        
-        return true;
-    }
+   
     
     public bool AddParentRoomNodeID(string id)
     {
