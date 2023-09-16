@@ -36,7 +36,7 @@ public class RoomNodeGraphSO : ScriptableObject
         LoadRoomNodeDictionary();
     }
 
-    public void SetNodeDrawConnectionLinFrom(RoomNodeSO node, Vector2 position)
+    public void SetNodeDrawConnectionLineFrom(RoomNodeSO node, Vector2 position)
     {
         roomNodeToDrawLineFrom = node;
         linePosition = position;

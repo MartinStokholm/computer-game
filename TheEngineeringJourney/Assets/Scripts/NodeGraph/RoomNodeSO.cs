@@ -73,12 +73,10 @@ public class RoomNodeSO : ScriptableObject
         GUILayout.EndArea();
     }
 
-    private bool IsSelectedChanged(int selected, int selection)
-    {
-        return roomNodeTypeList.list[selected].isCorridor && !roomNodeTypeList.list[selection].isCorridor ||
+    private bool IsSelectedChanged(int selected, int selection) => 
+        roomNodeTypeList.list[selected].isCorridor && !roomNodeTypeList.list[selection].isCorridor ||
                !roomNodeTypeList.list[selected].isCorridor && roomNodeTypeList.list[selection].isCorridor ||
                !roomNodeTypeList.list[selected].isBossRoom && roomNodeTypeList.list[selection].isBossRoom;
-    }
 
     /// <summary>
     /// Populate a string array with the RoomNodeTypes To Display That Can Be Selected
@@ -127,7 +125,7 @@ public class RoomNodeSO : ScriptableObject
 
     private void ProcessRightClickDownEvent(Event currentEvent)
     {
-        roomNodeGraph.SetNodeDrawConnectionLinFrom(this, currentEvent.mousePosition);
+        roomNodeGraph.SetNodeDrawConnectionLineFrom(this, currentEvent.mousePosition);
     }
     
     private void ProcessMouseUpEvent(Event currentEvent)
@@ -167,7 +165,7 @@ public class RoomNodeSO : ScriptableObject
     #endregion
 
 
-    private void DragNode(Vector2 delta)
+    public void DragNode(Vector2 delta)
     {
         rect.position += delta;
         EditorUtility.SetDirty(this);
