@@ -147,7 +147,7 @@ public class RoomNodeGraphEditor : EditorWindow
             Handles.DrawLine(new Vector3(gridSize * i, -gridSize, 0) + gridOffset,
                 new Vector3(gridSize * i, position.height + gridSize, 0f) + gridOffset);
         }
-        
+
         var horizontalLineCount = Mathf.CeilToInt((position.height + gridSize) / gridSize);
         for (var i = 0; i < horizontalLineCount; i++)
         {
