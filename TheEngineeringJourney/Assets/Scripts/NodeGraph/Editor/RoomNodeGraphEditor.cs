@@ -530,7 +530,6 @@ public class RoomNodeGraphEditor : EditorWindow
         _currentRoomNodeGraph.roomNodeList.ForEach(x=> x.DragNode(dragDelta));
         GUI.changed = true;
     }
-
     
     private static void SetNodeRelationship(RoomNodeSO roomNode)
     {
@@ -543,7 +542,6 @@ public class RoomNodeGraphEditor : EditorWindow
             roomNode.AddParentRoomNodeID(_currentRoomNodeGraph.roomNodeToDrawLineFrom.id);
         }
     }
-    
     
     /// <summary>
     /// Check To See 
