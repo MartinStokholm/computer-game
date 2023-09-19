@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomNodeTypeSO : MonoBehaviour
+[CreateAssetMenu(fileName = "RoomNodeType_", menuName = "Scriptable Objects/Map/Room Node Type")]
+public class RoomNodeTypeSO : ScriptableObject
 {
     public string roomNodeTypeName;
 
@@ -60,7 +59,6 @@ public class RoomNodeTypeSO : MonoBehaviour
     private void OnValidate()
     {
         HelperUtilities.ValidateCheckEmptyString(this, nameof(roomNodeTypeName), roomNodeTypeName);
-        
     }
 #endif
     #endregion
