@@ -35,4 +35,6 @@ MonoBehaviour:
     DoorwayCopyTileHeight: 0
     IsConnected: 0
     IsUnavailable: 0
-  SpawnPositions: []
+  SpawnPositions:
+  - {x: -13, y: -5}
+  - {x: -13, y: 4}
