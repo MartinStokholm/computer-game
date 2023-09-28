@@ -38,13 +38,7 @@ public static class HelperUtilities
         return false;
     }
     
-    private static bool IsNull<T>(this IEnumerable<T> enumerable) 
-    {
-        return enumerable == null;
-    }
+    private static bool IsNull<T>(this IEnumerable<T> enumerable) => enumerable == null;
     
-    private static bool IsEmpty<T>(this IEnumerable<T> enumerable) 
-    {
-        return !enumerable.Any();
-    }
+    private static bool IsEmpty<T>(this IEnumerable<T> enumerable) => !enumerable.Any();
 }
