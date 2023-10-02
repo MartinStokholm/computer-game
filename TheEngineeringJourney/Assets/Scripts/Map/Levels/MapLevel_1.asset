@@ -13,5 +13,12 @@ MonoBehaviour:
   m_Name: MapLevel_1
   m_EditorClassIdentifier: 
   LevelName: Edison
-  RoomTemplates: []
-  RoomNodeGraphs: []
+  RoomTemplates:
+  - {fileID: 11400000, guid: f5efa793225d4644baee14bd00e4564c, type: 2}
+  - {fileID: 11400000, guid: 3c0024a3a8af0484ea34c391723799b8, type: 2}
+  - {fileID: 11400000, guid: f73d96776b2dc52409b6ff274ce28c9f, type: 2}
+  - {fileID: 11400000, guid: 3c0024a3a8af0484ea34c391723799b8, type: 2}
+  - {fileID: 11400000, guid: 3459fffa9ec5b6c4283da15d4129b860, type: 2}
+  - {fileID: 11400000, guid: f571c7c66e941114082e07cf8b150287, type: 2}
+  RoomNodeGraphs:
+  - {fileID: 11400000, guid: 85f2c769bd21cc44898a0b37bc5d86c8, type: 2}

@@ -64,7 +64,7 @@ public class RoomNodeGraphEditor : EditorWindow
         };
         
         // Load Room node types
-        _roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
+        _roomNodeTypeList = GameResources.Instance.RoomNodeTypes;
     }
 
     private void OnDisable()
@@ -200,11 +200,11 @@ public class RoomNodeGraphEditor : EditorWindow
     /// </summary>
     private static void DrawRoomConnections() {
         var connectedRoomNodes = _currentRoomNodeGraph.roomNodeList
-            .Where(roomNodeSO => roomNodeSO.childRoomNodeIDList.Count > 0)
-            .SelectMany(x => x.childRoomNodeIDList)
+            .Where(roomNodeSO => roomNodeSO.childRoomNodeIDs.Count > 0)
+            .SelectMany(x => x.childRoomNodeIDs)
             .Select(childRoomNodeId => 
             (
-                roomNodeSO: _currentRoomNodeGraph.roomNodeList.FindAll(x => x.childRoomNodeIDList.Contains(childRoomNodeId)),
+                roomNodeSO: _currentRoomNodeGraph.roomNodeList.FindAll(x => x.childRoomNodeIDs.Contains(childRoomNodeId)),
                 childRoomNodeId
             ))
             .ToList();
@@ -268,10 +268,10 @@ public class RoomNodeGraphEditor : EditorWindow
     {
         if (_currentRoomNodeGraph.roomNodeList.Count.Equals(0))
         {
-            CreateRoomNode(new Vector2(200f, 200f), _roomNodeTypeList.list.Find(x => x.isEntrance));
+            CreateRoomNode(new Vector2(200f, 200f), _roomNodeTypeList.RoomNodeTypes.Find(x => x.isEntrance));
         }
         
-        CreateRoomNode(mousePositionObject, _roomNodeTypeList.list.Find(x => x.isNone));
+        CreateRoomNode(mousePositionObject, _roomNodeTypeList.RoomNodeTypes.Find(x => x.isNone));
     }
     
     /// <summary>
@@ -310,11 +310,11 @@ public class RoomNodeGraphEditor : EditorWindow
     private static void DeleteSelectedRoomNodeLinks()
     {
         var connectedRoomNodes = _currentRoomNodeGraph.roomNodeList
-            .Where(roomNodeSO => roomNodeSO.isSelected && roomNodeSO.childRoomNodeIDList.Count > 0)
-            .SelectMany(x => x.childRoomNodeIDList)
+            .Where(roomNodeSO => roomNodeSO.isSelected && roomNodeSO.childRoomNodeIDs.Count > 0)
+            .SelectMany(x => x.childRoomNodeIDs)
             .Select(childRoomNodeId => 
             (
-                roomNodeSO: _currentRoomNodeGraph.roomNodeList.FindAll(x => x.childRoomNodeIDList.Contains(childRoomNodeId)),
+                roomNodeSO: _currentRoomNodeGraph.roomNodeList.FindAll(x => x.childRoomNodeIDs.Contains(childRoomNodeId)),
                 childRoomNodeId
             ))
             .ToList();
@@ -326,10 +326,10 @@ public class RoomNodeGraphEditor : EditorWindow
                     .ForEach(roomNode =>
                     {
                         roomNode.RemoveChildRoomNodeIDFromRoomNode(_currentRoomNodeGraph
-                            .GetRoomNode(tuple.childRoomNodeId).id);
+                            .GetRoomNode(tuple.childRoomNodeId).Id);
                         
                         _currentRoomNodeGraph.GetRoomNode(tuple.childRoomNodeId)
-                            .RemoveParentRoomNodeIDFromRoomNode(roomNode.id);
+                            .RemoveParentRoomNodeIDFromRoomNode(roomNode.Id);
                     });
             });
         
@@ -348,19 +348,19 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             roomNodeDeletionQueue.Enqueue(roomNode);
         
-            roomNode.childRoomNodeIDList
+            roomNode.childRoomNodeIDs
                 .ForEach(childRoomNodeID => _currentRoomNodeGraph
-                    .GetRoomNode(childRoomNodeID)?.RemoveParentRoomNodeIDFromRoomNode(roomNode.id));
+                    .GetRoomNode(childRoomNodeID)?.RemoveParentRoomNodeIDFromRoomNode(roomNode.Id));
             
             roomNode.parentRoomNodeIDList
                 .ForEach(parentRoomNodeID => _currentRoomNodeGraph
-                    .GetRoomNode(parentRoomNodeID)?.RemoveChildRoomNodeIDFromRoomNode(roomNode.id));
+                    .GetRoomNode(parentRoomNodeID)?.RemoveChildRoomNodeIDFromRoomNode(roomNode.Id));
         });
   
         while (roomNodeDeletionQueue.Count > 0)
         {
             var RoomNodeToDelete = roomNodeDeletionQueue.Dequeue();
-            _currentRoomNodeGraph.RoomNodeDictionary.Remove(RoomNodeToDelete.id);
+            _currentRoomNodeGraph.RoomNodeDictionary.Remove(RoomNodeToDelete.Id);
             _currentRoomNodeGraph.roomNodeList.Remove(RoomNodeToDelete);
             
             DestroyImmediate(RoomNodeToDelete, true);
@@ -536,10 +536,10 @@ public class RoomNodeGraphEditor : EditorWindow
         if (roomNode is null) return;
         // Maybe muse a pipe here instead. Looks really bad
         // Set the it as a child of the parent room node 
-        if (_currentRoomNodeGraph.roomNodeToDrawLineFrom.AddChildRoomNodeID(roomNode.id))
+        if (_currentRoomNodeGraph.roomNodeToDrawLineFrom.AddChildRoomNodeID(roomNode.Id))
         {
             // Set parent ID in child room node
-            roomNode.AddParentRoomNodeID(_currentRoomNodeGraph.roomNodeToDrawLineFrom.id);
+            roomNode.AddParentRoomNodeID(_currentRoomNodeGraph.roomNodeToDrawLineFrom.Id);
         }
     }
     

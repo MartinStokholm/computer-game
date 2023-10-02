@@ -3,11 +3,12 @@ using UnityEngine.Serialization;
 
 public class GameResources : MonoBehaviour
 {
-    private static GameResources instance;
+    private static GameResources _instance;
 
-    public static GameResources Instance => instance ?? Resources.Load<GameResources>("GameResources");
+    public static GameResources Instance => _instance ?? Resources.Load<GameResources>("GameResources");
 
     #region Header Map
+    [FormerlySerializedAs("roomNodeTypeList")]
     [FormerlySerializedAs("roomNodeTypeListSo")]
     [Space(10)]
     [Header("Map")]
@@ -15,5 +16,25 @@ public class GameResources : MonoBehaviour
     #region Tooltip
     [Tooltip("Populate with map RoomNodeTypeListSO")]
     #endregion
-    public RoomNodeTypeListSO roomNodeTypeList;
+    public RoomNodeTypeListSO RoomNodeTypes;
+    
+    #region Header PLAYER
+    [Space(10)]
+    [Header("PLAYER")]
+    #endregion Header PLAYER
+    #region Tooltip
+    [Tooltip("The current player scriptable object - this is used to reference the current player between scenes")]
+    #endregion Tooltip
+    public CurrentPlayerSO currentPlayer;
+
+
+    #region Header MATERIALS
+    [Space(10)]
+    [Header("MATERIALS")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Dimmed Material")]
+    #endregion
+    public Material DimmedMaterial;
+
 }

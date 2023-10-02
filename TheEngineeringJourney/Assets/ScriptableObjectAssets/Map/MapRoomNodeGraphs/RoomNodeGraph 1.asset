@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: 
-  id: 54512593-00ef-41e2-8cdd-75e9018d9e3d
+  Id: 54512593-00ef-41e2-8cdd-75e9018d9e3d
   parentRoomNodeIDList: []
-  childRoomNodeIDList: []
+  childRoomNodeIDs: []
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: 92d311acf0513da4292bd90ec5ca0b2e, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 750
-    y: 194.66666
+    x: 751
+    y: 193.66666
     width: 160
     height: 160
   isLeftClickDragging: 0
-  isSelected: 0
+  isSelected: 1
 --- !u!114 &-8290249348593463887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38,10 +38,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: 
-  id: 6c496df6-c26d-478d-9428-bb42bdfc5976
+  Id: 6c496df6-c26d-478d-9428-bb42bdfc5976
   parentRoomNodeIDList:
   - f6412a31-9602-4780-8062-f0ecd81febf4
-  childRoomNodeIDList:
+  childRoomNodeIDs:
   - 0413b048-db47-4f00-a406-2f01fd0cf50e
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: 739da90e3af69a148a27a292eabc0561, type: 2}
@@ -66,9 +66,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: 
-  id: f6412a31-9602-4780-8062-f0ecd81febf4
+  Id: f6412a31-9602-4780-8062-f0ecd81febf4
   parentRoomNodeIDList: []
-  childRoomNodeIDList:
+  childRoomNodeIDs:
   - 6c496df6-c26d-478d-9428-bb42bdfc5976
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: 30cd6aa8fdd02eb43bd1067169c7563e, type: 2}
@@ -113,10 +113,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0053685452dc462429941a958896f1b3, type: 3}
   m_Name: RoomNode
   m_EditorClassIdentifier: 
-  id: 0413b048-db47-4f00-a406-2f01fd0cf50e
+  Id: 0413b048-db47-4f00-a406-2f01fd0cf50e
   parentRoomNodeIDList:
   - 6c496df6-c26d-478d-9428-bb42bdfc5976
-  childRoomNodeIDList: []
+  childRoomNodeIDs: []
   roomNodeGraph: {fileID: 11400000}
   roomNodeType: {fileID: 11400000, guid: d1c429d6bbb23654fa495efed18f61ca, type: 2}
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}

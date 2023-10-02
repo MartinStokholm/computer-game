@@ -1,9 +1,10 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "RoomNodeType_", menuName = "Scriptable Objects/Map/Room Node Type")]
 public class RoomNodeTypeSO : ScriptableObject
 {
-    public string roomNodeTypeName;
+    [FormerlySerializedAs("roomNodeTypeName")] public string RoomNodeTypeName;
 
     #region Header
 
@@ -58,7 +59,7 @@ public class RoomNodeTypeSO : ScriptableObject
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckEmptyString(this, nameof(roomNodeTypeName), roomNodeTypeName);
+        HelperUtilities.ValidateCheckEmptyString(this, nameof(RoomNodeTypeName), RoomNodeTypeName);
     }
 #endif
     #endregion

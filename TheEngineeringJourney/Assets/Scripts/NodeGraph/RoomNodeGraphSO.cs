@@ -16,13 +16,25 @@ public class RoomNodeGraphSO : ScriptableObject
 
     private void LoadRoomNodeDictionary()
     {
-        RoomNodeDictionary = roomNodeList.ToDictionary(node => node.id, node => node);
+        RoomNodeDictionary = roomNodeList.ToDictionary(node => node.Id, node => node);
     }
+    
+    /// <summary>
+    /// Get room node by roomNodeType
+    /// </summary>
+    public RoomNodeSO GetRoomNode(RoomNodeTypeSO roomNodeType) => 
+        RoomNodeDictionary.SingleOrDefault(x => x.Value == roomNodeType).Value;
 
     public RoomNodeSO GetRoomNode(string roomNodeID) =>
         RoomNodeDictionary.TryGetValue(roomNodeID, out var roomNode) ? roomNode : null;
     
-    
+    /// <summary>
+    /// Get child room nodes for supplied parent room node
+    /// </summary>
+    public IEnumerable<RoomNodeSO> GetChildRoomNodes(RoomNodeSO parentRoomNode) =>
+        parentRoomNode.childRoomNodeIDs.Select(GetRoomNode);
+
+
     #region  Editor Code
 
 #if  UNITY_EDITOR

@@ -18,6 +18,17 @@ public static class HelperUtilities
     }
     
     /// <summary>
+    /// null value debug check
+    /// </summary>
+    public static bool ValidateCheckNullValue(Object thisObject, string fieldName, Object objectToCheck)
+    {
+        if (objectToCheck is not null) return false;
+        
+        Debug.Log(fieldName + " is null and must contain a value in object " + thisObject.name);
+        return true;
+    }
+    
+    /// <summary>
     /// List empty or coa
     /// </summary>
     public static bool ValidateCheckEnumerableValues<T>(Object thisObject, string fieldName,
@@ -36,6 +47,18 @@ public static class HelperUtilities
         }
         
         return false;
+    }
+    
+    /// <summary>
+    /// positive value debug check- if zero is allowed set isZeroAllowed to true. Returns true if there is an error
+    /// </summary>
+    public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed)
+    {
+        if (isZeroAllowed ? valueToCheck >= 0 : valueToCheck > 0) return false;
+        
+        var str = (isZeroAllowed ? "positive value or zero" : "positive");
+        Debug.Log(fieldName + " must contain a " + str + " value in object " + thisObject.name);
+        return true;
     }
     
     private static bool IsNull<T>(this IEnumerable<T> enumerable) => enumerable == null;

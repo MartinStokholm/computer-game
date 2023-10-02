@@ -4,12 +4,13 @@ using System.Linq;
 using NodeGraph;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class RoomNodeSO : ScriptableObject
 {
-    [HideInInspector] public string id;
+    [FormerlySerializedAs("id")] [HideInInspector] public string Id;
     [HideInInspector] public List<string> parentRoomNodeIDList = new();
-    [HideInInspector] public List<string> childRoomNodeIDList = new();
+    [FormerlySerializedAs("childRoomNodeIDList")] [HideInInspector] public List<string> childRoomNodeIDs = new();
     [HideInInspector] public RoomNodeGraphSO roomNodeGraph;
     public RoomNodeTypeSO roomNodeType;
     [HideInInspector] public RoomNodeTypeListSO roomNodeTypeList;
@@ -22,13 +23,13 @@ public class RoomNodeSO : ScriptableObject
     public void Initialise(Rect rect, RoomNodeGraphSO roomNodeGraph, RoomNodeTypeSO roomNodeType)
     {
         this.rect = rect;
-        this.id = Guid.NewGuid().ToString();
+        this.Id = Guid.NewGuid().ToString();
         this.name = "RoomNode";
         this.roomNodeGraph = roomNodeGraph;
         this.roomNodeType = roomNodeType;
         
         // Load RoomNode Type List
-        roomNodeTypeList = GameResources.Instance.roomNodeTypeList;
+        roomNodeTypeList = GameResources.Instance.RoomNodeTypes;
     }
 
     public void Draw(GUIStyle nodeStyle)
@@ -42,26 +43,26 @@ public class RoomNodeSO : ScriptableObject
         // Display label that can't be changed
         if (parentRoomNodeIDList.Count > 0 || roomNodeType.isEntrance)
         {
-            EditorGUILayout.LabelField(roomNodeType.roomNodeTypeName);
+            EditorGUILayout.LabelField(roomNodeType.RoomNodeTypeName);
         }
         else 
         {
             // Display a PopUp Using the RoomNodeType Name Values, that can be selected from (default to the currently set roomNodeType
-            var selected = roomNodeTypeList.list.FindIndex(x => x == roomNodeType);
+            var selected = roomNodeTypeList.RoomNodeTypes.FindIndex(x => x == roomNodeType);
             var selection = EditorGUILayout.Popup("", selected,GetRoomTypesToDisplay());
 
-            roomNodeType = roomNodeTypeList.list[selection];
+            roomNodeType = roomNodeTypeList.RoomNodeTypes[selection];
 
             // If deleting a node changed the child to be invalid, remove relationship
-            if (IsSelectedChanged(selected, selection) && childRoomNodeIDList.Count > 0)
+            if (IsSelectedChanged(selected, selection) && childRoomNodeIDs.Count > 0)
             {
                 roomNodeGraph.roomNodeList
-                        .Where(roomNode => childRoomNodeIDList.Contains(roomNode.id))
+                        .Where(roomNode => childRoomNodeIDs.Contains(roomNode.Id))
                         .ToList()
                         .ForEach(childRoomNode =>
                         {
-                            RemoveChildRoomNodeIDFromRoomNode(childRoomNode.id);
-                            childRoomNode.RemoveParentRoomNodeIDFromRoomNode(id);
+                            RemoveChildRoomNodeIDFromRoomNode(childRoomNode.Id);
+                            childRoomNode.RemoveParentRoomNodeIDFromRoomNode(Id);
                         });
             }
 
@@ -74,17 +75,17 @@ public class RoomNodeSO : ScriptableObject
     }
 
     private bool IsSelectedChanged(int selected, int selection) => 
-        roomNodeTypeList.list[selected].isCorridor && !roomNodeTypeList.list[selection].isCorridor ||
-               !roomNodeTypeList.list[selected].isCorridor && roomNodeTypeList.list[selection].isCorridor ||
-               !roomNodeTypeList.list[selected].isBossRoom && roomNodeTypeList.list[selection].isBossRoom;
+        roomNodeTypeList.RoomNodeTypes[selected].isCorridor && !roomNodeTypeList.RoomNodeTypes[selection].isCorridor ||
+               !roomNodeTypeList.RoomNodeTypes[selected].isCorridor && roomNodeTypeList.RoomNodeTypes[selection].isCorridor ||
+               !roomNodeTypeList.RoomNodeTypes[selected].isBossRoom && roomNodeTypeList.RoomNodeTypes[selection].isBossRoom;
 
     /// <summary>
     /// Populate a string array with the RoomNodeTypes To Display That Can Be Selected
     /// </summary>
     private string[] GetRoomTypesToDisplay() =>
-        roomNodeTypeList.list
+        roomNodeTypeList.RoomNodeTypes
             .Where(nodeType => nodeType.displayInNodeGraphEditor)
-            .Select(nodeType => nodeType.roomNodeTypeName)
+            .Select(nodeType => nodeType.RoomNodeTypeName)
             .ToArray();
 
     #region Events
@@ -173,10 +174,10 @@ public class RoomNodeSO : ScriptableObject
 
     public bool AddChildRoomNodeID(string childId)
     {
-        if (!RoomNodeSOValidator.IsChildRoomValid(id, childId, roomNodeGraph, childRoomNodeIDList, roomNodeType)) 
+        if (!RoomNodeSOValidator.IsChildRoomValid(Id, childId, roomNodeGraph, childRoomNodeIDs, roomNodeType)) 
             return false;
         
-        childRoomNodeIDList.Add(childId);
+        childRoomNodeIDs.Add(childId);
         return true;
     }
     
@@ -188,9 +189,9 @@ public class RoomNodeSO : ScriptableObject
 
     public bool RemoveChildRoomNodeIDFromRoomNode(string childId)
     {
-        if (!childRoomNodeIDList.Contains(childId)) return false;
+        if (!childRoomNodeIDs.Contains(childId)) return false;
         
-        childRoomNodeIDList.Remove(childId);
+        childRoomNodeIDs.Remove(childId);
         return true;
     }
     
