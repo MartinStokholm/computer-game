@@ -229,12 +229,6 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         return true; 
     }
 
-    #region MyRegion
-
-
-
-    #endregion
-
     /// <summary>
     /// Get random room template for room node taking into account the parent doorway orientation.
     /// </summary>
