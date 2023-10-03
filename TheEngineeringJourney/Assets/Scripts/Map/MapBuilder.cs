@@ -155,7 +155,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
                 .ForEach(openRoomNodeQueue.Enqueue);
             
             noRoomOverlaps = roomNode.roomNodeType.isEntrance 
-                ? CanPlaceEntrance(roomNode, mapBuilderRoomDictionary[roomNode.parentRoomNodeIDList[0]], mapBuilderRoomDictionary, roomTemplates, roomNodeTypes)
+                ? CanPlaceEntrance(roomNode, mapBuilderRoomDictionary, roomTemplates, roomNodeTypes)
                 : CanPlaceRoomWithNoOverlaps(roomNode, mapBuilderRoomDictionary[roomNode.parentRoomNodeIDList[0]], mapBuilderRoomDictionary , roomTemplates, roomNodeTypes);
         }
 
@@ -185,7 +185,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         return roomTemplateDictionary;
     }
 
-    private static bool CanPlaceEntrance(RoomNodeSO roomNode, Room parentRoom, IDictionary<string, Room> mapBuilderRoomDictionary, IEnumerable<RoomTemplateSO> roomTemplates, RoomNodeTypeListSO roomNodeTypes)
+    private static bool CanPlaceEntrance(RoomNodeSO roomNode, IDictionary<string, Room> mapBuilderRoomDictionary, IEnumerable<RoomTemplateSO> roomTemplates, RoomNodeTypeListSO roomNodeTypes)
     {
         var roomTemplate = roomNode.roomNodeType.GetRandomRoomTemplate(roomTemplates);
 
