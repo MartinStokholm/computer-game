@@ -57,7 +57,43 @@ public class MapLevelSO : ScriptableObject
         if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(RoomTemplates), RoomTemplates)) return;
         if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(RoomNodeGraphs), RoomNodeGraphs)) return;
         
-        RoomTemplates.IsTypeOfCorridorOrEntrance(name).ForEach( x => Debug.Log(x));
+        // RoomTemplates.IsTypeOfCorridorOrEntrance(name).ForEach( x => Debug.Log(x));
+        // First check that north/south corridor, east/west corridor and entrance types have been specified
+        bool isEWCorridor = false;
+        bool isNSCorridor = false;
+        bool isEntrance = false;
+
+        // Loop through all room templates to check that this node type has been specified
+        foreach (RoomTemplateSO roomTemplateSO in RoomTemplates)
+        {
+            if (roomTemplateSO == null)
+                return;
+
+            if (roomTemplateSO.RoomNodeType.isCorridorEW)
+                isEWCorridor = true;
+
+            if (roomTemplateSO.RoomNodeType.isCorridorNS)
+                isNSCorridor = true;
+
+            if (roomTemplateSO.RoomNodeType.isEntrance)
+                isEntrance = true;
+        }
+
+        if (isEWCorridor == false)
+        {
+            Debug.Log("In " + this.name.ToString() + " : No E/W Corridor Room Type Specified");
+        }
+
+        if (isNSCorridor == false)
+        {
+            Debug.Log("In " + this.name.ToString() + " : No N/S Corridor Room Type Specified");
+        }
+
+        if (isEntrance == false)
+        {
+            Debug.Log("In " + this.name.ToString() + " : No Entrance Corridor Room Type Specified");
+        }
+
 
         GetTupleOfInvalidGraphsAndNodes(RoomNodeGraphs, RoomTemplates)
             .InvalidGraphsAndNodes(name)

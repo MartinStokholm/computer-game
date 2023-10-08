@@ -19,14 +19,21 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
 
         // Load the room node type list
         LoadRoomNodeTypeList();
+        
+        
+        // Set dimmed material to fully visible
+        GameResources.Instance.DimmedMaterial.SetFloat("Alpha_Slider", 1f);
     }
 
     /// <summary>
     /// Load the room node type list
     /// </summary>
-    private void LoadRoomNodeTypeList()
+    private RoomNodeTypeListSO LoadRoomNodeTypeList()
     {
         _roomNodeTypes = GameResources.Instance.RoomNodeTypes;
+        if ( _roomNodeTypes == null)
+            Debug.Log("IAM NUULL");
+        return _roomNodeTypes;
     }
 
     /// <summary>
@@ -37,7 +44,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         var roomTemplateList = currentMapLevel.RoomTemplates;
         
         // Load the scriptable object room templates into the dictionary
-        //var roomTemplateDictionary = LoadRoomTemplatesIntoDictionary(new Dictionary<string, RoomTemplateSO>(), _roomTemplateList);
+        var roomTemplateDictionary = LoadRoomTemplatesIntoDictionary(new Dictionary<string, RoomTemplateSO>(), roomTemplateList);
 
         var mapBuildSuccessful = false;
         var dungeonBuildAttempts = 0;
@@ -48,9 +55,10 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
 
             // Select a random room node graph from the list
             var roomNodeGraph = SelectRandomRoomNodeGraph(currentMapLevel.RoomNodeGraphs);
-
+            Debug.Log("roomNodeGraph");
+            Debug.Log(roomNodeGraph);
             var dungeonRebuildAttemptsForNodeGraph = 0;
-
+            
             // Loop until dungeon successfully built or more than max attempts for node graph
             while (!mapBuildSuccessful && dungeonRebuildAttemptsForNodeGraph <= Settings.MaxMapRebuildAttemptsForRoomGraph)
             {
@@ -61,6 +69,8 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
 
                 // Attempt To Build A Random Dungeon For The Selected room node graph
                 mapBuildSuccessful = AttemptToBuildRandomDungeon(roomNodeGraph, MapBuilderRoomDictionary, roomTemplateList, _roomNodeTypes);
+                Debug.Log("AttemptToBuildRandomDungeon");
+                Debug.Log(mapBuildSuccessful);
             }
 
 
@@ -68,9 +78,11 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
             {
                 // Instantiate Room Game objects
                 InstantiateRoomGameObjects(MapBuilderRoomDictionary);
+                Debug.Log("InstantiateRoomGameObjects");
+                Debug.Log(mapBuildSuccessful);
             }
         }
-
+        
         return mapBuildSuccessful;
     }
 
@@ -84,9 +96,9 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     {
         // Create Open Room Node Queue
         var openRoomNodeQueue = new Queue<RoomNodeSO>();
-
+        
         // Add Entrance Node To Room Node Queue From Room Node Graph
-        var entranceNode = roomNodeGraph.GetRoomNode(_roomNodeTypes.RoomNodeTypes.Find(x => x.isEntrance));
+        var entranceNode = roomNodeGraph.GetRoomNode(roomNodeTypes.RoomNodeTypes.Find(x => x.isEntrance));
 
         if (entranceNode is null)
         {
@@ -97,7 +109,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         openRoomNodeQueue.Enqueue(entranceNode);
         
         // Process open room nodes queue
-        var noRoomOverlaps = ProcessRoomsInOpenRoomNodeQueue(roomNodeGraph, openRoomNodeQueue, mapBuilderRoomDictionary, roomTemplates, _roomNodeTypes);
+        var noRoomOverlaps = ProcessRoomsInOpenRoomNodeQueue(roomNodeGraph, openRoomNodeQueue, mapBuilderRoomDictionary, roomTemplates, roomNodeTypes);
 
         // If all the room nodes have been processed and there hasn't been a room overlap then return true
         return openRoomNodeQueue.Count == 0 && noRoomOverlaps;
