@@ -23,7 +23,7 @@ public class RoomNodeGraphSO : ScriptableObject
     /// Get room node by roomNodeType
     /// </summary>
     public RoomNodeSO GetRoomNode(RoomNodeTypeSO roomNodeType) => 
-        RoomNodeDictionary.SingleOrDefault(x => x.Value == roomNodeType).Value;
+        roomNodeList.FirstOrDefault(node => node.roomNodeType == roomNodeType);
 
     public RoomNodeSO GetRoomNode(string roomNodeID) =>
         RoomNodeDictionary.TryGetValue(roomNodeID, out var roomNode) ? roomNode : null;

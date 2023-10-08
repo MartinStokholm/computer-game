@@ -61,6 +61,12 @@ public static class HelperUtilities
         return true;
     }
     
+    /// <summary>
+    /// Create deep copy of string list
+    /// </summary>
+    public static List<string> CopyStringList(this IEnumerable<string> oldStringList) => 
+        oldStringList.ToList();
+    
     private static bool IsNull<T>(this IEnumerable<T> enumerable) => enumerable == null;
     
     private static bool IsEmpty<T>(this IEnumerable<T> enumerable) => !enumerable.Any();

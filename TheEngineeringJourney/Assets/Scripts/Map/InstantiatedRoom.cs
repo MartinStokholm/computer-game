@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 [DisallowMultipleComponent]
@@ -29,7 +27,7 @@ public class InstantiatedRoom : MonoBehaviour
         RoomColliderBounds = boxCollider2D.bounds;
 
     }
-
+    
     /// <summary>
     /// Initialise The Instantiated Room
     /// </summary>
@@ -51,7 +49,7 @@ public class InstantiatedRoom : MonoBehaviour
         Grid = roomGameobject.GetComponentInChildren<Grid>();
 
         // Get tilemaps in children.
-        var tilemaps = roomGameobject.GetComponentsInChildren<Tilemap>();
+        Tilemap[] tilemaps = roomGameobject.GetComponentsInChildren<Tilemap>();
 
         foreach (var tilemap in tilemaps)
         {
@@ -77,7 +75,6 @@ public class InstantiatedRoom : MonoBehaviour
                     break;
             }
         }
-
     }
 
     /// <summary>
@@ -86,38 +83,41 @@ public class InstantiatedRoom : MonoBehaviour
     private void BlockOffUnusedDoorWays()
     {
         // Loop through all doorways
-        foreach (var doorway in Room.DoorWayList.Where(doorway => !doorway.IsConnected))
+        foreach (Doorway doorway in Room.DoorWayList)
         {
+            if (doorway.IsConnected)
+                continue;
+
             // Block unconnected doorways using tiles on tilemaps
-            // if (CollisionTilemap != null)
-            // {
-            //     BlockADoorwayOnTilemapLayer(CollisionTilemap, doorway);
-            // }
-            //
-            // if (MinimapTilemap != null)
-            // {
-            //     BlockADoorwayOnTilemapLayer(MinimapTilemap, doorway);
-            // }
-            //
-            // if (GroundTilemap != null)
-            // {
-            //     BlockADoorwayOnTilemapLayer(GroundTilemap, doorway);
-            // }
-            //
-            // if (Decoration1Tilemap != null)
-            // {
-            //     BlockADoorwayOnTilemapLayer(Decoration1Tilemap, doorway);
-            // }
-            //
-            // if (Decoration2Tilemap != null)
-            // {
-            //     BlockADoorwayOnTilemapLayer(Decoration2Tilemap, doorway);
-            // }
-            //
-            // if (FrontTilemap != null)
-            // {
-            //     BlockADoorwayOnTilemapLayer(FrontTilemap, doorway);
-            // }
+            if (CollisionTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(CollisionTilemap, doorway);
+            }
+
+            if (MinimapTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(MinimapTilemap, doorway);
+            }
+
+            if (GroundTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(GroundTilemap, doorway);
+            }
+
+            if (Decoration1Tilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(Decoration1Tilemap, doorway);
+            }
+
+            if (Decoration2Tilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(Decoration2Tilemap, doorway);
+            }
+
+            if (FrontTilemap != null)
+            {
+                BlockADoorwayOnTilemapLayer(FrontTilemap, doorway);
+            }
         }
     }
 
@@ -147,7 +147,7 @@ public class InstantiatedRoom : MonoBehaviour
     /// <summary>
     /// Block doorway horizontally - for North and South doorways
     /// </summary>
-    private static void BlockDoorwayHorizontally(Tilemap tilemap, Doorway doorway)
+    private void BlockDoorwayHorizontally(Tilemap tilemap, Doorway doorway)
     {
         var startPosition = doorway.DoorwayStartCopyPosition;
 
@@ -191,7 +191,6 @@ public class InstantiatedRoom : MonoBehaviour
                 tilemap.SetTransformMatrix(new Vector3Int(startPosition.x + xPos, startPosition.y - 1 - yPos, 0), transformMatrix);
 
             }
-
         }
     }
 
@@ -203,6 +202,7 @@ public class InstantiatedRoom : MonoBehaviour
     {
         // Disable collision tilemap renderer
         CollisionTilemap.gameObject.GetComponent<TilemapRenderer>().enabled = false;
+
     }
 
 }
