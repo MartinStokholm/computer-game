@@ -125,10 +125,12 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     {
         if (mapBuilderRoomDictionary.Count <= 0) return;
         
-        mapBuilderRoomDictionary
-            .Select(x => x.Value)
-            .ToList()
-            .ForEach(room => Destroy(room.InstantiatedRoom.gameObject));
+        foreach (var room in mapBuilderRoomDictionary
+                     .Select(keyValuePair => keyValuePair.Value)
+                     .Where(room => room.InstantiatedRoom is not null))
+        {
+            Destroy(room.InstantiatedRoom.gameObject);
+        }
         
         mapBuilderRoomDictionary.Clear();
     }
