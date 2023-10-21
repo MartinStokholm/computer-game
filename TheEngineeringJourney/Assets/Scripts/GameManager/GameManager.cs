@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -49,21 +50,21 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         base.Awake();
         _playerDetails = GameResources.Instance.CurrentPlayer.PlayerDetails;
-
-        InstantiatePlayer(_playerDetails);
+        
+        InstantiatePlayer();
     }
     
     /// <summary>
     /// Create player in scene at position
     /// </summary>
-    private void InstantiatePlayer(PlayerDetailsSO playerDetails)
+    private void InstantiatePlayer()
     {
-        var playerGameObject = Instantiate(playerDetails.PlayerPrefab);
+        var playerGameObject = Instantiate(_playerDetails.PlayerPrefab);
+        Debug.Log(_playerDetails.PlayerPrefab.name);
         
         Player = playerGameObject.GetComponent<Player>();
-
-        Player.Initialize(playerDetails);
-
+        Debug.Log(Player.name);
+        Player.Initialize(_playerDetails);
     }
 
     // Start is called before the first frame update
