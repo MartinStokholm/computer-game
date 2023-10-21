@@ -14,6 +14,7 @@ public class MovementToPositionEvent : MonoBehaviour
         float movementSpeed,
         Vector2 movementDirection)
     {
+    Debug.Log(this.name);
         OnMovementToPosition?.Invoke(this, new MovementToPositionArgs()
         {
             MovementPosition = movementPosition,

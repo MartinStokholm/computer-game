@@ -8,6 +8,7 @@ public class MovementByVelocityEvent : MonoBehaviour
 
     public void CallMovementByVelocityEvent(Vector2 movementDirection, float movementSpeed)
     {
+        Debug.Log(this.name);
         OnMovementByVelocity?.Invoke(this, new MovementByVelocityArgs() { MovementDirection = movementDirection, MovementSpeed = movementSpeed});
     }
 }

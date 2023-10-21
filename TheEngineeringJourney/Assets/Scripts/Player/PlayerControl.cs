@@ -27,7 +27,7 @@ public class PlayerControl : MonoBehaviour
     //private float _playerRollCooldownTimer = 0f;
 
     private void Awake()
-    {
+    { 
         _player = GetComponent<Player>();
 
         _moveSpeed = _movementDetail.GetMovementSpeed();
@@ -38,14 +38,13 @@ public class PlayerControl : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        
         _waitForFixedUpdate = new WaitForFixedUpdate();
     }
 
     private void Update()
     {
-        Debug.Log("Plaese upp");
         MovementInput();
-
     }
     
     /// <summary>
@@ -85,7 +84,21 @@ public class PlayerControl : MonoBehaviour
         // else trigger idle event
         else
         {
+            Debug.Log("Call Idle" + _player.IdleEvent.enabled + _player.IdleEvent.name);
             _player.IdleEvent.CallIdleEvent();
         }
     }
+    
+    #region Validation
+
+#if UNITY_EDITOR
+
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(MovementDetailsSO), _movementDetail);
+    }
+
+#endif
+
+    #endregion Validation
 }

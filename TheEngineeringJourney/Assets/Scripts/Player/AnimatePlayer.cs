@@ -11,10 +11,12 @@ public class AnimatePlayer : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
+        Debug.Log("Player is empty" + _player);
     }
 
     private void OnEnable()
     {
+        Debug.Log("Animate" + _player.MovementByVelocityEvent.name);
         _player.MovementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvent_OnMovementByVelocity;
         _player.MovementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
         _player.IdleEvent.OnIdle += IdleEvent_OnIdle;
