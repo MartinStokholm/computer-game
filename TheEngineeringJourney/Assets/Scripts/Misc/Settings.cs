@@ -16,14 +16,14 @@ public static class Settings
 
     #region ANIMATOR PARAMETERS
 
-    public static int AimUp = Animator.StringToHash("aimUp");
-    public static int AimDown = Animator.StringToHash("aimDown");
-    public static int AimUpRight = Animator.StringToHash("aimUpRight");
-    public static int AimUpLeft = Animator.StringToHash("aimUpLeft");
-    public static int AimRight = Animator.StringToHash("aimRight");
-    public static int AimLeft = Animator.StringToHash("aimLeft");
-    public static int IsIdle = Animator.StringToHash("isIdle");
-    public static int IsMoving = Animator.StringToHash("isMoving");
+    public static int AimUp = Animator.StringToHash("AimUp");
+    public static int AimDown = Animator.StringToHash("AimDown");
+    public static int AimUpRight = Animator.StringToHash("AimUpRight");
+    public static int AimUpLeft = Animator.StringToHash("AimUpLeft");
+    public static int AimRight = Animator.StringToHash("AimRight");
+    public static int AimLeft = Animator.StringToHash("AimLeft");
+    public static int IsIdle = Animator.StringToHash("IsIdle");
+    public static int IsMoving = Animator.StringToHash("IsMoving");
 
     #endregion
 }

@@ -60,10 +60,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void InstantiatePlayer()
     {
         var playerGameObject = Instantiate(_playerDetails.PlayerPrefab);
-        Debug.Log(_playerDetails.PlayerPrefab.name);
-        
+
         Player = playerGameObject.GetComponent<Player>();
-        Debug.Log(Player.name);
+
         Player.Initialize(_playerDetails);
     }
 
