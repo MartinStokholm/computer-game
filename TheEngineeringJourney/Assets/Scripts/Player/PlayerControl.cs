@@ -84,7 +84,6 @@ public class PlayerControl : MonoBehaviour
         // else trigger idle event
         else
         {
-            Debug.Log("Call Idle" + _player.IdleEvent.enabled + _player.IdleEvent.name);
             _player.IdleEvent.CallIdleEvent();
         }
     }

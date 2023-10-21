@@ -27,7 +27,12 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        PlayerDetails = GetComponent<PlayerDetailsSO>();
         Health = GetComponent<Health>();
+        MovementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
+        MovementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        IdleEvent = GetComponent<IdleEvent>();
+        AimWeaponEvent = GetComponent<AimWeaponEvent>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         Animator = GetComponent<Animator>();
     }
