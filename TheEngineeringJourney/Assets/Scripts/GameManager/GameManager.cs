@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -28,8 +27,44 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     [SerializeField] private int currentMapLevelListIndex = 0;
 
+   
+    
+    private Room _currentRoom;
+    public Player Player { get; private set; }
+    private Room _previousRoom;
+    private PlayerDetailsSO _playerDetails;
     [HideInInspector] public GameState gameState;
+    
+    public Room CurrentRoom
+    {
+        get => _currentRoom;
+        set
+        {
+            _previousRoom = _currentRoom;
+            _currentRoom = value;
+        }
+    }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        _playerDetails = GameResources.Instance.CurrentPlayer.PlayerDetails;
+
+        InstantiatePlayer(_playerDetails);
+    }
+    
+    /// <summary>
+    /// Create player in scene at position
+    /// </summary>
+    private void InstantiatePlayer(PlayerDetailsSO playerDetails)
+    {
+        var playerGameObject = Instantiate(playerDetails.PlayerPrefab);
+        
+        Player = playerGameObject.GetComponent<Player>();
+
+        Player.Initialize(playerDetails);
+
+    }
 
     // Start is called before the first frame update
     private void Start()
@@ -76,7 +111,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         
         Debug.LogError("Couldn't build Map from specified rooms and node graphs");
     }
-
 
     #region Validation
 

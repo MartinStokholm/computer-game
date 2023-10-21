@@ -494,6 +494,8 @@ public static class MapBuilderExtensions
     {
         room.ParentRoomID = "";
         room.IsPreviouslyVisited = true;
+        
+        GameManager.Instance.CurrentRoom = room;
         return room;
     }
     

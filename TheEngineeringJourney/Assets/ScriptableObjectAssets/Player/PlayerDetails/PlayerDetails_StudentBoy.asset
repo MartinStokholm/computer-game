@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6348b24c5d4af295747232fd6a137c, type: 3}
+  m_Name: PlayerDetails_StudentBoy
+  m_EditorClassIdentifier: 
+  PlayerCharacterName: Student
+  PlayerPrefab: {fileID: 2300109829186667463, guid: 75bcc422676ffcd4f858a0bea822bb5b, type: 3}
+  RuntimeAnimatorController: {fileID: 9100000, guid: 886d03762be6e2b4e86f2f3e855fe532, type: 2}
+  PlayerHealthAmount: 100
+  PlayerMiniMapIcon: {fileID: 0}
+  PlayerHandSprite: {fileID: 21300000, guid: d6a8ca577552e4240b5092d4503aa3e8, type: 3}

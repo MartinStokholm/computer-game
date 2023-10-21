@@ -1,9 +1,11 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(SortingGroup))]
+[RequireComponent(typeof(Health))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxCollider2D))]
@@ -16,6 +18,10 @@ public class Player : MonoBehaviour
 {
     [HideInInspector] public PlayerDetailsSO PlayerDetails;
     [HideInInspector] public Health Health;
+    [HideInInspector] public MovementByVelocityEvent MovementByVelocityEvent;
+    [HideInInspector] public MovementToPositionEvent MovementToPositionEvent;
+    [HideInInspector] public IdleEvent IdleEvent;
+    [FormerlySerializedAs("aimWeaponEvent")] [HideInInspector] public AimWeaponEvent AimWeaponEvent;
     [HideInInspector] public SpriteRenderer SpriteRenderer;
     [HideInInspector] public Animator Animator;
 

@@ -60,7 +60,7 @@ public static class HelperUtilities
         Debug.Log(fieldName + " must contain a " + str + " value in object " + thisObject.name);
         return true;
     }
-    
+
     /// <summary>
     /// Create deep copy of string list
     /// </summary>
