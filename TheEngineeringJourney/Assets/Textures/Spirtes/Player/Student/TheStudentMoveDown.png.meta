@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 088ea52fc7adaac40b75134f0d6a7174
+guid: 7f0e7b07e824bb24098d3d4169bc80c1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: TheGeneralIdleDown_0
+      name: TheStudentMoveDown_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
-        height: 28
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,41 +137,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5d38fbe63924a3148901833db750e684
-      internalID: -1128785887
+      spriteID: eb462eb2fe45b574586b094c8ab20fa8
+      internalID: 674735704
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TheGeneralIdleDown_1
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 0
-        width: 24
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a7af23712f5f1e6448dc17664d9ba90b
-      internalID: 365010592
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TheGeneralIdleDown_2
+      name: TheStudentMoveDown_1
       rect:
         serializedVersion: 2
         x: 48
         y: 0
-        width: 24
-        height: 28
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -179,41 +158,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 93b97bb2c8c219a49a7a69c90a1f26a8
-      internalID: -1886627732
+      spriteID: 211aeafdfac27ec4497ffda8a82afe7b
+      internalID: -2086343269
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: TheGeneralIdleDown_3
-      rect:
-        serializedVersion: 2
-        x: 72
-        y: 0
-        width: 24
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: eb1667f9af4400e498586ddeea5c8255
-      internalID: -981450545
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: TheGeneralIdleDown_4
+      name: TheStudentMoveDown_2
       rect:
         serializedVersion: 2
         x: 96
         y: 0
-        width: 24
-        height: 28
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,8 +179,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d266d155454bc9d46a4478874148f480
-      internalID: 1156456391
+      spriteID: 5deecb359e3abe84ab2c63e0a3e40dce
+      internalID: 2000396864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TheStudentMoveDown_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e3366c06dc4cb84691bc6732691b30d
+      internalID: -1669809939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TheStudentMoveDown_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2b720bfd1459ee4d92447ba80b5f768
+      internalID: -1095859273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TheStudentMoveDown_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25bbdf01790a4db42a78764a64baf507
+      internalID: 1800517305
       vertices: []
       indices: 
       edges: []
@@ -230,7 +251,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 07e45a85fba7cb649b5c7b6096c21590
+    spriteID: 392cb48ca5f9d224eba87dc6c5f7fbde
     internalID: 0
     vertices: []
     indices: 
@@ -238,11 +259,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      TheGeneralIdleDown_0: -1128785887
-      TheGeneralIdleDown_1: 365010592
-      TheGeneralIdleDown_2: -1886627732
-      TheGeneralIdleDown_3: -981450545
-      TheGeneralIdleDown_4: 1156456391
+      TheStudentMoveDown_0: 674735704
+      TheStudentMoveDown_1: -2086343269
+      TheStudentMoveDown_2: 2000396864
+      TheStudentMoveDown_3: -1669809939
+      TheStudentMoveDown_4: -1095859273
+      TheStudentMoveDown_5: 1800517305
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

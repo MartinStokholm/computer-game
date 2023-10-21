@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63deeb7a16584a36a9d73d557e7bd89d, type: 3}
+  m_Name: MapLevel_0
+  m_EditorClassIdentifier: 
+  LevelName: BaseLevel
+  RoomTemplates:
+  - {fileID: 11400000, guid: d2a380ae9e395334e9e060d5c86fdba9, type: 2}
+  - {fileID: 11400000, guid: 02eeb8beda5ebb046a55ca6eff8d928a, type: 2}
+  - {fileID: 11400000, guid: 89522d681b0681a45871ec416946fc60, type: 2}
+  - {fileID: 11400000, guid: 9b28fa1c8d258fe46a8fc927fa841f0c, type: 2}
+  RoomNodeGraphs:
+  - {fileID: 11400000, guid: 35cd24adc52684249ad5ad358fe7a43d, type: 2}
