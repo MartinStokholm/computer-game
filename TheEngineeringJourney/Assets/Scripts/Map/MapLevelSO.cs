@@ -53,9 +53,9 @@ public class MapLevelSO : ScriptableObject
     /// </summary>
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckEmptyString(this, nameof(LevelName), LevelName);
-        if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(RoomTemplates), RoomTemplates)) return;
-        if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(RoomNodeGraphs), RoomNodeGraphs)) return;
+        EditorUtilities.ValidateCheckEmptyString(this, nameof(LevelName), LevelName);
+        if (EditorUtilities.ValidateCheckEnumerableValues(this, nameof(RoomTemplates), RoomTemplates)) return;
+        if (EditorUtilities.ValidateCheckEnumerableValues(this, nameof(RoomNodeGraphs), RoomNodeGraphs)) return;
         
         // RoomTemplates.IsTypeOfCorridorOrEntrance(name).ForEach( x => Debug.Log(x));
         // First check that north/south corridor, east/west corridor and entrance types have been specified

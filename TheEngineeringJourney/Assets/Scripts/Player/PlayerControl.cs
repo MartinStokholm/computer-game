@@ -94,7 +94,7 @@ public class PlayerControl : MonoBehaviour
 
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckNullValue(this, nameof(MovementDetailsSO), _movementDetail);
+        EditorUtilities.ValidateCheckNullValue(this, nameof(MovementDetailsSO), _movementDetail);
     }
 
 #endif

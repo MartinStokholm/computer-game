@@ -90,10 +90,10 @@ public class RoomTemplateSO : ScriptableObject
             EditorUtility.SetDirty(this);
         }
 
-        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(Doorways), Doorways);
+        EditorUtilities.ValidateCheckEnumerableValues(this, nameof(Doorways), Doorways);
 
         // Check spawn positions populated
-        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(SpawnPositions), SpawnPositions);
+        EditorUtilities.ValidateCheckEnumerableValues(this, nameof(SpawnPositions), SpawnPositions);
     }
 
     private static bool IsPrefabChanged(GameObject previous, GameObject current) => previous != current;

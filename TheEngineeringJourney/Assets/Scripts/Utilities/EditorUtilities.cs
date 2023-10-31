@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-public static class HelperUtilities 
+public static class EditorUtilities 
 {
 
     /// <summary>
