@@ -118,7 +118,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(MapLevelList), MapLevelList);
+        EditorUtilities.ValidateCheckEnumerableValues(this, nameof(MapLevelList), MapLevelList);
     }
 
 #endif

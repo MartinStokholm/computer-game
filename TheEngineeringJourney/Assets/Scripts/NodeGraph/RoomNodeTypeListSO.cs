@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,7 +23,7 @@ public class RoomNodeTypeListSO : ScriptableObject
     # if UNITY_EDITOR
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(RoomNodeTypes), RoomNodeTypes);
+        EditorUtilities.ValidateCheckEnumerableValues(this, nameof(RoomNodeTypes), RoomNodeTypes);
     }
 #endif
     #endregion

@@ -20,4 +20,9 @@ public class Health : MonoBehaviour
     /// </summary>
     public int GetStartingHealth() => _startingHealth;
 
+    public void LoseHealth(int healthlost)
+    {
+        _currentHealth -= healthlost;
+    }
+
 }

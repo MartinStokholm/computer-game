@@ -51,12 +51,12 @@ public class PlayerDetailsSO : ScriptableObject
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        HelperUtilities.ValidateCheckEmptyString(this, nameof(PlayerCharacterName), PlayerCharacterName);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(PlayerPrefab), PlayerPrefab);
-        HelperUtilities.ValidateCheckPositiveValue(this, nameof(PlayerHealthAmount), PlayerHealthAmount, false);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(PlayerMiniMapIcon), PlayerMiniMapIcon);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(PlayerHandSprite), PlayerHandSprite);
-        HelperUtilities.ValidateCheckNullValue(this, nameof(RuntimeAnimatorController), RuntimeAnimatorController);
+        EditorUtilities.ValidateCheckEmptyString(this, nameof(PlayerCharacterName), PlayerCharacterName);
+        EditorUtilities.ValidateCheckNullValue(this, nameof(PlayerPrefab), PlayerPrefab);
+        EditorUtilities.ValidateCheckPositiveValue(this, nameof(PlayerHealthAmount), PlayerHealthAmount, false);
+        EditorUtilities.ValidateCheckNullValue(this, nameof(PlayerMiniMapIcon), PlayerMiniMapIcon);
+        EditorUtilities.ValidateCheckNullValue(this, nameof(PlayerHandSprite), PlayerHandSprite);
+        EditorUtilities.ValidateCheckNullValue(this, nameof(RuntimeAnimatorController), RuntimeAnimatorController);
     }
 #endif
     #endregion
