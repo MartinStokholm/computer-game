@@ -54,4 +54,14 @@ public class Player : MonoBehaviour
     {
         Health.SetStartingHealth(playerDetails.PlayerHealthAmount);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("IsTrigger");
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Debug.Log("IsTrigger collision");
+    }
 }

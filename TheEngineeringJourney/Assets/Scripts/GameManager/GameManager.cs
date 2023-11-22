@@ -26,10 +26,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     #endregion Tooltip
 
-    [SerializeField] private int currentMapLevelListIndex = 0;
+    [SerializeField] public int currentMapLevelListIndex = 0;
 
-   
-    
+
     private Room _currentRoom;
     public Player Player { get; private set; }
     private Room _previousRoom;
@@ -50,7 +49,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         base.Awake();
         _playerDetails = GameResources.Instance.CurrentPlayer.PlayerDetails;
-        
         InstantiatePlayer();
     }
     
@@ -65,6 +63,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         Player.Initialize(_playerDetails);
     }
+    
+    private void OnEnable()
+    {
+        StaticEventHandler.OnEnterLevel += EnterLevelEvent_CallEnterLevelEvent;
+    }
+    
+    private void OnDisable()
+    {
+        StaticEventHandler.OnEnterLevel -= EnterLevelEvent_CallEnterLevelEvent;
+    }
+
 
     // Start is called before the first frame update
     private void Start()
@@ -101,6 +110,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 gameState = GameState.PlayingLevel;
 
                 break;
+            case GameState.LevelCompleted:
+                PlayMapLevel(currentMapLevelListIndex);
+                gameState = GameState.PlayingLevel;
+                break;
         }
     }
 
@@ -110,6 +123,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         if (MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex])) return;
         
         Debug.LogError("Couldn't build Map from specified rooms and node graphs");
+    }
+    
+
+    private void EnterLevelEvent_CallEnterLevelEvent(SceneChangeArgs args)
+    {
+        currentMapLevelListIndex = args.Level;
+        gameState = GameState.LevelCompleted;
     }
 
     #region Validation

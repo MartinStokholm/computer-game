@@ -353,7 +353,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MapLevelList:
+  - {fileID: 11400000, guid: b66a920eaa6c4dd46aaa196f21110a84, type: 2}
   - {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
+  - {fileID: 11400000, guid: b1d7bfda013e28d478f33f24d7f9dbca, type: 2}
   currentMapLevelListIndex: 0
   gameState: 0
 --- !u!4 &356438187
@@ -986,9 +988,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.08379888
-    width: 0.40764332
-    height: 0.50279325
+    y: 0.21916507
+    width: 1
+    height: 0.56116575
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
