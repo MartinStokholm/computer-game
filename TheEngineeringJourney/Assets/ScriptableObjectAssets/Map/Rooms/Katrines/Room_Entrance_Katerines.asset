@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1efa68128c017cc479db505ae6d7900d, type: 3}
   m_Name: Room_Entrance_Katerines
   m_EditorClassIdentifier: 
-  Guid: 7454c0b80b6e1d14ea67284e737a4a77
-  Prefab: {fileID: 1993324435411693179, guid: ddff071f74bf64e4d85d17bbc896d0d1, type: 3}
-  PreviousPrefab: {fileID: 1993324435411693179, guid: ddff071f74bf64e4d85d17bbc896d0d1, type: 3}
+  Guid: dd3312ccdead93b46ae08d025c0ebe89
+  Prefab: {fileID: 1993324435411693179, guid: b8ea46f9c52df78488767fc6255dec17, type: 3}
+  PreviousPrefab: {fileID: 1993324435411693179, guid: b8ea46f9c52df78488767fc6255dec17, type: 3}
   RoomNodeType: {fileID: 11400000, guid: 30cd6aa8fdd02eb43bd1067169c7563e, type: 2}
   LowerBounds: {x: -29, y: 5}
   UpperBounds: {x: -17, y: 14}
