@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63deeb7a16584a36a9d73d557e7bd89d, type: 3}
+  m_Name: MapLevel_3_1
+  m_EditorClassIdentifier: 
+  LevelName: Nygaard
+  RoomTemplates:
+  - {fileID: 11400000, guid: c2ccaca955c350f4f8b0586217017299, type: 2}
+  - {fileID: 11400000, guid: 95403f62a0f1d2040a79fc2bb52b67b2, type: 2}
+  - {fileID: 11400000, guid: d378ee1b84b72d34680a2be694893c60, type: 2}
+  - {fileID: 11400000, guid: 092b7e6a9857cc745a4b411f31ecb6f7, type: 2}
+  - {fileID: 11400000, guid: 6335c54cdc003324a8c1f23ab8e45885, type: 2}
+  - {fileID: 11400000, guid: d2c001d3d8264bb4f9f0e0e376aeaf96, type: 2}
+  - {fileID: 11400000, guid: 082d6492ba2e18f47a22460434ab5802, type: 2}
+  - {fileID: 11400000, guid: 060b390cd1e6d4344a14531e3eb43652, type: 2}
+  - {fileID: 11400000, guid: e7fedb6d4bc499842970c38436cc154c, type: 2}
+  - {fileID: 11400000, guid: d615138b5f8cea845adb1fdb6a13cb00, type: 2}
+  RoomNodeGraphs: []

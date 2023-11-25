@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1efa68128c017cc479db505ae6d7900d, type: 3}
+  m_Name: Room_BossRoom_Shannon_1
+  m_EditorClassIdentifier: 
+  Guid: edbe8ecbe64eab944b29cc28f510957d
+  Prefab: {fileID: 1993324435411693179, guid: e851d57d4d7408b4f968ac85eb825985, type: 3}
+  PreviousPrefab: {fileID: 1993324435411693179, guid: e851d57d4d7408b4f968ac85eb825985, type: 3}
+  RoomNodeType: {fileID: 11400000, guid: d1c429d6bbb23654fa495efed18f61ca, type: 2}
+  LowerBounds: {x: -24, y: -2}
+  UpperBounds: {x: 34, y: 63}
+  Doorways:
+  - Position: {x: 5, y: 63}
+    Orientation: 0
+    DoorPrefab: {fileID: 0}
+    DoorwayStartCopyPosition: {x: 2, y: 63}
+    DoorwayCopyTileWidth: 5
+    DoorwayCopyTileHeight: 11
+    IsConnected: 0
+    IsUnavailable: 0
+  - Position: {x: 5, y: -2}
+    Orientation: 2
+    DoorPrefab: {fileID: 0}
+    DoorwayStartCopyPosition: {x: 2, y: 2}
+    DoorwayCopyTileWidth: 5
+    DoorwayCopyTileHeight: 5
+    IsConnected: 0
+    IsUnavailable: 0
+  - Position: {x: 34, y: 27}
+    Orientation: 1
+    DoorPrefab: {fileID: 0}
+    DoorwayStartCopyPosition: {x: 31, y: 33}
+    DoorwayCopyTileWidth: 4
+    DoorwayCopyTileHeight: 8
+    IsConnected: 0
+    IsUnavailable: 0
+  - Position: {x: -24, y: 27}
+    Orientation: 3
+    DoorPrefab: {fileID: 0}
+    DoorwayStartCopyPosition: {x: -27, y: 33}
+    DoorwayCopyTileWidth: 4
+    DoorwayCopyTileHeight: 8
+    IsConnected: 0
+    IsUnavailable: 0
+  SpawnPositions:
+  - {x: -6, y: 28}
+  - {x: 5, y: 27}
+  - {x: 19, y: 27}

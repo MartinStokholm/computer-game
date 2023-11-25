@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2108424220752526690}
   - component: {fileID: 4541607504490300507}
+  - component: {fileID: 7016403287824909754}
   m_Layer: 12
   m_Name: LargeRoom_Shannon1
   m_TagString: Untagged
@@ -110,6 +111,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7016403287824909754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993324435411693179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d49b4d6adb64e60ba31417fa2d34f71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grid: {fileID: 0}
+  GroundTilemap: {fileID: 0}
+  Decoration1Tilemap: {fileID: 0}
+  Decoration2Tilemap: {fileID: 0}
+  FrontTilemap: {fileID: 0}
+  CollisionTilemap: {fileID: 0}
+  MinimapTilemap: {fileID: 0}
+  RoomColliderBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &2150579554788913346
 GameObject:
   m_ObjectHideFlags: 0

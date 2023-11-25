@@ -356,7 +356,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b66a920eaa6c4dd46aaa196f21110a84, type: 2}
   - {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
   - {fileID: 11400000, guid: b1d7bfda013e28d478f33f24d7f9dbca, type: 2}
-  currentMapLevelListIndex: 0
+  - {fileID: 11400000, guid: 4f5ab75fa12fbfd4e8a86b428b180347, type: 2}
+  currentMapLevelListIndex: 1
   gameState: 0
 --- !u!4 &356438187
 Transform:
@@ -988,9 +989,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.12674543
-    width: 1
-    height: 0.74677765
+    y: 0.06444684
+    width: 0.9411765
+    height: 0.386681
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
