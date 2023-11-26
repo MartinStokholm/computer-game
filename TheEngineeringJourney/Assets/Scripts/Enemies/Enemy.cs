@@ -17,12 +17,12 @@ public class Enemey : MovingObjects
 
     protected override void OnCantMove<T>(T component)
     {
-        Player hitPlayer = component as Player;
+        var hitPlayer = component as Player;
         
         hitPlayer.Health.LoseHealth(playerDamage);
     }
 
-    protected override void AttemptMove<T>(int xdir, int ydir)
+    protected override void AttemptMove<T>(int xDir, int yDir)
     {
         if (_skipMove)
         {
@@ -30,23 +30,23 @@ public class Enemey : MovingObjects
             return;
         }
         
-        base.AttemptMove<T>(xdir, ydir);
+        base.AttemptMove<T>(xDir, yDir);
     }
 
     public void MoveEnemy()
     {
-        var xdir = 0;
-        var ydir = 0;
+        var xDir = 0;
+        var yDir = 0;
 
         if (Mathf.Abs(_target.position.x - transform.position.x) < float.Epsilon)
         {
-            ydir = _target.position.y > transform.position.y ? 1 : -1;
+            yDir = _target.position.y > transform.position.y ? 1 : -1;
         }
         else
         {
-            xdir = _target.position.x > transform.position.x ? 1 : -1;
+            xDir = _target.position.x > transform.position.x ? 1 : -1;
         }
         
-        AttemptMove<Player>(xdir,ydir);
+        AttemptMove<Player>(xDir,yDir);
     }
 }

@@ -47,10 +47,10 @@ public abstract class MovingObjects : MonoBehaviour
 
     }
 
-    protected virtual void AttemptMove<T>(int xdir, int ydir) where T : Component
+    protected virtual void AttemptMove<T>(int xDir, int yDir) where T : Component
     {
         RaycastHit2D hit; 
-        var canMove = Move(xdir, ydir, out hit);
+        var canMove = Move(xDir, yDir, out hit);
         
         if (hit.transform == null) return;
 

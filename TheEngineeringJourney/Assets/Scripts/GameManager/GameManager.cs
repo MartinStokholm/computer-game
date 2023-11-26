@@ -14,6 +14,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     #region Tooltip
 
+    [Tooltip("Populate with pause menu game object in hierarchy")]
+
+    #endregion Tooltip
+
+    [SerializeField] private GameObject pauseMenu;
+    
+    #region Tooltip
+
     [Tooltip("Populate with the map level scriptable objects")]
 
     #endregion Tooltip
@@ -33,7 +41,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public Player Player { get; private set; }
     private Room _previousRoom;
     private PlayerDetailsSO _playerDetails;
-    [HideInInspector] public GameState gameState;
+    private GameState _gameState;
+    private GameState _previousGameState;
+
+    public GameState GameState
+    {
+        get => _gameState;
+        set
+        {
+            _previousGameState = _gameState;
+            _gameState = value;
+        }
+    }
+    
     
     public Room CurrentRoom
     {
@@ -78,7 +98,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     // Start is called before the first frame update
     private void Start()
     {
-        gameState = GameState.GameStarted;
+        _gameState = GameState.GameStarted;
     }
 
     // Update is called once per frame
@@ -89,7 +109,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         // For testing
         if (Input.GetKeyDown(KeyCode.R))
         {
-            gameState = GameState.GameStarted;
+            _gameState = GameState.GameStarted;
         }
 
     }
@@ -100,19 +120,26 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void HandleGameState()
     {
         // Handle game state
-        switch (gameState)
+        switch (_gameState)
         {
             case GameState.GameStarted:
 
                 // Play first level
                 PlayMapLevel(currentMapLevelListIndex);
 
-                gameState = GameState.PlayingLevel;
-
+                _gameState = GameState.PlayingLevel;
                 break;
+            case GameState.PlayingLevel:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                    PauseGameMenu();
+                    break;
             case GameState.LevelCompleted:
                 PlayMapLevel(currentMapLevelListIndex);
-                gameState = GameState.PlayingLevel;
+                _gameState = GameState.PlayingLevel;
+                break;
+            case GameState.GamePaused:
+                if (Input.GetKeyDown(KeyCode.Escape))
+                    PauseGameMenu();
                 break;
         }
     }
@@ -129,8 +156,34 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void EnterLevelEvent_CallEnterLevelEvent(SceneChangeArgs args)
     {
         currentMapLevelListIndex = args.Level;
-        gameState = GameState.LevelCompleted;
+        _gameState = GameState.LevelCompleted;
     }
+    
+    /// <summary>
+    /// Pause game menu - also called from resume game button on pause menu
+    /// </summary>
+    public void PauseGameMenu()
+    {
+        if (GameState != GameState.GamePaused)
+        {
+              pauseMenu.SetActive(true);
+            // GetPlayer().playerControl.DisablePlayer();
+            
+            GameState = GameState.GamePaused;
+        }
+        else if (GameState == GameState.GamePaused)
+        {
+              pauseMenu.SetActive(false);
+            // GetPlayer().playerControl.EnablePlayer();
+            
+            GameState = _previousGameState;
+        }
+    }
+    
+    /// <summary>
+    /// Get the current map level
+    /// </summary>
+    public MapLevelSO GetCurrentMapLevel() => MapLevelList[currentMapLevelListIndex];
 
     #region Validation
 
@@ -138,6 +191,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void OnValidate()
     {
+        EditorUtilities.ValidateCheckNullValue(this, nameof(pauseMenu), pauseMenu);
         EditorUtilities.ValidateCheckEnumerableValues(this, nameof(MapLevelList), MapLevelList);
     }
 
