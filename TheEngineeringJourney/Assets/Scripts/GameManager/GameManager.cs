@@ -86,12 +86,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     
     private void OnEnable()
     {
-        StaticEventHandler.OnEnterLevel += EnterLevelEvent_CallEnterLevelEvent;
+        StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
+        StaticSceneChangeEvent.OnEnterLevel += EnterLevelEvent_CallEnterLevelEvent;
     }
     
     private void OnDisable()
     {
-        StaticEventHandler.OnEnterLevel -= EnterLevelEvent_CallEnterLevelEvent;
+        StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+        StaticSceneChangeEvent.OnEnterLevel -= EnterLevelEvent_CallEnterLevelEvent;
     }
 
 
@@ -147,9 +149,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void PlayMapLevel(int MapLevelListIndex)
     {
-        if (MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex])) return;
-        
-        Debug.LogError("Couldn't build Map from specified rooms and node graphs");
+        if (MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex]))
+        {
+            Debug.LogError("Couldn't build Map from specified rooms and node graphs");
+        }
+
+        Debug.Log("Got to be fucking kidding me");
+        //StaticEventHandler.CallRoomChangedEvent(CurrentRoom);
     }
     
 
@@ -178,6 +184,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             
             GameState = _previousGameState;
         }
+    }
+    
+    /// <summary>
+    /// Handle room changed event
+    /// </summary>
+    private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
+    {
+        CurrentRoom = roomChangedEventArgs.Room;
     }
     
     /// <summary>

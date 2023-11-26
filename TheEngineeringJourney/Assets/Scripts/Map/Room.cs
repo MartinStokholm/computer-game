@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Room
 {
@@ -13,6 +14,8 @@ public class Room
     public Vector2Int TemplateLowerBounds;
     public Vector2Int TemplateUpperBounds;
     public Vector2Int[] SpawnPositionArray;
+    public List<SpawnableObjectsByLevel<EnemyDetailsSO>> EnemiesByLevels;
+    public List<RoomEnemySpawnParameters> RoomEnemySpawnParametersList;
     public List<string> ChildRoomIDList;
     public string ParentRoomID;
     public List<Doorway> DoorWayList;
@@ -27,5 +30,4 @@ public class Room
         ChildRoomIDList = new List<string>();
         DoorWayList = new List<Doorway>();
     }
-
 }

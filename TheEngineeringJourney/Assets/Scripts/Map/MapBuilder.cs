@@ -8,8 +8,14 @@ using Random = UnityEngine.Random;
 [DisallowMultipleComponent]
 public class MapBuilder : SingletonMonobehaviour<MapBuilder>
 {
+    enum GenerateSteps
+    {
+        SelectRoomNodeGraph,
+        AttemptToBuildRandomMap
+    }
     public readonly Dictionary<string, Room> MapBuilderRoomDictionary = new();
     private RoomNodeTypeListSO _roomNodeTypeList;
+    private GenerateSteps _states;
 
     protected override void Awake()
     {
@@ -44,6 +50,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         {
             dungeonBuildAttempts++;
             // Select a random room node graph from the list
+            _states = GenerateSteps.SelectRoomNodeGraph;
             var roomNodeGraph = currentDungeonLevel.RoomNodeGraphs.SelectRandomRoomNodeGraph();
             
             // Loop until dungeon successfully built or more than max attempts for node graph
@@ -53,7 +60,8 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
                 ClearMap(MapBuilderRoomDictionary);
                 
                 dungeonRebuildAttemptsForNodeGraph++;
-
+                _states = GenerateSteps.AttemptToBuildRandomMap;
+                print(_states.ToString() + "  :" +  dungeonBuildAttempts);
                 // Attempt To Build A Random Dungeon For The Selected room node graph
                 dungeonBuildSuccessful = AttemptToBuildRandomMap(roomNodeGraph, MapBuilderRoomDictionary, roomTemplateList, _roomNodeTypeList);
             }
