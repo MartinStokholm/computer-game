@@ -35,27 +35,7 @@ public enum AimDirection
 public enum Build
 {
     Failed,
-    Success,
-    AttemptBuilding,
-    AttemptFailed,
-    ReAttemptFailedCreateNodeGraph,
-    MaxAttemptFailed,
-    CreateNodeGraph
-}
-
-public enum Attempt
-{
-    Zero,
-    First,
-    Second,
-    Third,
-    Fourth,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten
+    Success
 }
 
 public enum RoomOverlapping
