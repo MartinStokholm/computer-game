@@ -206,3 +206,27 @@ public class RoomNodeSO : ScriptableObject
     #endregion
 
 }
+
+public static class RoomNodeSOHelper
+{
+    public static bool IsEntrance(this RoomNodeSO roomNode) => roomNode.parentRoomNodeIDList.Count == 0;
+    
+    public static bool IsEntranceDebug(this RoomNodeSO entranceNode)
+    {
+        if (entranceNode is not null) return false;
+        
+        Debug.Log("Entrance Node missing. Please provide Room Node in Room Node graph scriptable object asset");
+        return true;
+    }
+    
+    public static bool IsQueueEmpty(this Queue<RoomNodeSO> queueRoomNode)
+    {
+        if (queueRoomNode.Count > 0) 
+        {
+            Debug.LogError("The Room Node Queue is empty. Please provide Room Node in Room Node graph scriptable object asset");    
+            return false;
+        }
+
+        return true;
+    }
+}

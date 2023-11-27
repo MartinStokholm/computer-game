@@ -1131,7 +1131,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b1d7bfda013e28d478f33f24d7f9dbca, type: 2}
   - {fileID: 11400000, guid: 4f5ab75fa12fbfd4e8a86b428b180347, type: 2}
   - {fileID: 11400000, guid: 87bf280339160f34993ca93c44dd9274, type: 2}
-  currentMapLevelListIndex: 4
+  currentMapLevelListIndex: 0
 --- !u!4 &356438187
 Transform:
   m_ObjectHideFlags: 0
@@ -5862,10 +5862,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.15822785
-    y: 0
-    width: 0.68354434
-    height: 0.99999994
+    x: 0
+    y: 0.15358362
+    width: 1.0004631
+    height: 0.6911263
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

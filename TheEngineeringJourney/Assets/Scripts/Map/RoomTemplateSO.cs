@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -103,4 +104,22 @@ public class RoomTemplateSO : ScriptableObject
 #endif
 
     #endregion Validation
+}
+
+public static class RoomTemplateSOHElper
+{
+    public static (IEnumerable<RoomTemplateSO> uniqueTemplates, IEnumerable<RoomTemplateSO> duplicates) 
+        GetSeperatedRoomTemplates(this IEnumerable<RoomTemplateSO> roomTemplateList)
+    {
+        var duplicates = roomTemplateList
+            .GroupBy(roomTemplate => roomTemplate.Guid)
+            .Where(group => group.Count() > 1)
+            .SelectMany(group => group);
+
+        var uniqueTemplates = roomTemplateList
+            .Except(duplicates)
+            .ToList();
+
+        return (uniqueTemplates, duplicates);
+    }
 }

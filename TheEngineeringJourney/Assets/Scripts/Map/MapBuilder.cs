@@ -9,7 +9,17 @@ using Random = UnityEngine.Random;
 public class MapBuilder : SingletonMonobehaviour<MapBuilder>
 {
     public readonly Dictionary<string, Room> MapBuilderRoomDictionary = new();
-    private RoomNodeTypeListSO _roomNodeTypeList;
+    private RoomNodeTypeListSO _roomNodeTypes;
+    
+    private enum Attempt
+    {
+        Failed,
+        Success,
+        Building,
+        RetryBuild,
+        RetryCreateNodeGraph,
+        CreateNodeGraph
+    }
 
     protected override void Awake()
     {
@@ -27,54 +37,65 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     /// </summary>
     private void LoadRoomNodeTypeList()
     {
-        _roomNodeTypeList = GameResources.Instance.RoomNodeTypes;
+        _roomNodeTypes = GameResources.Instance.RoomNodeTypes;
     }
 
     /// <summary>
     /// Generate random dungeon, returns true if dungeon built, false if failed
     /// </summary>
-    public bool GenerateMap(MapLevelSO currentDungeonLevel)
+    public Build GenerateMap(MapLevelSO currentDungeonLevel)
     {
-        var dungeonBuildSuccessful = false;
-        var dungeonBuildAttempts = 0;
-        var dungeonRebuildAttemptsForNodeGraph = 0;
-        var roomTemplateList = currentDungeonLevel.RoomTemplates;
+        var status = Attempt.CreateNodeGraph;
+        var buildAttempts = 0;
+        var rebuildNodeGraph = 0;
+        var roomTemplates = currentDungeonLevel.RoomTemplates;
+        // This load something please don't delete me!!!
+        var dict = roomTemplates.LoadRoomTemplatesIntoDictionary(new());
+        // Select a random room node graph from the list
+        var roomNodeGraph = currentDungeonLevel.RoomNodeGraphs.SelectRandomRoomNodeGraph();
         
-        while (!dungeonBuildSuccessful && dungeonBuildAttempts < Settings.MaxMapBuildAttempts)
+        while (true)
         {
-            dungeonBuildAttempts++;
-            // Select a random room node graph from the list
-            var roomNodeGraph = currentDungeonLevel.RoomNodeGraphs.SelectRandomRoomNodeGraph();
-            
-            // Loop until dungeon successfully built or more than max attempts for node graph
-            while (!dungeonBuildSuccessful && dungeonRebuildAttemptsForNodeGraph <= Settings.MaxMapBuildAttempts)
+            switch (status)
             {
-                // Clear dungeon room game objects and dungeon room dictionary
-                ClearMap(MapBuilderRoomDictionary);
-                
-                dungeonRebuildAttemptsForNodeGraph++;
-
-                // Attempt To Build A Random Dungeon For The Selected room node graph
-                dungeonBuildSuccessful = AttemptToBuildRandomMap(roomNodeGraph, MapBuilderRoomDictionary, roomTemplateList, _roomNodeTypeList);
+                case Attempt.CreateNodeGraph:
+                    ClearMap(MapBuilderRoomDictionary);
+                    ++rebuildNodeGraph;
+                    status = AttemptToBuildRandomMap(roomNodeGraph, MapBuilderRoomDictionary, roomTemplates, _roomNodeTypes);
+                    break;
+                case Attempt.RetryCreateNodeGraph:
+                    status = rebuildNodeGraph == Settings.MaxMapRebuildAttemptsForRoomGraph
+                        ? Attempt.RetryBuild
+                        : Attempt.Building;
+                    break;
+                case Attempt.RetryBuild:
+                    status = buildAttempts == Settings.MaxMapBuildAttempts
+                        ? Attempt.Failed
+                        : Attempt.Building;
+                    break;
+                case Attempt.Building:
+                    roomNodeGraph = currentDungeonLevel.RoomNodeGraphs.SelectRandomRoomNodeGraph();
+                    rebuildNodeGraph = 0;
+                    ++buildAttempts;
+                    status = Attempt.CreateNodeGraph;
+                    break;
+                case Attempt.Failed:
+                    return Build.Failed;
+                case Attempt.Success:
+                    InstantiateRoomGameObjects(MapBuilderRoomDictionary);
+                    return Build.Success;
             }
-
-
-            if (dungeonBuildSuccessful)
-            {
-                // Instantiate Room Game Objects
-                InstantiateRoomGameObjects(MapBuilderRoomDictionary);
-            }
+            Debug.Log(status.ToString());
         }
-
-        return dungeonBuildSuccessful;
+        
     }
-    
+
     /// <summary>
     /// Attempt to randomly build the dungeon for the specified room nodeGraph. Returns true if a
     /// successful random layout was generated, else returns false if a problem was encountered and
     /// another attempt is required.
     /// </summary>
-    private bool AttemptToBuildRandomMap(RoomNodeGraphSO roomNodeGraph, Dictionary<string, Room> mapBuilderRoomDictionary, 
+    private Attempt AttemptToBuildRandomMap(RoomNodeGraphSO roomNodeGraph, Dictionary<string, Room> mapBuilderRoomDictionary, 
         IReadOnlyCollection<RoomTemplateSO> roomTemplates, RoomNodeTypeListSO roomNodeTypes)
     {
         // Create Open Room Node Queue
@@ -83,17 +104,19 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         // Add Entrance Node To Room Node Queue From Room Node Graph
         var entranceNode = roomNodeGraph.GetRoomNode(roomNodeTypes.RoomNodeTypes.Find(x => x.isEntrance));
 
-        if (entranceNode.IsEntranceDebug()) return false;
+        if (entranceNode.IsEntranceDebug()) return Attempt.RetryBuild;
 
         openRoomNodeQueue.Enqueue(entranceNode);
         
         // Process open room nodes queue
         var noRoomOverlaps = ProcessRoomsInOpenRoomNodeQueue(roomNodeGraph, openRoomNodeQueue, mapBuilderRoomDictionary, roomTemplates, roomNodeTypes);
-
+        
+        Debug.Log($"Overlapping?: {noRoomOverlaps.ToString()}");
         // If all the room nodes have been processed and there hasn't been a room overlap then return true
-        return openRoomNodeQueue.Count == 0 && noRoomOverlaps;
+        return openRoomNodeQueue.IsQueueEmpty() && noRoomOverlaps is RoomOverlapping.Overlapping
+            ? Attempt.RetryBuild
+            : Attempt.Success;
     }
-    
      
     /// <summary>
     /// Instantiate the dungeon room game objects from the prefabs
@@ -139,13 +162,13 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     /// <summary>
     /// Process rooms in the open room node queue, returning true if there are no room overlaps
     /// </summary>
-    private bool ProcessRoomsInOpenRoomNodeQueue(RoomNodeGraphSO roomNodeGraph, Queue<RoomNodeSO> openRoomNodeQueue, 
+    private RoomOverlapping ProcessRoomsInOpenRoomNodeQueue(RoomNodeGraphSO roomNodeGraph, Queue<RoomNodeSO> openRoomNodeQueue, 
         Dictionary<string, Room> mapBuilderRoomDictionary, 
         IReadOnlyCollection<RoomTemplateSO> roomTemplates, RoomNodeTypeListSO roomNodeTypes)
     {
-        var noRoomOverlaps = true;
+        var noRoomOverlaps = RoomOverlapping.Attempt;
         // While room nodes in open room node queue & no room overlaps detected.
-        while (openRoomNodeQueue.Count > 0 && noRoomOverlaps)
+        while (openRoomNodeQueue.Count > 0 && noRoomOverlaps is not RoomOverlapping.Overlapping)
         {
             // Get next room node from open room node queue.
             var roomNode = openRoomNodeQueue.Dequeue();
@@ -164,7 +187,10 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         return noRoomOverlaps;
     }
 
-    private static bool CanPlaceEntrance(RoomNodeSO roomNode, IDictionary<string, Room> mapBuilderRoomDictionary, IEnumerable<RoomTemplateSO> roomTemplates)
+    /// <summary>
+    /// Entrance can't overlap, because non other exists
+    /// </summary>
+    private static RoomOverlapping CanPlaceEntrance(RoomNodeSO roomNode, IDictionary<string, Room> mapBuilderRoomDictionary, IEnumerable<RoomTemplateSO> roomTemplates)
     {
         var roomTemplate = roomNode.roomNodeType.GetRandomRoomTemplate(roomTemplates);
 
@@ -174,21 +200,21 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         
         mapBuilderRoomDictionary.Add(room.Id, room);
 
-        return true;
+        return RoomOverlapping.Contiguous;
     }
 
     /// <summary>
     /// Attempt to place the room node in the map - if room can be placed return the room, else return null
     /// </summary>
-    private bool CanPlaceRoomWithNoOverlaps(RoomNodeSO roomNode, Room parentRoom, Dictionary<string, Room> mapBuilderRoomDictionary, IReadOnlyCollection<RoomTemplateSO> roomTemplateList, RoomNodeTypeListSO roomNodeTypes)
+    private RoomOverlapping CanPlaceRoomWithNoOverlaps(RoomNodeSO roomNode, Room parentRoom, Dictionary<string, Room> mapBuilderRoomDictionary, IReadOnlyCollection<RoomTemplateSO> roomTemplateList, RoomNodeTypeListSO roomNodeTypes)
     {
-        var roomOverlaps = true;
+        var roomOverlaps = RoomOverlapping.Overlapping;
         
-        while (roomOverlaps)
+        while (roomOverlaps is RoomOverlapping.Overlapping or RoomOverlapping.Attempt)
         {
             var unconnectedAvailableParentDoorways = parentRoom.DoorWayList.GetUnconnectedAvailableDoorways().ToList();
 
-            if (unconnectedAvailableParentDoorways.IsNoMoreDoorwaysToTryThenOverlapFailure()) return false; 
+            if (unconnectedAvailableParentDoorways.IsNoMoreDoorwaysToTryThenOverlapFailure()) return RoomOverlapping.Contiguous; 
             
             var doorwayParent = unconnectedAvailableParentDoorways[Random.Range(0, unconnectedAvailableParentDoorways.Count)];
 
@@ -198,12 +224,12 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
             
             if (!PlaceTheRoom(parentRoom, doorwayParent, room, mapBuilderRoomDictionary)) continue;
             
-            roomOverlaps = false;
+            roomOverlaps = RoomOverlapping.Contiguous;
             room.IsPositioned = true;
             mapBuilderRoomDictionary.Add(room.Id, room);
         }
 
-        return true; 
+        return roomOverlaps; 
     }
 
     /// <summary>
@@ -221,7 +247,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     {
         var doorway = doorwayParent.GetOppositeOrientationDoorway(room.DoorWayList);
         
-        if (doorway.IsDoorWayInRoomOppositeToParentDoorway()) return MarkDoorwayUnavailableAndDontConnect(doorwayParent);
+        if (doorway.IsDoorWayInRoomOppositeToParentDoorway()) return DoorwayHelper.MarkDoorwayUnavailableAndDontConnect(doorwayParent);
 
         // Calculate 'world' grid parent doorway position
         var parentDoorwayPosition = parentRoom.GridOfParentDoorway(doorwayParent);
@@ -231,30 +257,11 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         room.UpperBounds = room.LowerBounds + room.TemplateUpperBounds - room.TemplateLowerBounds;
         
         return mapBuilderRoomDictionary.CheckForRoomOverlap(room) 
-            ? MarkDoorwaysAsConnected(doorway, doorwayParent) 
-            : MarkDoorwayUnavailableAndDontConnect(doorwayParent);
+            ? DoorwayHelper.MarkDoorwaysAsConnected(doorway, doorwayParent) 
+            : DoorwayHelper.MarkDoorwayUnavailableAndDontConnect(doorwayParent);
     }
 
-    #region PlaceTheRoomHelper
-    
-    private static bool MarkDoorwayUnavailableAndDontConnect(Doorway doorwayParent)
-    {
-        doorwayParent.IsUnavailable = true;
-        return false;
-    }
 
-    private static bool MarkDoorwaysAsConnected(Doorway doorway, Doorway doorwayParent)
-    {
-        doorway.IsConnected = true;
-        doorway.IsUnavailable = true;
-        
-        doorwayParent.IsConnected = true;
-        doorwayParent.IsUnavailable = true;
-        
-        return true;
-    }
-    
-    #endregion
 
    
 }
@@ -264,45 +271,6 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
 
 public static class MapBuilderExtensions
 {
-    private static (IEnumerable<RoomTemplateSO> uniqueTemplates, IEnumerable<RoomTemplateSO> duplicates) 
-        GetSeperatedRoomTemplates(this IEnumerable<RoomTemplateSO> roomTemplateList)
-    {
-        var duplicates = roomTemplateList
-            .GroupBy(roomTemplate => roomTemplate.Guid)
-            .Where(group => group.Count() > 1)
-            .SelectMany(group => group);
-
-        var uniqueTemplates = roomTemplateList
-            .Except(duplicates)
-            .ToList();
-
-        return (uniqueTemplates, duplicates);
-    }
-    
-    
-    /// <summary>
-    /// Get the doorway from the doorway list that has the opposite orientation to doorway
-    /// </summary>
-    public static Doorway GetOppositeOrientationDoorway(this Doorway parentDoorway, List<Doorway> doorwayList)
-    {
-        foreach (var doorwayToCheck in doorwayList)
-        {
-            switch (parentDoorway.Orientation)
-            {
-                case Orientation.East when doorwayToCheck.Orientation == Orientation.West:
-                    return doorwayToCheck;
-                case Orientation.West when doorwayToCheck.Orientation == Orientation.East:
-                    return doorwayToCheck;
-                case Orientation.North when doorwayToCheck.Orientation == Orientation.South:
-                    return doorwayToCheck;
-                case Orientation.South when doorwayToCheck.Orientation == Orientation.North:
-                    return doorwayToCheck;
-            }
-        }
-
-        return null;
-    }
-    
     [CanBeNull]
     public static RoomTemplateSO GetCorridorOrientation(this RoomNodeTypeListSO roomNodeTypes, Orientation orientation, IEnumerable<RoomTemplateSO> roomTemplateList)
     {
@@ -322,72 +290,6 @@ public static class MapBuilderExtensions
 
         return null;
     }
-
-    
-    /// <summary>
-    ///  Calculate adjustment position offset based on room doorway position that we are trying to connect (e.g. if this doorway is west then we need to add (1,0) to the east parent doorway)
-    /// </summary>
-    /// <param name="doorway"></param>
-    public static Vector2Int DoorPositionAdjustment(this Doorway doorway)
-    {
-        switch (doorway.Orientation)
-        {
-            case Orientation.North:
-                return new Vector2Int(0, -1);
-            
-            case Orientation.East:
-                return new Vector2Int(-1, 0);
-            
-            case Orientation.South:
-                return new Vector2Int(0, 1);
-            
-            case Orientation.West:
-                return new Vector2Int(1, 0);
-            
-            case Orientation.None:
-                return new Vector2Int(0, 0);
-
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-    
-    /// <summary>
-    /// Select a random room node graph from the list of room node graphs
-    /// </summary>
-    public static RoomNodeGraphSO SelectRandomRoomNodeGraph(this IReadOnlyList<RoomNodeGraphSO> roomNodeGraphList)
-    {
-        if (roomNodeGraphList.Count > 0) return roomNodeGraphList[Random.Range(0, roomNodeGraphList.Count)];
-        
-        Debug.Log("No room node graphs in list");
-        return null;
-    }
-
-    /// <summary>
-    /// Get unconnected doorways
-    /// </summary>
-    public static IEnumerable<Doorway> GetUnconnectedAvailableDoorways(this IEnumerable<Doorway> roomDoorwayList) => 
-        roomDoorwayList.Where(doorway => !doorway.IsConnected && !doorway.IsUnavailable);
-
-    public static bool IsDoorWayInRoomOppositeToParentDoorway(this Doorway doorway) => doorway == null;
-    
-    /// <summary>
-    /// Create deep copy of doorway list
-    /// </summary>
-    private static List<Doorway> CopyDoorwayList(this IEnumerable<Doorway> oldDoorwayList) =>
-        oldDoorwayList.Select(doorway => new Doorway
-            {
-                Position = doorway.Position,
-                Orientation = doorway.Orientation,
-                DoorPrefab = doorway.DoorPrefab,
-                IsConnected = doorway.IsConnected,
-                IsUnavailable = doorway.IsUnavailable,
-                DoorwayStartCopyPosition = doorway.DoorwayStartCopyPosition,
-                DoorwayCopyTileWidth = doorway.DoorwayCopyTileWidth,
-                DoorwayCopyTileHeight = doorway.DoorwayCopyTileHeight
-            })
-            .ToList();
-    
     
     /// <summary>
     /// Get a room template by room template ID, returns null if ID doesn't exist
@@ -400,26 +302,6 @@ public static class MapBuilderExtensions
     /// </summary>
     public static Room GetRoomByRoomID(this Dictionary<string, Room> mapBuilderRoomDictionary, string roomID) =>
         mapBuilderRoomDictionary.TryGetValue(roomID, out var room) ? room : null;
-    
-    
-    private static bool IsEntrance(this RoomNodeSO roomNode) => roomNode.parentRoomNodeIDList.Count == 0;
-    
-    /// <summary>
-    /// Check if 2 rooms overlap each other - return true if they overlap or false if they don't overlap
-    /// </summary>
-    private static bool IsOverLappingRoom(this Room room1, Room room2)
-    {
-        var isOverlappingX = IsOverLappingInterval(room1.LowerBounds.x, room1.UpperBounds.x, room2.LowerBounds.x, room2.UpperBounds.x);
-        var isOverlappingY = IsOverLappingInterval(room1.LowerBounds.y, room1.UpperBounds.y, room2.LowerBounds.y, room2.UpperBounds.y);
-
-        return isOverlappingX && isOverlappingY;
-    }
-    
-    /// <summary>
-    /// Check if interval 1 overlaps interval 2 - this method is used by the IsOverlappingRoom method
-    /// </summary>
-    private static bool IsOverLappingInterval(int iMin1, int iMax1, int iMin2, int iMax2) =>
-        Mathf.Max(iMin1, iMin2) <= Mathf.Min(iMax1, iMax2);
 
     #region MapBuilderRoomDictionary
 
@@ -437,73 +319,8 @@ public static class MapBuilderExtensions
     }
 
         #endregion
-    
-    
-    public static bool IsNoMoreDoorwaysToTryThenOverlapFailure(this IReadOnlyList<Doorway> unconnectedAvailableParentDoorways) =>
-        unconnectedAvailableParentDoorways.Count == 0;
-    
-
+        
     #region RoomTemplate
-    
-    /// <summary>
-    /// Get a random room template from the room template list that matches the roomType and return it
-    /// (return null if no matching room templates found).
-    /// </summary>
-    public static RoomTemplateSO GetRandomRoomTemplate(this RoomNodeTypeSO roomNodeType, IEnumerable<RoomTemplateSO> roomTemplateList)
-    {
-        // Loop through room template list
-        var matchingRoomTemplateList = roomTemplateList
-            .Where(x => x.RoomNodeType == roomNodeType)
-            .ToList();
-        
-        // Return null if list is zero or Select random room template from list and return
-        return matchingRoomTemplateList.Count is not 0
-            ? matchingRoomTemplateList[Random.Range(0, matchingRoomTemplateList.Count)]
-            : null;
-    }
-
-    /// <summary>
-    /// Create room based on roomTemplate and layoutNode, and return the created room
-    /// </summary>
-    public static Room CreateRoomFromRoomTemplate(this RoomTemplateSO roomTemplate, RoomNodeSO roomNode)
-    {
-        var room = roomTemplate.CreateRoom(roomNode);
-        
-        return roomNode.IsEntrance()
-            ? room.SetEntrance()
-            : room.SetRoom(roomNode);
-    }
-    
-    private static Room CreateRoom(this RoomTemplateSO roomTemplate, RoomNodeSO roomNode) =>
-        new()
-        {
-            TemplateID = roomTemplate.Guid,
-            Id = roomNode.Id,
-            Prefab = roomTemplate.Prefab,
-            RoomNodeType = roomTemplate.RoomNodeType,
-            LowerBounds = roomTemplate.LowerBounds,
-            UpperBounds = roomTemplate.UpperBounds,
-            SpawnPositionArray = roomTemplate.SpawnPositions,
-            TemplateLowerBounds = roomTemplate.LowerBounds,
-            TemplateUpperBounds = roomTemplate.UpperBounds,
-            ChildRoomIDList = roomNode.childRoomNodeIDs.CopyStringList(),
-            DoorWayList = roomTemplate.Doorways.CopyDoorwayList()
-        };
-    
-    private static Room SetEntrance(this Room room)
-    {
-        room.ParentRoomID = "";
-        room.IsPreviouslyVisited = true;
-        
-        GameManager.Instance.CurrentRoom = room;
-        return room;
-    }
-    
-    private static Room SetRoom(this Room room, RoomNodeSO roomNode)
-    {
-        room.ParentRoomID = roomNode.parentRoomNodeIDList[0];
-        return room;
-    }
     
     /// <summary>
     /// Load the room templates into the dictionary
@@ -525,27 +342,10 @@ public static class MapBuilderExtensions
         
         return roomTemplateDictionary;
     }
-    
-    public static bool IsEntranceDebug(this RoomNodeSO entranceNode)
-    {
-        if (entranceNode is not null) return false;
-        
-        Debug.Log("No Entrance Node");
-        return true;
-    }
-    
-    /// <summary>
-    /// Calculate room position (remember the room instantiation position needs to be adjusted by the room template lower bounds)
-    /// </summary>
-    /// <returns></returns>
-    public static Vector3 CalculateAdjustedRoomPosition(this Room room) =>
-        new(room.LowerBounds.x - room.TemplateLowerBounds.x, room.LowerBounds.y - room.TemplateLowerBounds.y, 0f);
 
     public static Vector2Int GridOfParentDoorway(this Room parentRoom, Doorway doorwayParent) =>
         parentRoom.LowerBounds + doorwayParent.Position - parentRoom.TemplateLowerBounds;
     
-    public static Vector2Int DetermineUpperBoundRelativeToParentDoorway(this Room room) =>
-        room.LowerBounds + room.TemplateUpperBounds - room.TemplateLowerBounds;
     #endregion
 }
 

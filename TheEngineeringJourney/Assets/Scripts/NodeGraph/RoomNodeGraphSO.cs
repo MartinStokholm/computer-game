@@ -56,3 +56,17 @@ public class RoomNodeGraphSO : ScriptableObject
 
     #endregion
 }
+
+public static class RoomNodeGraphSOHelper
+{
+    /// <summary>
+    /// Select a random room node graph from the list of room node graphs
+    /// </summary>
+    public static RoomNodeGraphSO SelectRandomRoomNodeGraph(this IReadOnlyList<RoomNodeGraphSO> roomNodeGraphList)
+    {
+        if (roomNodeGraphList.Count > 0) return roomNodeGraphList[Random.Range(0, roomNodeGraphList.Count)];
+        
+        Debug.Log("No room node graphs in list");
+        return null;
+    }
+}

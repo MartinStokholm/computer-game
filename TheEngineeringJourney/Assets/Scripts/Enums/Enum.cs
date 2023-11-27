@@ -31,3 +31,16 @@ public enum AimDirection
     Left,
     Down
 }
+
+public enum Build
+{
+    Failed,
+    Success
+}
+
+public enum RoomOverlapping
+{
+    Overlapping,
+    Contiguous,
+    Attempt
+}
