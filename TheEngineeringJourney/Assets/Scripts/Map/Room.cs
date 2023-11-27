@@ -98,4 +98,9 @@ public static class RoomNodeHelper
     /// <returns></returns>
     public static Vector3 CalculateAdjustedRoomPosition(this Room room) =>
         new(room.LowerBounds.x - room.TemplateLowerBounds.x, room.LowerBounds.y - room.TemplateLowerBounds.y, 0f);
+
+    public static Vector3 GetRoomAsVector3(this Room currentRoom)
+    {
+        return new Vector3((currentRoom.LowerBounds.x + currentRoom.UpperBounds.x) / 2f, (currentRoom.LowerBounds.y + currentRoom.UpperBounds.y) / 2f, 0f);
+    }
 }
