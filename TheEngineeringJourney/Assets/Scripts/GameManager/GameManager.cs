@@ -157,6 +157,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 Debug.LogError("Couldn't build Map from specified rooms and node graphs");
                 return;
             case Build.Success:
+                Player.gameObject.transform.position =
+                    PlayerUtils.GetSpawnPosition(Player.gameObject.transform.position);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
