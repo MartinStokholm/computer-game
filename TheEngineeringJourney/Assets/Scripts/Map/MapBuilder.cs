@@ -59,10 +59,12 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
             switch (status)
             {
                 case Attempt.CreateNodeGraph:
-                    (status, rebuildNodeGraph) = AttemptCreating(roomNodeGraph, MapBuilderRoomDictionary, roomTemplates, _roomNodeTypes, rebuildNodeGraph);
+                    ClearMap(MapBuilderRoomDictionary);
+                    ++rebuildNodeGraph;
+                    status = AttemptToBuildRandomMap(roomNodeGraph, MapBuilderRoomDictionary, roomTemplates, _roomNodeTypes);
                     break;
                 case Attempt.RetryCreateNodeGraph:
-                    status = rebuildNodeGraph == Settings.MaxMapBuildAttempts
+                    status = rebuildNodeGraph == Settings.MaxMapRebuildAttemptsForRoomGraph
                         ? Attempt.RetryBuild
                         : Attempt.Building;
                     break;
@@ -88,16 +90,6 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         
     }
 
-    private (Attempt, int) AttemptCreating(RoomNodeGraphSO roomNodeGraph, Dictionary<string, Room> mapBuilderRoomDictionary, 
-        IReadOnlyCollection<RoomTemplateSO> roomTemplates, RoomNodeTypeListSO roomNodeTypes, int rebuildAttemptsForNodeGraph)
-    {
-        // Clear dungeon room game objects and dungeon room dictionary
-        ClearMap(MapBuilderRoomDictionary);
-
-        // Attempt To Build A Random Dungeon For The Selected room node graph
-        return (AttemptToBuildRandomMap(roomNodeGraph, MapBuilderRoomDictionary, roomTemplates, _roomNodeTypes), ++rebuildAttemptsForNodeGraph);
-    }
-    
     /// <summary>
     /// Attempt to randomly build the dungeon for the specified room nodeGraph. Returns true if a
     /// successful random layout was generated, else returns false if a problem was encountered and
