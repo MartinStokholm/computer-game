@@ -26,21 +26,24 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
         StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
     }
 
-    public void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
+    private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
     {
         _currentRoom = roomChangedEventArgs.Room;
-        _enemiesToSpawn = _currentRoom
-            .RoomEnemySpawnParametersList
-            .GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel());
-        
-        
-        Debug.Log($"_enemiesToSpawn: {_enemiesToSpawn}");
+        _enemiesToSpawn = _currentRoom.GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel());
+        //_enemiesToSpawn = _currentRoom
+            // .RoomEnemySpawnParametersList
+            // .GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel());
+            
+        //This line does not what you expect
+        //It can't find the roomEnemySpawnParameters... :angry_smiley: IDK WHY??!?!?!
+        roomEnemySpawnParameters = _currentRoom.GetRoomEnemySpawnParameters(GameManager.Instance.GetCurrentMapLevel());
+        Debug.Log($"roomEnemySpawnParameters: {roomEnemySpawnParameters}");
         // If no enemies to spawn return
         if (_enemiesToSpawn == 0)
         {
             // Mark the room as cleared
             _currentRoom.IsClearedOfEnemies = true;
-
+        
             return;
         }
         
@@ -70,34 +73,38 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
     /// <summary>
     /// Get a random number of concurrent enemies between the minimum and maximum values
     /// </summary>
-    // private int GetConcurrentEnemies()
-    // {
-    //     return (Random.Range(roomEnemySpawnParameters.minConcurrentEnemies, roomEnemySpawnParameters.maxConcurrentEnemies));
-    // }
+    private int GetConcurrentEnemies()
+    {
+        return (Random.Range(roomEnemySpawnParameters.MinConcurrentEnemies, roomEnemySpawnParameters.MaxConcurrentEnemies));
+    }
 
     private IEnumerator SpawnEnemiesRoutine()
     {
         Debug.Log("SpawnEnemiesRoutine");
         var grid = _currentRoom.InstantiatedRoom.Grid;
-        
+        Debug.Log($" Check we have somewhere to spawn the enemies: {_currentRoom.SpawnPositionArray.Length}");
         // Get an instance of the helper class used to select a random enemy
         var randomEnemyHelperClass = new RandomSpawnableObject<EnemyDetailsSO>(_currentRoom.EnemiesByLevels);
 
         // Check we have somewhere to spawn the enemies
+        Debug.Log($" Check we have somewhere to spawn the enemies: {_currentRoom.SpawnPositionArray.Length}");
         if (_currentRoom.SpawnPositionArray.Length <= 0) yield break;
         
         // Loop through to create all the enemeies
+        
         for (var i = 0; i < _enemiesToSpawn; i++)
         {
             // wait until current enemy count is less than max concurrent enemies
             while (_currentEnemyCount >= _enemyMaxConcurrentSpawnNumber)
             {
+                Debug.Log($"Waiting to spawn, because there is {_currentEnemyCount} and there can only be {_enemyMaxConcurrentSpawnNumber}");
                 yield return null;
             }
 
             var cellPosition = (Vector3Int)_currentRoom.SpawnPositionArray[Random.Range(0, _currentRoom.SpawnPositionArray.Length)];
 
             // Create Enemy - Get next enemy type to spawn 
+            Debug.Log("CreateEnemy");
             CreateEnemy(randomEnemyHelperClass.GetItem(), grid.CellToWorld(cellPosition));
 
             yield return new WaitForSeconds(GetEnemySpawnInterval());
@@ -123,7 +130,7 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
     
         Debug.Log("Create Enemy");
         // // Initialize Enemy
-        enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, _enemiesSpawnedSoFar, mapLevel);
+        //enemy.GetComponent<Enemy>().EnemyInitialization(enemyDetails, _enemiesSpawnedSoFar, mapLevel);
         //
         // // subscribe to enemy destroyed event
         // enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;

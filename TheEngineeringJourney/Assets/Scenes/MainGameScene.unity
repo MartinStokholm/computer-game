@@ -351,6 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 175093236}
   - component: {fileID: 175093237}
+  - component: {fileID: 175093238}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -383,6 +384,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 096d72558a12abc4cae367f58869f4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &175093238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175093235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46af95d5431ae8b4487c12d77146ac07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &195856873
@@ -5875,9 +5888,9 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
+    x: 0.096979335
     y: 0
-    width: 1
+    width: 0.8055114
     height: 1
   near clip plane: 0.3
   far clip plane: 1000

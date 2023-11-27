@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -63,4 +65,24 @@ public class RoomNodeTypeSO : ScriptableObject
     }
 #endif
     #endregion
+}
+
+public static class RoomNodeTypeSOHelper
+{
+    /// <summary>
+    /// Get a random room template from the room template list that matches the roomType and return it
+    /// (return null if no matching room templates found).
+    /// </summary>
+    public static RoomTemplateSO GetRandomRoomTemplate(this RoomNodeTypeSO roomNodeType, IEnumerable<RoomTemplateSO> roomTemplateList)
+    {
+        // Loop through room template list
+        var matchingRoomTemplateList = roomTemplateList
+            .Where(x => x.RoomNodeType == roomNodeType)
+            .ToList();
+        
+        // Return null if list is zero or Select random room template from list and return
+        return matchingRoomTemplateList.Count is not 0
+            ? matchingRoomTemplateList[Random.Range(0, matchingRoomTemplateList.Count)]
+            : null;
+    }
 }

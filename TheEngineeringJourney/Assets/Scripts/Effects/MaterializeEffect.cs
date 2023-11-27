@@ -11,26 +11,26 @@ public class MaterializeEffect : MonoBehaviour
     {
         Material materializeMaterial = new Material(materializeShader);
 
-        materializeMaterial.SetColor("_EmissionColor", materializeColor);
-
-        // Set materialize material in sprite renderers
-        foreach (SpriteRenderer spriteRenderer in spriteRendererArray)
-        {
-            spriteRenderer.material = materializeMaterial;
-        }
-
-        var dissolveAmount = 0f;
-
-        // materialize enemy
-        while (dissolveAmount < 1f)
-        {
-            dissolveAmount += Time.deltaTime / materializeTime;
-
-            materializeMaterial.SetFloat("_DissolveAmount", dissolveAmount);
-
-            yield return null;
-
-        }
+        // materializeMaterial.SetColor("_EmissionColor", materializeColor);
+        //
+        // // Set materialize material in sprite renderers
+        // foreach (SpriteRenderer spriteRenderer in spriteRendererArray)
+        // {
+        //     spriteRenderer.material = materializeMaterial;
+        // }
+        //
+        // var dissolveAmount = 0f;
+        //
+        // // materialize enemy
+        // while (dissolveAmount < 1f)
+        // {
+        //     dissolveAmount += Time.deltaTime / materializeTime;
+        //
+        //     materializeMaterial.SetFloat("_DissolveAmount", dissolveAmount);
+        //
+        //     yield return null;
+        //
+        // }
 
 
         // Set standard material in sprite renderers
@@ -39,5 +39,6 @@ public class MaterializeEffect : MonoBehaviour
             spriteRenderer.material = normalMaterial;
         }
 
+        yield return spriteRendererArray;
     }
 }

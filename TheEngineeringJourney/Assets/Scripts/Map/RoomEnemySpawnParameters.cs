@@ -42,16 +42,12 @@ public static class RoomEnemySpawnParametersHelper
     /// <summary>
     /// Get the number of enemies to spawn for this room in this dungeon level
     /// </summary>
-    public static int GetNumberOfEnemiesToSpawn(this IEnumerable<RoomEnemySpawnParameters> roomEnemySpawnParameters, MapLevelSO mapLevelSo)
-    {
-        var enemySpawnParameters = roomEnemySpawnParameters
-            .SingleOrDefault(x => x.mapLevel == mapLevelSo);
+    public static int GetNumberOfEnemiesToSpawn(this IEnumerable<RoomEnemySpawnParameters> roomEnemySpawnParameters, MapLevelSO mapLevelSo) =>
+        roomEnemySpawnParameters
+            .Where(roomEnemySpawnParameters => roomEnemySpawnParameters.mapLevel == mapLevelSo)
+            .Select(roomEnemySpawnParameters => Random.Range(roomEnemySpawnParameters.MinTotalEnemiesToSpawn, roomEnemySpawnParameters.MaxTotalEnemiesToSpawn))
+            .FirstOrDefault();
 
-        return enemySpawnParameters is not null
-            ? Random.Range(enemySpawnParameters.MinTotalEnemiesToSpawn, enemySpawnParameters.MaxTotalEnemiesToSpawn)
-            : 0;
-    }
-    
     /// <summary>
     /// Get the room enemy spawn parameters for this dungeon level - if none found then return null
     /// </summary>

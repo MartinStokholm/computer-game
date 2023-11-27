@@ -54,6 +54,8 @@ MonoBehaviour:
   blockingLayer:
     serializedVersion: 2
     m_Bits: 0
+  EnemyDetails: {fileID: 0}
+  spriteRendererArray: []
   playerDamage: 0
 --- !u!210 &8877384412269885691
 SortingGroup:
@@ -244,7 +246,7 @@ Animator:
   m_GameObject: {fileID: 7373351919331419221}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 53d7e3758750c7f4198e06d18b7210a3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

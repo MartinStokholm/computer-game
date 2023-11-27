@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -149,13 +150,22 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void PlayMapLevel(int MapLevelListIndex)
     {
-        if (MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex]))
+        var statusGenerateMap = MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex]);
+        Debug.Log($"Status for generate map: {statusGenerateMap}");
+        
+        switch (statusGenerateMap)
         {
-            Debug.LogError("Couldn't build Map from specified rooms and node graphs");
+            case Build.Failed:
+                Debug.LogError("Couldn't build Map from specified rooms and node graphs");
+                return;
+            case Build.Success:
+                StaticEventHandler.CallRoomChangedEvent(CurrentRoom);
+                Player.gameObject.transform.position = _currentRoom.GetRoomAsVector3();
+                Player.gameObject.transform.position = PlayerUtils.GetSpawnPosition(Player.gameObject.transform.position);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-
-        Debug.Log("Got to be fucking kidding me");
-        //StaticEventHandler.CallRoomChangedEvent(CurrentRoom);
     }
     
 
@@ -191,6 +201,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
     {
+        
         CurrentRoom = roomChangedEventArgs.Room;
     }
     

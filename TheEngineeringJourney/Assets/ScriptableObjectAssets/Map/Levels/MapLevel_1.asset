@@ -14,11 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelName: Edison
   RoomTemplates:
-  - {fileID: 11400000, guid: f73d96776b2dc52409b6ff274ce28c9f, type: 2}
-  - {fileID: 11400000, guid: f5efa793225d4644baee14bd00e4564c, type: 2}
-  - {fileID: 11400000, guid: 20d1505f2b35a8b498f16e71c2e506d8, type: 2}
-  - {fileID: 11400000, guid: 3c0024a3a8af0484ea34c391723799b8, type: 2}
-  - {fileID: 11400000, guid: 3459fffa9ec5b6c4283da15d4129b860, type: 2}
-  - {fileID: 11400000, guid: f571c7c66e941114082e07cf8b150287, type: 2}
+  - {fileID: 11400000, guid: 9bf08d90464af074bb405eadede653e7, type: 2}
+  - {fileID: 11400000, guid: 7415d9a67b8a2264e925576e3cf3f322, type: 2}
+  - {fileID: 11400000, guid: 02eeb8beda5ebb046a55ca6eff8d928a, type: 2}
+  - {fileID: 11400000, guid: 9aa3b8dff8976c143a1797cd6f33b1f3, type: 2}
+  - {fileID: 11400000, guid: 9b28fa1c8d258fe46a8fc927fa841f0c, type: 2}
+  - {fileID: 11400000, guid: d87c8cfc25b402f46bb11d0c0b32fde1, type: 2}
+  - {fileID: 11400000, guid: 22b87a24b7f4a4349937fc87ccf1e193, type: 2}
+  - {fileID: 11400000, guid: 6be00207e4025da4b8d808e75cd13a9a, type: 2}
+  - {fileID: 11400000, guid: 89522d681b0681a45871ec416946fc60, type: 2}
+  - {fileID: 11400000, guid: ff2b369fb7c9e6d489d322a36ef90f3c, type: 2}
   RoomNodeGraphs:
-  - {fileID: 11400000, guid: 85f2c769bd21cc44898a0b37bc5d86c8, type: 2}
+  - {fileID: 11400000, guid: 2275f74ed5b801a4aaaea13f2d9abee7, type: 2}
