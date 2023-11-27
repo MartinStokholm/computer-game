@@ -36,8 +36,11 @@ public enum Build
 {
     Failed,
     Success,
-    Attempt,
-    AttemptFailed
+    AttemptBuilding,
+    AttemptFailed,
+    ReAttemptFailedCreateNodeGraph,
+    MaxAttemptFailed,
+    CreateNodeGraph
 }
 
 public enum Attempt
@@ -55,30 +58,7 @@ public enum Attempt
     Ten
 }
 
-public enum RebuildAttempt
-{
-    Zero,
-    First,
-    Second,
-    Third,
-    Fourth,
-    Five,
-    Six,
-    Seven,
-    Eight,
-    Nine,
-    Ten
-}
-
-public enum Building
-{
-    Failed,
-    Success,
-    Attempt,
-    AttemptFailed
-}
-
-public enum RoomOverlaps
+public enum RoomOverlapping
 {
     Overlapping,
     Contiguous,
