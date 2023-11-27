@@ -33,37 +33,44 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     /// <summary>
     /// Generate random dungeon, returns true if dungeon built, false if failed
     /// </summary>
-    public bool GenerateMap(MapLevelSO currentDungeonLevel)
+    public Build GenerateMap(MapLevelSO currentDungeonLevel)
     {
-        var dungeonBuildSuccessful = false;
-        var dungeonBuildAttempts = 0;
-        var dungeonRebuildAttemptsForNodeGraph = 0;
+        var dungeonBuildSuccessful = Build.Attempt;
+        var dungeonBuildAttempts = Attempt.Zero;
+        var dungeonRebuildAttemptsForNodeGraph = RebuildAttempt.Zero;
         var roomTemplateList = currentDungeonLevel.RoomTemplates;
         
-        while (!dungeonBuildSuccessful && dungeonBuildAttempts < Settings.MaxMapBuildAttempts)
+        while (dungeonBuildSuccessful is Build.Failed or Build.Attempt or Build.AttemptFailed)
         {
-            dungeonBuildAttempts++;
+            ++dungeonBuildAttempts;
             // Select a random room node graph from the list
             var roomNodeGraph = currentDungeonLevel.RoomNodeGraphs.SelectRandomRoomNodeGraph();
             
             // Loop until dungeon successfully built or more than max attempts for node graph
-            while (!dungeonBuildSuccessful && dungeonRebuildAttemptsForNodeGraph <= Settings.MaxMapBuildAttempts)
+            while (dungeonBuildSuccessful is Build.AttemptFailed or Build.Attempt)
             {
                 // Clear dungeon room game objects and dungeon room dictionary
                 ClearMap(MapBuilderRoomDictionary);
                 
-                dungeonRebuildAttemptsForNodeGraph++;
+                ++dungeonRebuildAttemptsForNodeGraph;
 
                 // Attempt To Build A Random Dungeon For The Selected room node graph
                 dungeonBuildSuccessful = AttemptToBuildRandomMap(roomNodeGraph, MapBuilderRoomDictionary, roomTemplateList, _roomNodeTypeList);
+
+                if ((int)dungeonRebuildAttemptsForNodeGraph == Settings.MaxMapBuildAttempts)
+                    dungeonBuildSuccessful = Build.AttemptFailed;
+                
             }
 
 
-            if (dungeonBuildSuccessful)
+            if (dungeonBuildSuccessful is Build.Success or Build.Attempt)
             {
                 // Instantiate Room Game Objects
                 InstantiateRoomGameObjects(MapBuilderRoomDictionary);
             }
+            
+            if ((int)dungeonBuildAttempts == Settings.MaxMapBuildAttempts)
+                dungeonBuildSuccessful = Build.Failed;
         }
 
         return dungeonBuildSuccessful;
@@ -74,7 +81,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     /// successful random layout was generated, else returns false if a problem was encountered and
     /// another attempt is required.
     /// </summary>
-    private bool AttemptToBuildRandomMap(RoomNodeGraphSO roomNodeGraph, Dictionary<string, Room> mapBuilderRoomDictionary, 
+    private Build AttemptToBuildRandomMap(RoomNodeGraphSO roomNodeGraph, Dictionary<string, Room> mapBuilderRoomDictionary, 
         IReadOnlyCollection<RoomTemplateSO> roomTemplates, RoomNodeTypeListSO roomNodeTypes)
     {
         // Create Open Room Node Queue
@@ -83,7 +90,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         // Add Entrance Node To Room Node Queue From Room Node Graph
         var entranceNode = roomNodeGraph.GetRoomNode(roomNodeTypes.RoomNodeTypes.Find(x => x.isEntrance));
 
-        if (entranceNode.IsEntranceDebug()) return false;
+        if (entranceNode.IsEntranceDebug()) return Build.AttemptFailed;
 
         openRoomNodeQueue.Enqueue(entranceNode);
         
@@ -91,7 +98,9 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         var noRoomOverlaps = ProcessRoomsInOpenRoomNodeQueue(roomNodeGraph, openRoomNodeQueue, mapBuilderRoomDictionary, roomTemplates, roomNodeTypes);
 
         // If all the room nodes have been processed and there hasn't been a room overlap then return true
-        return openRoomNodeQueue.Count == 0 && noRoomOverlaps;
+        return openRoomNodeQueue.Count == 0 && noRoomOverlaps
+            ? Build.Success
+            : Build.AttemptFailed;
     }
     
      

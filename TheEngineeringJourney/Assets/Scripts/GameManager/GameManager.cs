@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -147,9 +148,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void PlayMapLevel(int MapLevelListIndex)
     {
-        if (MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex])) return;
+        var statusGenerateMap = MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex]);
+        Debug.Log($"Status for generate map: {statusGenerateMap}");
         
-        Debug.LogError("Couldn't build Map from specified rooms and node graphs");
+        switch (statusGenerateMap)
+        {
+            case Build.Failed:
+                Debug.LogError("Couldn't build Map from specified rooms and node graphs");
+                return;
+            case Build.Success:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
     }
     
 
