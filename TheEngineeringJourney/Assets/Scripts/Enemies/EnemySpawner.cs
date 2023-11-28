@@ -95,11 +95,11 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
         for (var i = 0; i < _enemiesToSpawn; i++)
         {
             // wait until current enemy count is less than max concurrent enemies
-            while (_currentEnemyCount >= _enemyMaxConcurrentSpawnNumber)
-            {
-                Debug.Log($"Waiting to spawn, because there is {_currentEnemyCount} and there can only be {_enemyMaxConcurrentSpawnNumber}");
-                yield return null;
-            }
+            // while (_currentEnemyCount >= _enemyMaxConcurrentSpawnNumber)
+            // {
+            //     Debug.Log($"Waiting to spawn, because there is {_currentEnemyCount} and there can only be {_enemyMaxConcurrentSpawnNumber}");
+            //     yield return null;
+            // }
 
             var cellPosition = (Vector3Int)_currentRoom.SpawnPositionArray[Random.Range(0, _currentRoom.SpawnPositionArray.Length)];
 

@@ -28,6 +28,6 @@ MonoBehaviour:
     IsConnected: 0
     IsUnavailable: 0
   SpawnPositions:
-  - {x: -140, y: -6}
+  - {x: -8, y: -6}
   EnemiesByLevelList: []
   RoomEnemySpawnParametersList: []
