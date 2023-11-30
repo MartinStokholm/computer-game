@@ -85,6 +85,8 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
                 case Attempt.Success:
                     InstantiateRoomGameObjects(MapBuilderRoomDictionary);
                     return Build.Success;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
             Debug.Log(status.ToString());
         }
@@ -284,7 +286,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         roomTemplateDictionary.Clear();
 
         // Load room template list into dictionary
-        foreach (RoomTemplateSO roomTemplate in roomTemplates)
+        foreach (var roomTemplate in roomTemplates)
         {
             if (!roomTemplateDictionary.ContainsKey(roomTemplate.Guid))
             {

@@ -33,19 +33,44 @@ public class Room
     /// <summary>
     /// Get the number of enemies to spawn for this room in this dungeon level
     /// </summary>
-    public int GetNumberOfEnemiesToSpawn(/*this IEnumerable<RoomEnemySpawnParameters> roomEnemySpawnParameters,*/ MapLevelSO mapLevelSo) =>
-        RoomEnemySpawnParametersList
-            .Where(roomEnemySpawnParameters => roomEnemySpawnParameters.mapLevel == mapLevelSo)
-            .Select(roomEnemySpawnParameters => Random.Range(roomEnemySpawnParameters.MinTotalEnemiesToSpawn, roomEnemySpawnParameters.MaxTotalEnemiesToSpawn))
-            .FirstOrDefault();
+    // public int GetNumberOfEnemiesToSpawn(/*this IEnumerable<RoomEnemySpawnParameters> roomEnemySpawnParameters,*/ MapLevelSO mapLevelSo) =>
+    //     RoomEnemySpawnParametersList
+    //         .Where(roomEnemySpawnParameters => roomEnemySpawnParameters.mapLevel == mapLevelSo)
+    //         .Select(roomEnemySpawnParameters => Random.Range(roomEnemySpawnParameters.MinTotalEnemiesToSpawn, roomEnemySpawnParameters.MaxTotalEnemiesToSpawn))
+    //         .FirstOrDefault();
+    public int GetNumberOfEnemiesToSpawn(MapLevelSO mapLevel)
+    {
+        foreach (var roomEnemySpawnParameters in RoomEnemySpawnParametersList)
+        {
+            if (roomEnemySpawnParameters.mapLevel == mapLevel)
+            {
+                Debug.Log($"roomEnemySpawnParameters: {roomEnemySpawnParameters.MinTotalEnemiesToSpawn} - {roomEnemySpawnParameters.MaxTotalEnemiesToSpawn}");
+                return Random.Range(roomEnemySpawnParameters.MinTotalEnemiesToSpawn, roomEnemySpawnParameters.MaxTotalEnemiesToSpawn);
+            }
+        }
+
+        return 0;
+    }
+
     
     /// <summary>
     /// Get the room enemy spawn parameters for this dungeon level - if none found then return null
     /// </summary>
     public RoomEnemySpawnParameters GetRoomEnemySpawnParameters(MapLevelSO mapLevel)
     {
-        return RoomEnemySpawnParametersList.FirstOrDefault(roomEnemySpawnParameters => roomEnemySpawnParameters.mapLevel == mapLevel);
+        foreach (RoomEnemySpawnParameters roomEnemySpawnParameters in RoomEnemySpawnParametersList)
+        {
+            if (roomEnemySpawnParameters.mapLevel == mapLevel)
+            {
+                Debug.Log($"roomEnemySpawnParameters in GetRoomEnemySpawnParameters: {roomEnemySpawnParameters.MinTotalEnemiesToSpawn} - {roomEnemySpawnParameters.MaxTotalEnemiesToSpawn}");
+                return roomEnemySpawnParameters;
+            }
+        }
+        return null;
     }
+    // {
+    //     return RoomEnemySpawnParametersList.FirstOrDefault(roomEnemySpawnParameters => roomEnemySpawnParameters.mapLevel == mapLevel);
+    // }
 }
 
 public static class RoomNodeHelper
@@ -80,6 +105,8 @@ public static class RoomNodeHelper
             ChildRoomIDList = roomNode.childRoomNodeIDs.CopyStringList(),
             DoorWayList = roomTemplate.Doorways.CopyDoorwayList()
         };
+        
+        Debug.Log("Enemies to spawn in tiles: " + room.RoomEnemySpawnParametersList.FindAll(x => x.MaxTotalEnemiesToSpawn != 0).Count);
     
         if (room.GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel()) == 0)
         {

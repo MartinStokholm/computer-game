@@ -26,4 +26,8 @@ public static class Settings
     public static int IsMoving = Animator.StringToHash("IsMoving");
 
     #endregion
+    
+    #region GAMEOBJECT TAGS
+    public const string PlayerTag = "Player";
+    #endregion
 }

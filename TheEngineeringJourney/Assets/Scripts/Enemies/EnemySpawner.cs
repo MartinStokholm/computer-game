@@ -10,10 +10,8 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
     private int _enemiesSpawnedSoFar;
     private int _enemyMaxConcurrentSpawnNumber;
     private RoomEnemySpawnParameters roomEnemySpawnParameters;
-
     private Room _currentRoom;
-
-    //private RoomEnemySpawnParameters roomEnemySpawnParameters;
+    
     private void OnEnable()
     {
         // subscribe to room changed event
@@ -30,6 +28,19 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
     {
         _currentRoom = roomChangedEventArgs.Room;
         _enemiesToSpawn = _currentRoom.GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel());
+        
+        // if the room is a corridor or the entrance then return
+        if (_currentRoom.RoomNodeType.isCorridorEW || _currentRoom.RoomNodeType.isCorridorNS || _currentRoom.RoomNodeType.isEntrance)
+            return;
+
+        // if the room has already been defeated then return
+        if (_currentRoom.IsClearedOfEnemies) return;
+        Debug.Log("GameManager.Instance.GetCurrentMapLevel: "+ GameManager.Instance.GetCurrentMapLevel());
+        // Get random number of enemies to spawn
+        //_enemiesToSpawn = _currentRoom.GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel());
+
+        // Get room enemy spawn parameters
+        //roomEnemySpawnParameters = _currentRoom.GetRoomEnemySpawnParameters(GameManager.Instance.GetCurrentMapLevel());
         //_enemiesToSpawn = _currentRoom
             // .RoomEnemySpawnParametersList
             // .GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel());
@@ -37,7 +48,8 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
         //This line does not what you expect
         //It can't find the roomEnemySpawnParameters... :angry_smiley: IDK WHY??!?!?!
         roomEnemySpawnParameters = _currentRoom.GetRoomEnemySpawnParameters(GameManager.Instance.GetCurrentMapLevel());
-        Debug.Log($"roomEnemySpawnParameters: {roomEnemySpawnParameters}");
+        Debug.Log($"roomEnemySpawnParameters in enemy spawner: {roomEnemySpawnParameters.MinTotalEnemiesToSpawn} - {roomEnemySpawnParameters.MaxTotalEnemiesToSpawn}");
+        _enemyMaxConcurrentSpawnNumber = roomEnemySpawnParameters.MaxTotalEnemiesToSpawn;
         // If no enemies to spawn return
         if (_enemiesToSpawn == 0)
         {
@@ -94,12 +106,12 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
         
         for (var i = 0; i < _enemiesToSpawn; i++)
         {
-            // wait until current enemy count is less than max concurrent enemies
-            // while (_currentEnemyCount >= _enemyMaxConcurrentSpawnNumber)
-            // {
-            //     Debug.Log($"Waiting to spawn, because there is {_currentEnemyCount} and there can only be {_enemyMaxConcurrentSpawnNumber}");
-            //     yield return null;
-            // }
+            //wait until current enemy count is less than max concurrent enemies
+            while (_currentEnemyCount >= _enemyMaxConcurrentSpawnNumber)
+            {
+                Debug.Log($"Waiting to spawn, because there is {_currentEnemyCount} and there can only be {_enemyMaxConcurrentSpawnNumber}");
+                yield return null;
+            }
 
             var cellPosition = (Vector3Int)_currentRoom.SpawnPositionArray[Random.Range(0, _currentRoom.SpawnPositionArray.Length)];
 

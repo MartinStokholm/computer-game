@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(BoxCollider2D))]
 public class InstantiatedRoom : MonoBehaviour
 {
-    [HideInInspector] public Room Room;
+    public Room Room;
     [HideInInspector] public Grid Grid;
     [HideInInspector] public Tilemap GroundTilemap;
     [HideInInspector] public Tilemap Decoration1Tilemap;
@@ -30,15 +30,13 @@ public class InstantiatedRoom : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // If the player triggered the collider
-        if (collision.tag == "Player" && Room != GameManager.Instance.CurrentRoom)
-        {
-            // Set room as visited
-            Room.IsPreviouslyVisited = true;
+        if (collision.tag != Settings.PlayerTag || Room == GameManager.Instance.CurrentRoom) return;
+        
+        // Set room as visited
+        Room.IsPreviouslyVisited = true;
 
-            // Call room changed event
-            StaticEventHandler.CallRoomChangedEvent(Room);
-        }
+        // Call room changed event
+        StaticEventHandler.CallRoomChangedEvent(Room);
     }
     
     /// <summary>
