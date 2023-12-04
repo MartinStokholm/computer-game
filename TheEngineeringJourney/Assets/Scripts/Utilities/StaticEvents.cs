@@ -1,18 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StaticEvents : MonoBehaviour
+public static class StaticEventHandler 
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // Room changed event
+    public static event Action<RoomChangedEventArgs> OnRoomChanged;
 
-    // Update is called once per frame
-    void Update()
+    public static void CallRoomChangedEvent(Room room)
     {
-        
+        OnRoomChanged?.Invoke(new RoomChangedEventArgs() { Room = room });
     }
+} 
+
+public class RoomChangedEventArgs : EventArgs
+{
+    public Room Room;
 }

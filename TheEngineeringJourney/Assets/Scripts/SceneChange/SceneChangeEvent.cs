@@ -9,12 +9,12 @@ public class SceneChangeEvent : MonoBehaviour
      {
          if (other.tag == "Player")
          {
-             StaticEventHandler.CallEnterLevelEvent(sceneBuildIndex);
+             StaticSceneChangeEvent.CallEnterLevelEvent(sceneBuildIndex);
          }
      }
 }
 
-public static class StaticEventHandler
+public static class StaticSceneChangeEvent
 {
     public static event Action<SceneChangeArgs> OnEnterLevel;
 

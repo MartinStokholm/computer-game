@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Room
 {
@@ -13,6 +14,8 @@ public class Room
     public Vector2Int TemplateLowerBounds;
     public Vector2Int TemplateUpperBounds;
     public Vector2Int[] SpawnPositionArray;
+    public List<SpawnableObjectsByLevel<EnemyDetailsSO>> EnemiesByLevels;
+    public List<RoomEnemySpawnParameters> RoomEnemySpawnParametersList;
     public List<string> ChildRoomIDList;
     public string ParentRoomID;
     public List<Doorway> DoorWayList;
@@ -27,7 +30,47 @@ public class Room
         ChildRoomIDList = new List<string>();
         DoorWayList = new List<Doorway>();
     }
+    /// <summary>
+    /// Get the number of enemies to spawn for this room in this dungeon level
+    /// </summary>
+    // public int GetNumberOfEnemiesToSpawn(/*this IEnumerable<RoomEnemySpawnParameters> roomEnemySpawnParameters,*/ MapLevelSO mapLevelSo) =>
+    //     RoomEnemySpawnParametersList
+    //         .Where(roomEnemySpawnParameters => roomEnemySpawnParameters.mapLevel == mapLevelSo)
+    //         .Select(roomEnemySpawnParameters => Random.Range(roomEnemySpawnParameters.MinTotalEnemiesToSpawn, roomEnemySpawnParameters.MaxTotalEnemiesToSpawn))
+    //         .FirstOrDefault();
+    public int GetNumberOfEnemiesToSpawn(MapLevelSO mapLevel)
+    {
+        foreach (var roomEnemySpawnParameters in RoomEnemySpawnParametersList)
+        {
+            if (roomEnemySpawnParameters.mapLevel == mapLevel)
+            {
+                Debug.Log($"roomEnemySpawnParameters: {roomEnemySpawnParameters.MinTotalEnemiesToSpawn} - {roomEnemySpawnParameters.MaxTotalEnemiesToSpawn}");
+                return Random.Range(roomEnemySpawnParameters.MinTotalEnemiesToSpawn, roomEnemySpawnParameters.MaxTotalEnemiesToSpawn);
+            }
+        }
 
+        return 0;
+    }
+
+    
+    /// <summary>
+    /// Get the room enemy spawn parameters for this dungeon level - if none found then return null
+    /// </summary>
+    public RoomEnemySpawnParameters GetRoomEnemySpawnParameters(MapLevelSO mapLevel)
+    {
+        foreach (RoomEnemySpawnParameters roomEnemySpawnParameters in RoomEnemySpawnParametersList)
+        {
+            if (roomEnemySpawnParameters.mapLevel == mapLevel)
+            {
+                Debug.Log($"roomEnemySpawnParameters in GetRoomEnemySpawnParameters: {roomEnemySpawnParameters.MinTotalEnemiesToSpawn} - {roomEnemySpawnParameters.MaxTotalEnemiesToSpawn}");
+                return roomEnemySpawnParameters;
+            }
+        }
+        return null;
+    }
+    // {
+    //     return RoomEnemySpawnParametersList.FirstOrDefault(roomEnemySpawnParameters => roomEnemySpawnParameters.mapLevel == mapLevel);
+    // }
 }
 
 public static class RoomNodeHelper
@@ -44,8 +87,9 @@ public static class RoomNodeHelper
             : room.SetRoom(roomNode);
     }
 
-    private static Room CreateRoom(this RoomTemplateSO roomTemplate, RoomNodeSO roomNode) =>
-        new()
+    private static Room CreateRoom(this RoomTemplateSO roomTemplate, RoomNodeSO roomNode)
+    {
+        var room = new Room
         {
             TemplateID = roomTemplate.Guid,
             Id = roomNode.Id,
@@ -54,12 +98,24 @@ public static class RoomNodeHelper
             LowerBounds = roomTemplate.LowerBounds,
             UpperBounds = roomTemplate.UpperBounds,
             SpawnPositionArray = roomTemplate.SpawnPositions,
+            EnemiesByLevels = roomTemplate.EnemiesByLevelList,
+            RoomEnemySpawnParametersList = roomTemplate.RoomEnemySpawnParametersList,
             TemplateLowerBounds = roomTemplate.LowerBounds,
             TemplateUpperBounds = roomTemplate.UpperBounds,
             ChildRoomIDList = roomNode.childRoomNodeIDs.CopyStringList(),
             DoorWayList = roomTemplate.Doorways.CopyDoorwayList()
         };
+        
+        Debug.Log("Enemies to spawn in tiles: " + room.RoomEnemySpawnParametersList.FindAll(x => x.MaxTotalEnemiesToSpawn != 0).Count);
     
+        if (room.GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel()) == 0)
+        {
+            room.IsClearedOfEnemies = true;
+        }
+
+        return room;
+    }
+
     private static Room SetEntrance(this Room room)
     {
         room.ParentRoomID = "";

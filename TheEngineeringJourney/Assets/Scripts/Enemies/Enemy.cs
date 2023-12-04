@@ -1,7 +1,16 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class Enemey : MovingObjects
+public class Enemy : MovingObjects
 {
+    [HideInInspector] public EnemyDetailsSO EnemyDetails;
+    [HideInInspector] public SpriteRenderer[] spriteRendererArray;
+    
+    private MaterializeEffect MaterializeEffect;
+    private CircleCollider2D circleCollider2D;
+    private PolygonCollider2D polygonCollider2D;
+    
     public int playerDamage;
 
     private Animator _animator;
@@ -48,5 +57,50 @@ public class Enemey : MovingObjects
         }
         
         AttemptMove<Player>(xDir,yDir);
+    }
+    
+    
+    /// <summary>
+    /// Initialise the enemy
+    /// </summary>
+    public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber, MapLevelSO mapLevel)
+    {
+        this.EnemyDetails = enemyDetails;
+
+        // SetEnemyMovementUpdateFrame(enemySpawnNumber);
+        //
+        // SetEnemyStartingHealth(dungeonLevel);
+        //
+        // SetEnemyStartingWeapon();
+        //
+        // SetEnemyAnimationSpeed();
+
+        // Materialise enemy
+        StartCoroutine(MaterializeEnemy());
+    }
+    
+    private IEnumerator MaterializeEnemy()
+    {
+        // Disable collider, Movement AI and Weapon AI
+        EnemyEnable(false);
+
+        yield return StartCoroutine(MaterializeEffect.MaterializeRoutine(EnemyDetails.enemyMaterializeShader, EnemyDetails.enemyMaterializeColor, EnemyDetails.enemyMaterializeTime, spriteRendererArray, EnemyDetails.enemyStandardMaterial));
+
+        // Enable collider, Movement AI and Weapon AI
+        EnemyEnable(true);
+
+    }
+    
+    private void EnemyEnable(bool isEnabled)
+    {
+        // Enable/Disable colliders
+        // circleCollider2D.enabled = isEnabled;
+        // polygonCollider2D.enabled = isEnabled;
+        //
+        // // Enable/Disable movement AI
+        // enemyMovementAI.enabled = isEnabled;
+        //
+        // // Enable / Disable Fire Weapon
+        // fireWeapon.enabled = isEnabled;
     }
 }

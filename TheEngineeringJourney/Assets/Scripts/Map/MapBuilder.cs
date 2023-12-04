@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 public class MapBuilder : SingletonMonobehaviour<MapBuilder>
 {
     public readonly Dictionary<string, Room> MapBuilderRoomDictionary = new();
+    private Dictionary<string, RoomTemplateSO> roomTemplateDictionary = new();
     private RoomNodeTypeListSO _roomNodeTypes;
     
     private enum Attempt
@@ -50,7 +51,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         var rebuildNodeGraph = 0;
         var roomTemplates = currentDungeonLevel.RoomTemplates;
         // This load something please don't delete me!!!
-        var dict = roomTemplates.LoadRoomTemplatesIntoDictionary(new());
+        LoadRoomTemplatesIntoDictionary(roomTemplates);
         // Select a random room node graph from the list
         var roomNodeGraph = currentDungeonLevel.RoomNodeGraphs.SelectRandomRoomNodeGraph();
         
@@ -84,6 +85,8 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
                 case Attempt.Success:
                     InstantiateRoomGameObjects(MapBuilderRoomDictionary);
                     return Build.Success;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
             Debug.Log(status.ToString());
         }
@@ -262,8 +265,39 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
     }
 
 
+    /// <summary>
+    /// Get a room template by room template ID, returns null if ID doesn't exist
+    /// </summary>
+    public RoomTemplateSO GetRoomTemplate(string roomTemplateID) =>
+        roomTemplateDictionary.TryGetValue(roomTemplateID, out var roomTemplate) ? roomTemplate : null;
 
+    /// <summary>
+    /// Get room by roomID, if no room exists with that ID return null
+    /// </summary>
+    public Room GetRoomByRoomID(string roomID) =>
+        MapBuilderRoomDictionary.TryGetValue(roomID, out var room) ? room : null;
    
+    /// <summary>
+    /// Load the room templates into the dictionary
+    /// </summary>
+    private void LoadRoomTemplatesIntoDictionary(IEnumerable<RoomTemplateSO> roomTemplates)
+    {
+        // Clear room template dictionary
+        roomTemplateDictionary.Clear();
+
+        // Load room template list into dictionary
+        foreach (var roomTemplate in roomTemplates)
+        {
+            if (!roomTemplateDictionary.ContainsKey(roomTemplate.Guid))
+            {
+                roomTemplateDictionary.Add(roomTemplate.Guid, roomTemplate);
+            }
+            else
+            {
+                Debug.Log("Duplicate Room Template Key In " + roomTemplates);
+            }
+        }
+    }
 }
 #endregion
 
@@ -291,17 +325,7 @@ public static class MapBuilderExtensions
         return null;
     }
     
-    /// <summary>
-    /// Get a room template by room template ID, returns null if ID doesn't exist
-    /// </summary>
-    public static RoomTemplateSO GetRoomTemplate(this Dictionary<string, RoomTemplateSO> roomTemplateDictionary, string roomTemplateID) =>
-        roomTemplateDictionary.TryGetValue(roomTemplateID, out var roomTemplate) ? roomTemplate : null;
-
-    /// <summary>
-    /// Get room by roomID, if no room exists with that ID return null
-    /// </summary>
-    public static Room GetRoomByRoomID(this Dictionary<string, Room> mapBuilderRoomDictionary, string roomID) =>
-        mapBuilderRoomDictionary.TryGetValue(roomID, out var room) ? room : null;
+ 
 
     #region MapBuilderRoomDictionary
 
