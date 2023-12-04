@@ -23,7 +23,7 @@ public abstract class MovingObjects : MonoBehaviour
 
         while (remainingDistance > float.Epsilon)
         {
-            Vector3 newPos = Vector3.MoveTowards(_rigidbody2D.position, end, _inverseMoveTime * Time.deltaTime);
+            var newPos = Vector3.MoveTowards(_rigidbody2D.position, end, _inverseMoveTime * Time.deltaTime);
             _rigidbody2D.MovePosition(newPos);
             remainingDistance = (transform.position - end).sqrMagnitude;
             yield return null;
