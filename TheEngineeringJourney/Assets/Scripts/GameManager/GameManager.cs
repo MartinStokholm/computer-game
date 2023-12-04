@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -37,7 +38,12 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     [SerializeField] public int currentMapLevelListIndex = 0;
 
-
+    public PlayerEvents PlayerEvents;
+    public GoldEvents GoldEvents;
+    public MiscEvents MiscEvents;
+    public QuestEvents QuestEvents;
+    public InputEvents InputEvents;
+    
     private Room _currentRoom;
     public Player Player { get; private set; }
     private Room _previousRoom;
@@ -71,6 +77,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         base.Awake();
         _playerDetails = GameResources.Instance.CurrentPlayer.PlayerDetails;
         InstantiatePlayer();
+        PlayerEvents = new PlayerEvents();
+        GoldEvents = new GoldEvents();
+        MiscEvents = new MiscEvents();
+        QuestEvents = new QuestEvents();
+        InputEvents = new InputEvents();
     }
     
     /// <summary>

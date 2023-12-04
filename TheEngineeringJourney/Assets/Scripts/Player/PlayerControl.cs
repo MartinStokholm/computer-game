@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
@@ -45,6 +42,8 @@ public class PlayerControl : MonoBehaviour
     private void Update()
     {
         MovementInput();
+
+        InteractInput();
     }
     
     /// <summary>
@@ -56,6 +55,7 @@ public class PlayerControl : MonoBehaviour
         var horizontalMovement = Input.GetAxisRaw("Horizontal");
         var verticalMovement = Input.GetAxisRaw("Vertical");
         var rightMouseButtonDown = Input.GetMouseButtonDown(1);
+        
 
         // Create a direction vector based on the input
         var direction = new Vector2(horizontalMovement, verticalMovement);
@@ -86,6 +86,25 @@ public class PlayerControl : MonoBehaviour
         {
             _player.IdleEvent.CallIdleEvent();
         }
+    }
+
+    private void InteractInput()
+    {
+        if (Input.GetKey(KeyCode.E))
+            SubmitPressed();
+
+    }
+    
+    public void SubmitPressed()
+    {
+        Debug.Log("Interact");
+        GameManager.Instance.InputEvents.SubmitPressed();
+        
+    }
+
+    public void QuestLogTogglePressed()
+    {
+        GameManager.Instance.InputEvents.QuestLogTogglePressed();
     }
     
     #region Validation

@@ -12,18 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21aa399e358b97e49a63913b8a04d0a1, type: 3}
   m_Name: EnemyDetails_Default
   m_EditorClassIdentifier: 
-  enemyName: 
+  enemyName: Deault
   enemyPrefab: {fileID: 7373351919331419221, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
   chaseDistance: 50
-  enemyStandardMaterial: {fileID: 0}
-  enemyMaterializeTime: 0
-  enemyMaterializeShader: {fileID: 0}
-  enemyMaterializeColor: {r: 0, g: 0, b: 0, a: 0}
-  firingIntervalMin: 0.1
-  firingIntervalMax: 1
-  firingDurationMin: 1
-  firingDurationMax: 2
-  firingLineOfSightRequired: 0
-  isImmuneAfterHit: 0
-  hitImmunityTime: 0
-  isHealthBarDisplayed: 0

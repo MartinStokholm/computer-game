@@ -38,4 +38,8 @@ public static class Settings
     public const float PlayerMoveDistanceToRebuildPath = 3f;
     public const float EnemyPathRebuildCooldown = 2f;
     #endregion
+
+    #region PlayerLevel
+    public const int ExperienceToLevelUp = 100;
+    #endregion
 }
