@@ -1,65 +1,51 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
+#region REQUIRE COMPONENTS
+[RequireComponent(typeof(SortingGroup))]
+[RequireComponent(typeof(HealthEvent))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(AnimateEnemy))]
+[RequireComponent(typeof(EnemyMovementAI))]
+[DisallowMultipleComponent]
+#endregion REQUIRE COMPONENTS
 
-public class Enemy : MovingObjects
+public class Enemy : MonoBehaviour
 {
-    [HideInInspector] public EnemyDetailsSO EnemyDetails;
+    public EnemyDetailsSO EnemyDetails;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
-    
+    [HideInInspector] public Health Health;
+    [HideInInspector] public MovementByVelocityEvent MovementByVelocityEvent;
+    [HideInInspector] public MovementToPositionEvent MovementToPositionEvent;
+    [HideInInspector] public IdleEvent IdleEvent;
+    [HideInInspector] public Animator Animator;
+
+    private HealthEvent HealthEvent;
     private MaterializeEffect MaterializeEffect;
     private CircleCollider2D circleCollider2D;
     private PolygonCollider2D polygonCollider2D;
-    
-    public int playerDamage;
+    private EnemyMovementAI _enemyMovementAI;
 
-    private Animator _animator;
-    private Transform _target; 
-    private bool _skipMove;
-    
-    protected override void Start()
+    private void Awake()
     {
-        _animator = GetComponent<Animator>();
-        _target = GameObject.FindGameObjectWithTag("Player").transform;
-        base.Start();
+        // Load components
+        HealthEvent = GetComponent<HealthEvent>();
+        Health = GetComponent<Health>();
+        MovementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        IdleEvent = GetComponent<IdleEvent>();
+        _enemyMovementAI = GetComponent<EnemyMovementAI>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
+        polygonCollider2D = GetComponent<PolygonCollider2D>();
+        spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
+        Animator = GetComponent<Animator>();
     }
 
-    protected override void OnCantMove<T>(T component)
-    {
-        var hitPlayer = component as Player;
-        
-        hitPlayer.Health.LoseHealth(playerDamage);
-    }
-
-    protected override void AttemptMove<T>(int xDir, int yDir)
-    {
-        if (_skipMove)
-        {
-            _skipMove = false;
-            return;
-        }
-        
-        base.AttemptMove<T>(xDir, yDir);
-    }
-
-    public void MoveEnemy()
-    {
-        var xDir = 0;
-        var yDir = 0;
-
-        if (Mathf.Abs(_target.position.x - transform.position.x) < float.Epsilon)
-        {
-            yDir = _target.position.y > transform.position.y ? 1 : -1;
-        }
-        else
-        {
-            xDir = _target.position.x > transform.position.x ? 1 : -1;
-        }
-        
-        AttemptMove<Player>(xDir,yDir);
-    }
-    
-    
     /// <summary>
     /// Initialise the enemy
     /// </summary>
@@ -76,29 +62,29 @@ public class Enemy : MovingObjects
         // SetEnemyAnimationSpeed();
 
         // Materialise enemy
-        StartCoroutine(MaterializeEnemy());
+        //StartCoroutine(MaterializeEnemy());
     }
     
-    private IEnumerator MaterializeEnemy()
-    {
-        // Disable collider, Movement AI and Weapon AI
-        EnemyEnable(false);
-
-        yield return StartCoroutine(MaterializeEffect.MaterializeRoutine(EnemyDetails.enemyMaterializeShader, EnemyDetails.enemyMaterializeColor, EnemyDetails.enemyMaterializeTime, spriteRendererArray, EnemyDetails.enemyStandardMaterial));
-
-        // Enable collider, Movement AI and Weapon AI
-        EnemyEnable(true);
-
-    }
+    // private IEnumerator MaterializeEnemy()
+    // {
+    //     // Disable collider, Movement AI and Weapon AI
+    //     EnemyEnable(false);
+    //
+    //     //yield return StartCoroutine(MaterializeEffect.MaterializeRoutine(EnemyDetails.enemyMaterializeShader, EnemyDetails.enemyMaterializeColor, EnemyDetails.enemyMaterializeTime, spriteRendererArray, EnemyDetails.enemyStandardMaterial));
+    //
+    //     // Enable collider, Movement AI and Weapon AI
+    //     EnemyEnable(true);
+    //
+    // }
     
     private void EnemyEnable(bool isEnabled)
     {
         // Enable/Disable colliders
-        // circleCollider2D.enabled = isEnabled;
-        // polygonCollider2D.enabled = isEnabled;
+        circleCollider2D.enabled = isEnabled;
+        polygonCollider2D.enabled = isEnabled;
         //
         // // Enable/Disable movement AI
-        // enemyMovementAI.enabled = isEnabled;
+        _enemyMovementAI.enabled = isEnabled;
         //
         // // Enable / Disable Fire Weapon
         // fireWeapon.enabled = isEnabled;

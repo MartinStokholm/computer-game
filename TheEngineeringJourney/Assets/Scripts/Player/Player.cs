@@ -64,4 +64,10 @@ public class Player : MonoBehaviour
     {
         Debug.Log("IsTrigger collision");
     }
+    
+    /// <summary>
+    /// Gets the player position
+    /// </summary>
+    public Vector3 GetPlayerPosition() => transform.position;
+    
 }
