@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: QuestInfo_CollectCoinsQuest
   DisplayName: Collect the Coins!
-  levelRequirement: 1
+  LevelRequirement: 1
   QuestPrerequisites: []
+  QuestStepPrefabs:
+  - {fileID: 2892783811145347769, guid: f95387ded4ecd5d49888bc5373013ccd, type: 3}
   GoldReward: 50
   ExperienceReward: 250

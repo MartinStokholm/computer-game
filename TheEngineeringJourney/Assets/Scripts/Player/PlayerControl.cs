@@ -26,7 +26,7 @@ public class PlayerControl : MonoBehaviour
     private void Awake()
     { 
         _player = GetComponent<Player>();
-
+        
         _moveSpeed = _movementDetail.GetMovementSpeed();
     }
 
@@ -35,7 +35,6 @@ public class PlayerControl : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        
         _waitForFixedUpdate = new WaitForFixedUpdate();
     }
 
@@ -90,22 +89,22 @@ public class PlayerControl : MonoBehaviour
 
     private void InteractInput()
     {
-        if (Input.GetKey(KeyCode.E))
-            SubmitPressed();
+        if (Input.GetKey(KeyCode.E)) 
+            GameManager.Instance.InputEvents.SubmitPressed();
 
     }
     
-    public void SubmitPressed()
-    {
-        Debug.Log("Interact");
-        GameManager.Instance.InputEvents.SubmitPressed();
-        
-    }
-
-    public void QuestLogTogglePressed()
-    {
-        GameManager.Instance.InputEvents.QuestLogTogglePressed();
-    }
+    // public void SubmitPressed()
+    // {
+    //     Debug.Log("Interact");
+    //     GameManager.Instance.InputEvents.SubmitPressed();
+    //     
+    // }
+    //
+    // public void QuestLogTogglePressed()
+    // {
+    //     GameManager.Instance.InputEvents.QuestLogTogglePressed();
+    // }
     
     #region Validation
 

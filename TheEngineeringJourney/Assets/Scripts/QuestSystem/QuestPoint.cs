@@ -9,13 +9,19 @@ public class QuestPoint : MonoBehaviour
     [Header("Quest")] 
     [SerializeField] private QuestInfoSO _questInfoForPoint;
 
+    [Header("Config")] 
+    [SerializeField] private bool StartingPoint = true;
+    [SerializeField] private bool EndingPoint = true;
+    
     private bool _playerIsNear;
     private string _questId;
     private QuestState _questState;
+    private QuestIcon _questIcon;
 
     private void Awake()
     {
         _questId = _questInfoForPoint.id;
+        _questIcon = GetComponentInChildren<QuestIcon>();
     }
 
     private void OnEnable()
@@ -33,18 +39,23 @@ public class QuestPoint : MonoBehaviour
     private void SubmitPressed()
     {
         if (!_playerIsNear) return;
-        
-        GameManager.Instance.QuestEvents.StartQuest(_questId);
-        GameManager.Instance.QuestEvents.AdvanceQuest(_questId);
-        GameManager.Instance.QuestEvents.FinishQuest(_questId);
+
+        if (_questState.Equals(QuestState.CAN_START) && StartingPoint)
+        {
+            GameManager.Instance.QuestEvents.StartQuest(_questId);
+        } 
+        else if (_questState.Equals(QuestState.CAN_FINISH) && EndingPoint)
+        {
+            GameManager.Instance.QuestEvents.FinishQuest(_questId);
+        }
     }
 
-    public void QuestStateChange(Quest quest)
+    private void QuestStateChange(Quest quest)
     {
         if (!quest._info.Equals(_questId)) return;
         
         _questState = quest.State;
-        Debug.Log($"Quest with {_questId} update to state {_questState}");
+        _questIcon.SetState(_questState, StartingPoint, EndingPoint);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GoldManager : MonoBehaviour
 {
     [Header("Configuration")]
-    [SerializeField] private int startingGold = 5;
+    [SerializeField] public int startingGold = 0;
 
     public int currentGold { get; private set; }
 
