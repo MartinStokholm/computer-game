@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class QuestEvents
 {
@@ -6,6 +7,7 @@ public class QuestEvents
 
     public void StartQuest(string id)
     {
+        Debug.Log($"Start quest: {id}");
         OnStartQuest?.Invoke(id);
     }
     

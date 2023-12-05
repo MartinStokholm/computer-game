@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CircleCollider2D))]
@@ -9,9 +7,10 @@ public class Coin : MonoBehaviour
     [Header("Config")] 
     [SerializeField] private float _respawnTimeSeconds = 8;
     [SerializeField] private int _goldGained;
-
+    
     private CircleCollider2D _circleCollider;
     private SpriteRenderer _spriteRenderer;
+    private bool _collected;
 
     private void Awake()
     {
@@ -21,7 +20,7 @@ public class Coin : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D otherCollider) 
     {
-        if (otherCollider.CompareTag(Settings.PlayerTag))
+        if (otherCollider.CompareTag(Settings.PlayerTag) && !_collected)
         {
             Debug.Log("Collected coin");
             CollectCoin();
@@ -30,11 +29,13 @@ public class Coin : MonoBehaviour
 
     private void CollectCoin()
     {
+        _collected = true;
         _circleCollider.enabled = false;
         _spriteRenderer.gameObject.SetActive(false);
         GameManager.Instance.GoldEvents.GoldGained(_goldGained);
         GameManager.Instance.MiscEvents.CoinCollected();
         StopAllCoroutines();
+        StartCoroutine(RespawnAfterTime());
     }
     
     private IEnumerator RespawnAfterTime()
@@ -42,7 +43,6 @@ public class Coin : MonoBehaviour
         yield return new WaitForSeconds(_respawnTimeSeconds);
         _circleCollider.enabled = true;
         _spriteRenderer.gameObject.SetActive(true);
+        _collected = false;
     }
-
-
 }

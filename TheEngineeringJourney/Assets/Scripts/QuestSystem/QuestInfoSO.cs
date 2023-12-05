@@ -17,17 +17,16 @@ public class QuestInfoSO : ScriptableObject
     public QuestInfoSO[] QuestPrerequisites;
 
     [Header("Steps")] 
-    [field: SerializeField]public GameObject[] QuestStepPrefabs;
+    public GameObject[] QuestStepPrefabs;
 
     [Header("Rewards")] 
     public int GoldReward;
-
     public int ExperienceReward;
     
     private void OnValidate()
     {
         #if UNITY_EDITOR
-        id = this.name;
+        id = name;
         UnityEditor.EditorUtility.SetDirty(this);
         #endif
     }

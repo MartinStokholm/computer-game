@@ -30,7 +30,7 @@ public class EnemyMovementAI : MovingObjects
         _movementSpeed = _movementDetails.GetMovementSpeed();
     }
 
-    private void Start()
+    protected override void Start()
     {
         _waitForFixedUpdate = new WaitForFixedUpdate();
         _playerPosition = GetPlayerPosition();

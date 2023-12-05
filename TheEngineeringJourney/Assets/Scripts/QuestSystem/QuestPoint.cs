@@ -38,24 +38,28 @@ public class QuestPoint : MonoBehaviour
 
     private void SubmitPressed()
     {
+        Debug.Log($"Submit pressed on quest and got this state: {_questState}");
         if (!_playerIsNear) return;
-
-        if (_questState.Equals(QuestState.CAN_START) && StartingPoint)
+        
+        switch (_questState)
         {
-            GameManager.Instance.QuestEvents.StartQuest(_questId);
-        } 
-        else if (_questState.Equals(QuestState.CAN_FINISH) && EndingPoint)
-        {
-            GameManager.Instance.QuestEvents.FinishQuest(_questId);
+            case QuestState.CAN_START when StartingPoint:
+                GameManager.Instance.QuestEvents.StartQuest(_questId);
+                break;
+            case QuestState.CAN_FINISH when EndingPoint:
+                GameManager.Instance.QuestEvents.FinishQuest(_questId);
+                break;
         }
     }
 
     private void QuestStateChange(Quest quest)
     {
-        if (!quest._info.Equals(_questId)) return;
-        
-        _questState = quest.State;
-        _questIcon.SetState(_questState, StartingPoint, EndingPoint);
+        Debug.Log("QuestStateChange" + quest._info.id.Equals(_questId));
+        if (quest._info.id.Equals(_questId))
+        {
+            _questState = quest.State;
+            _questIcon.SetState(_questState, StartingPoint, EndingPoint);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

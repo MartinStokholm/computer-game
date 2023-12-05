@@ -3,13 +3,13 @@ using UnityEngine;
 public class GoldManager : MonoBehaviour
 {
     [Header("Configuration")]
-    [SerializeField] public int startingGold = 0;
+    [SerializeField] public int StartingGold = 0;
 
     public int currentGold { get; private set; }
 
     private void Awake()
     {
-        currentGold = startingGold;
+        currentGold = StartingGold;
     }
 
     private void OnEnable() 

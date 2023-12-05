@@ -2511,6 +2511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994978a503728e04abec0bb059bd87c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _loadQuestState: 1
 --- !u!1 &699098670
 GameObject:
   m_ObjectHideFlags: 0
@@ -3555,7 +3556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab5c4155cc48cd4ba0add16a9810ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingGold: 0
+  StartingGold: 0
 --- !u!1 &842584856
 GameObject:
   m_ObjectHideFlags: 0
@@ -6779,7 +6780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab5c4155cc48cd4ba0add16a9810ef2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingGold: 5
+  StartingGold: 0
 --- !u!1 &1756950306
 GameObject:
   m_ObjectHideFlags: 0
@@ -7439,9 +7440,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.040069688
+    y: 0.048780486
     width: 1
-    height: 0.9182274
+    height: 0.9017461
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
