@@ -2511,7 +2511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 994978a503728e04abec0bb059bd87c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _loadQuestState: 1
+  _loadQuestState: 0
 --- !u!1 &699098670
 GameObject:
   m_ObjectHideFlags: 0
@@ -7440,9 +7440,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.048780486
+    y: 0.2011173
     width: 1
-    height: 0.9017461
+    height: 0.59863824
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
