@@ -40,9 +40,11 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        MovementInput();
-
         InteractInput();
+        
+        // Don't move when dialogue system is play???
+        if (DialogueManager.Instance._isDialoguePlaying) return;
+        MovementInput();
     }
     
     /// <summary>

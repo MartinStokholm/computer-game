@@ -3,6 +3,7 @@
     "com.unity.cinemachine": "2.9.7",
     "com.unity.feature.2d": "2.0.0",
     "com.unity.ide.rider": "3.0.24",
+    "com.unity.inputsystem": "1.6.3",
     "com.unity.logging": "1.0.16",
     "com.unity.render-pipelines.universal": "14.0.8",
     "com.unity.scriptablebuildpipeline": "1.21.9",
