@@ -14,16 +14,11 @@ public class InputEvents : MonoBehaviour
     {
         OnQuestLogTogglePressed?.Invoke();
     }
+    
+    public event Action OnInventoryTogglePressed;
+    public void InventoryTogglePressed()
+    {
+        Debug.Log("Inventory");
+        OnInventoryTogglePressed?.Invoke();
+    }
 }
-
-
-// public static class StaticInputsEvent
-// {
-//     public static event Action OnSubmitPressed;
-//
-//     public static void OnSubmitEvent()
-//     {
-//         Debug.Log("Interact using static");
-//         OnSubmitPressed?.Invoke();
-//     }
-// }

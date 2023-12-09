@@ -27,6 +27,14 @@ public class InputManager : SingletonMonobehaviour<InputManager>
     //     }
     // }
 
+    public void InventoryTogglePressed(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GameManager.Instance.InputEvents.InventoryTogglePressed();
+        }
+    }
+    
     public void QuestLogTogglePressed(InputAction.CallbackContext context)
     {
         if (context.started)
