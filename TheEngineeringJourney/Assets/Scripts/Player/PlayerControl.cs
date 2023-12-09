@@ -42,7 +42,7 @@ public class PlayerControl : MonoBehaviour
     {
 
         // Don't move when dialogue system is play???
-        if (DialogueManager.Instance._isDialoguePlaying) return;
+        if (DialogueManager.Instance.IsDialoguePlaying) return;
         MovementInput();
     }
     

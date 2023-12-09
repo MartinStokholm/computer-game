@@ -47,3 +47,12 @@ MonoBehaviour:
   RoomNodeTypes: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   CurrentPlayer: {fileID: 11400000, guid: 2a3afe81264b6514bad95673485bc0cb, type: 2}
   DimmedMaterial: {fileID: 2100000, guid: de88fd1a9926ce94d85925e33dcb508e, type: 2}
+  MusicMasterMixerGroup: {fileID: -7206380732494497733, guid: 27c31a9fa15d6ac40b3c1def96612e0e, type: 2}
+  MainMenuMusic: {fileID: 11400000, guid: 7f478c30f82c34747b50e11de55f3703, type: 2}
+  MusicOnFullSnapshot: {fileID: 24500006, guid: 27c31a9fa15d6ac40b3c1def96612e0e, type: 2}
+  MusicLowSnapshot: {fileID: 8893122114324796974, guid: 27c31a9fa15d6ac40b3c1def96612e0e, type: 2}
+  MusicOffSnapshot: {fileID: -3084740370723268673, guid: 27c31a9fa15d6ac40b3c1def96612e0e, type: 2}
+  SoundsMasterMixerGroup: {fileID: -4734643798044506327, guid: 27c31a9fa15d6ac40b3c1def96612e0e, type: 2}
+  DoorOpenCloseSoundEffect: {fileID: 0}
+  ChestOpen: {fileID: 0}
+  HealthPickup: {fileID: 0}

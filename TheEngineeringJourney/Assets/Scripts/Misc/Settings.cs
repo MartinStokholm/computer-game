@@ -14,6 +14,11 @@ public static class Settings
     
     #endregion
 
+    #region AUDIO
+    public const float MusicFadeOutTime = 0.5f;  // Default Music Fade Out Transition
+    public const float MusicFadeInTime = 0.5f;  // Default Music Fade In Transition
+    #endregion
+    
     #region ANIMATOR PARAMETERS
 
     public static int AimUp = Animator.StringToHash("AimUp");

@@ -47,7 +47,7 @@ public class DialogueTrigger : MonoBehaviour
         
         switch (_playerIsNear)
         {
-            case true when !DialogueManager.Instance._isDialoguePlaying:
+            case true when !DialogueManager.Instance.IsDialoguePlaying:
                 DialogueManager.Instance.EnterDialogueMode(_inkJSON);
                 break;
             case false :

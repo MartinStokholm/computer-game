@@ -1,11 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
 public class DialogueManager : SingletonMonobehaviour<DialogueManager>
 {
@@ -34,23 +31,23 @@ public class DialogueManager : SingletonMonobehaviour<DialogueManager>
     
     private DialogueVariables _dialogueVariables;
     private Story _currentStory;
-    public bool _isDialoguePlaying { get; private set;}
+    public bool IsDialoguePlaying { get; private set;}
     private bool _canContinueToNextLine = false;
     private Coroutine displayLineCoroutine;
 
-    protected override void Awake()
-    {
-        // dialogueVariables = new DialogueVariables(loadGlobalsJSON);
-        // inkExternalFunctions = new InkExternalFunctions();
-        //
-        // audioSource = this.gameObject.AddComponent<AudioSource>();
-        // currentAudioInfo = defaultAudioInfo;
-        base.Awake();
-    }
+    // protected override void Awake()
+    // {
+    //     // dialogueVariables = new DialogueVariables(loadGlobalsJSON);
+    //     // inkExternalFunctions = new InkExternalFunctions();
+    //     //
+    //     // audioSource = this.gameObject.AddComponent<AudioSource>();
+    //     // currentAudioInfo = defaultAudioInfo;
+    //     base.Awake();
+    // }
 
     private void Start()
     {
-        _isDialoguePlaying = false;
+        IsDialoguePlaying = false;
         _dialoguePanel.SetActive(false);
 
         _choicesText = new TextMeshProUGUI[_choices.Length];
@@ -64,7 +61,7 @@ public class DialogueManager : SingletonMonobehaviour<DialogueManager>
 
     private void Update()
     {
-        if (!_isDialoguePlaying) return;
+        if (!IsDialoguePlaying) return;
 
         if (_canContinueToNextLine 
             && _currentStory.currentChoices.Count == 0 
@@ -74,11 +71,11 @@ public class DialogueManager : SingletonMonobehaviour<DialogueManager>
         }
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(TextAsset inkJson)
     {
-        _currentStory = new Story(inkJSON.text);
-        _isDialoguePlaying = true;
-        _dialoguePanel.SetActive(_isDialoguePlaying);
+        _currentStory = new Story(inkJson.text);
+        IsDialoguePlaying = true;
+        _dialoguePanel.SetActive(IsDialoguePlaying);
         
         // dialogueVariables.StartListening(currentStory);
         // inkExternalFunctions.Bind(currentStory, emoteAnimator);
@@ -94,8 +91,8 @@ public class DialogueManager : SingletonMonobehaviour<DialogueManager>
     {
         yield return new WaitForSeconds(0.2f);
         
-        _isDialoguePlaying = false;
-        _dialoguePanel.SetActive(_isDialoguePlaying);
+        IsDialoguePlaying = false;
+        _dialoguePanel.SetActive(IsDialoguePlaying);
         _dialogueText.text = "";
     }
 
@@ -251,8 +248,7 @@ public class DialogueManager : SingletonMonobehaviour<DialogueManager>
     
     public Ink.Runtime.Object GetVariableState(string variableName) 
     {
-        Ink.Runtime.Object variableValue = null;
-        _dialogueVariables.Variables.TryGetValue(variableName, out variableValue);
+        _dialogueVariables.Variables.TryGetValue(variableName, out var variableValue);
         if (variableValue == null) 
         {
             Debug.LogWarning("Ink Variable was found to be null: " + variableName);

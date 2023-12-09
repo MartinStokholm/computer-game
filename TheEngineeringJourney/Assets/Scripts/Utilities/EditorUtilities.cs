@@ -60,6 +60,24 @@ public static class EditorUtilities
         Debug.Log(fieldName + " must contain a " + str + " value in object " + thisObject.name);
         return true;
     }
+    
+    /// <summary>
+    /// positive range debug check - set isZeroAllowed to true if the min and max range values can both be zero. Returns true if there is an error
+    /// </summary>
+    public static bool ValidateCheckPositiveRange(Object thisObject, string fieldNameMinimum, float valueToCheckMinimum, string fieldNameMaximum, float valueToCheckMaximum, bool isZeroAllowed)
+    {
+        if (valueToCheckMinimum > valueToCheckMaximum)
+        {
+            Debug.Log(fieldNameMinimum + " must be less than or equal to " + fieldNameMaximum + " in object " + thisObject.name.ToString());
+            return true;
+        }
+
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, (int)valueToCheckMinimum, isZeroAllowed)) return true;
+
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, (int)valueToCheckMaximum, isZeroAllowed)) return true;
+
+        return false;
+    }
 
     /// <summary>
     /// Create deep copy of string list

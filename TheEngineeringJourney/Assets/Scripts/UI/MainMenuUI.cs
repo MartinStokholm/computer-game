@@ -12,16 +12,10 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField]private GameObject TutorialMenu;
     [SerializeField]private GameObject OptionsMenu;
     
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        MusicManager.Instance.PlayMusic(GameResources.Instance.MainMenuMusic, 0f, 2f);
         HideSubMenu();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void StartGame()
