@@ -40,8 +40,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        InteractInput();
-        
+
         // Don't move when dialogue system is play???
         if (DialogueManager.Instance._isDialoguePlaying) return;
         MovementInput();
@@ -53,16 +52,12 @@ public class PlayerControl : MonoBehaviour
     private void MovementInput()
     {
         // Get movement input
-        var horizontalMovement = Input.GetAxisRaw("Horizontal");
-        var verticalMovement = Input.GetAxisRaw("Vertical");
+        var direction = InputManager.Instance.GetMoveDirection();
         var rightMouseButtonDown = Input.GetMouseButtonDown(1);
         
 
-        // Create a direction vector based on the input
-        var direction = new Vector2(horizontalMovement, verticalMovement);
-
         // Adjust distance for diagonal movement (pythagoras approximation)
-        if (horizontalMovement != 0f && verticalMovement != 0f)
+        if (direction.x != 0f && direction.y != 0f)
         {
             direction *= 0.7f;
         }
@@ -89,13 +84,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void InteractInput()
-    {
-        if (Input.GetKey(KeyCode.E)) 
-            GameManager.Instance.InputEvents.SubmitPressed();
-
-    }
-    
     // public void SubmitPressed()
     // {
     //     Debug.Log("Interact");

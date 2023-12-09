@@ -6,7 +6,6 @@ public class InputEvents : MonoBehaviour
     public event Action OnSubmitPressed;
     public void SubmitPressed()
     {
-        Debug.Log("Interact");
         OnSubmitPressed?.Invoke();
     }
 
@@ -18,13 +17,13 @@ public class InputEvents : MonoBehaviour
 }
 
 
-public static class StaticInputsEvent
-{
-    public static event Action OnSubmitPressed;
-
-    public static void OnSubmitEvent()
-    {
-        Debug.Log("Interact using static");
-        OnSubmitPressed?.Invoke();
-    }
-}
+// public static class StaticInputsEvent
+// {
+//     public static event Action OnSubmitPressed;
+//
+//     public static void OnSubmitEvent()
+//     {
+//         Debug.Log("Interact using static");
+//         OnSubmitPressed?.Invoke();
+//     }
+// }
