@@ -54,6 +54,18 @@ public static class RoomEnemySpawnParametersHelper
     public static RoomEnemySpawnParameters GetRoomEnemySpawnParameters(this IEnumerable<RoomEnemySpawnParameters> roomEnemySpawnParameters, MapLevelSO mapLevelSo)  =>
         roomEnemySpawnParameters
             .SingleOrDefault(x => x.mapLevel == mapLevelSo);
+    
+    /// <summary>
+    /// Get a random spawn interval between the minimum and maximum values
+    /// </summary>
+    public static float GetEnemySpawnInterval(this RoomEnemySpawnParameters roomEnemySpawnParameters) => 
+            Random.Range(roomEnemySpawnParameters.MinSpawnInterval, roomEnemySpawnParameters.MaxSpawnInterval);
+
+    /// <summary>
+    /// Get a random number of concurrent enemies between the minimum and maximum values
+    /// </summary>
+    public static int GetConcurrentEnemies(this RoomEnemySpawnParameters roomEnemySpawnParameters) => 
+        (Random.Range(roomEnemySpawnParameters.MinConcurrentEnemies, roomEnemySpawnParameters.MaxConcurrentEnemies));
 }
 
 

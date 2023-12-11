@@ -45,4 +45,12 @@ public static class Settings
     #region PlayerLevel
     public const int ExperienceToLevelUp = 100;
     #endregion
+    
+    #region ENEMY PARAMETERS
+    public const int DefaultEnemyHealth = 20;
+    #endregion
+    
+    #region CONTACT DAMAGE PARAMETERS
+    public const float ContactDamageCollisionResetDelay = 0.5f;
+    #endregion
 }

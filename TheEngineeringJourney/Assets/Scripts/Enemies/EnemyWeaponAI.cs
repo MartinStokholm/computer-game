@@ -31,4 +31,15 @@ public class EnemyWeaponAI : MonoBehaviour
         
         _enemy.AimWeaponEvent.CallAimWeaponEvent(enemyAimDirection, enemyAngleDegrees, 0f, new Vector3(0,0,0));
     }
+    
+    private void FireWeapon()
+    {
+        
+    }
+
+    private bool IsPlayerInLineOfSight(Vector3 weaponDirection, float enemyAmmoRange)
+    {
+        return true;
+    }
+    
 }

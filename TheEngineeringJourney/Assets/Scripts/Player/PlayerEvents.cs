@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class PlayerEvents : MonoBehaviour
 {
-    public event Action<int> onExperienceGained;
+    public event Action<int> OnExperienceGained;
     public void ExperienceGained(int experience)
     {
-        onExperienceGained?.Invoke(experience);
+        OnExperienceGained?.Invoke(experience);
     }
 
     public event Action<int> OnPlayerLevelChange;

@@ -10,6 +10,7 @@
 public enum GameState
 {
     GameStarted,
+    EnterLevel,
     PlayingLevel,
     EngagingEnemies,
     BossStage,

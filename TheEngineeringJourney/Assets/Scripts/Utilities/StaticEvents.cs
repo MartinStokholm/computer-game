@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,9 +13,22 @@ public static class StaticEventHandler
     {
         OnRoomChanged?.Invoke(new RoomChangedEventArgs() { Room = room });
     }
+    
+    
+    public static event Action<RoomEnemiesDefeatedArgs> OnRoomEnemiesDefeated;
+
+    public static void CallRoomEnemiesDefeatedEvent(Room room)
+    {
+        OnRoomEnemiesDefeated?.Invoke(new RoomEnemiesDefeatedArgs() { Room = room });
+    }
 } 
 
 public class RoomChangedEventArgs : EventArgs
+{
+    public Room Room;
+}
+
+public class RoomEnemiesDefeatedArgs : EventArgs
 {
     public Room Room;
 }

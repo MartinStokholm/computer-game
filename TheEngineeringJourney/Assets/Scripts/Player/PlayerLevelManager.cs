@@ -21,12 +21,12 @@ public class PlayerLevelManager : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.PlayerEvents.onExperienceGained += ExperienceGained;
+        GameManager.Instance.PlayerEvents.OnExperienceGained += ExperienceGained;
     }
 
     private void OnDisable() 
     {
-        GameManager.Instance.PlayerEvents.onExperienceGained -= ExperienceGained;
+        GameManager.Instance.PlayerEvents.OnExperienceGained -= ExperienceGained;
     }
 
     private void Start()

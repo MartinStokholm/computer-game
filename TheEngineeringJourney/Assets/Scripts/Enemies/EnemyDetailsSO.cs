@@ -60,14 +60,14 @@ public class EnemyDetailsSO : ScriptableObject
     // // [Tooltip("The weapon for the enemy - none if the enemy doesn't have a weapon")]
     // // #endregion
     // // public WeaponDetailsSO enemyWeapon;
-    // #region Tooltip
-    // [Tooltip("The minimum time delay interval in seconds between bursts of enemy shooting.  This value should be greater than 0. A random value will be selected between the minimum value and the maximum value")]
-    // #endregion
-    // public float firingIntervalMin = 0.1f;
-    // #region Tooltip
-    // [Tooltip("The maximum time delay interval in seconds between bursts of enemy shooting.  A random value will be selected between the minimum value and the maximum value")]
-    // #endregion
-    // public float firingIntervalMax = 1f;
+    #region Tooltip
+    [Tooltip("The minimum time delay interval in seconds between bursts of enemy shooting.  This value should be greater than 0. A random value will be selected between the minimum value and the maximum value")]
+    #endregion
+    public float FiringIntervalMin = 0.1f;
+    #region Tooltip
+    [Tooltip("The maximum time delay interval in seconds between bursts of enemy shooting.  A random value will be selected between the minimum value and the maximum value")]
+    #endregion
+    public float FiringIntervalMax = 1f;
     // #region Tooltip
     // [Tooltip("The minimum firing duration that the enemy shoots for during a firing burst.  This value should be greater than zero.  A random value will be selected between the minimum value and the maximum value.")]
     // #endregion
@@ -80,15 +80,15 @@ public class EnemyDetailsSO : ScriptableObject
     // [Tooltip("Select this if line of sight is required of the player before the enemy fires.  If line of sight isn't selected the enemy will fire regardless of obstacles whenever the player is 'in range'")]
     // #endregion
     // public bool firingLineOfSightRequired;
-    //
-    // #region Header ENEMY HEALTH
-    // [Space(10)]
-    // [Header("ENEMY HEALTH")]
-    // #endregion
-    // #region Tooltip
-    // // [Tooltip("The health of the enemy for each level")]
-    // // #endregion
-    // // public EnemyHealthDetails[] enemyHealthDetailsArray;
+    
+    #region Header ENEMY HEALTH
+    [Space(10)]
+    [Header("ENEMY HEALTH")]
+    #endregion
+    #region Tooltip
+    [Tooltip("The health of the enemy for each level")]
+    #endregion
+    public EnemyHealthDetails[] EnemyHealthDetailsArray;
     // // #region Tooltip
     // [Tooltip("Select if has immunity period immediately after being hit.  If so specify the immunity time in seconds in the other field")]
     // #endregion
@@ -126,5 +126,15 @@ public class EnemyDetailsSO : ScriptableObject
 
 #endif
     #endregion
+
+}
+
+public static class EnemyDetailsSOHelper
+{
+    /// <summary>
+    /// Calculate a random weapon shoot interval between the min and max values
+    /// </summary>
+    private static void WeaponShootInterval(this EnemyDetailsSO enemyDetailsSo) =>
+        Random.Range(enemyDetailsSo.FiringIntervalMin, enemyDetailsSo.FiringIntervalMax);
 
 }

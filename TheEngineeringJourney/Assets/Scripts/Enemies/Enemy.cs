@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -49,6 +50,28 @@ public class Enemy : MonoBehaviour
         spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         Animator = GetComponent<Animator>();
     }
+    
+    private void OnEnable()
+    {
+        HealthEvent.OnHealthChanged += HealthEvent_OnHealthLost;
+    }
+
+    private void OnDisable()
+    {
+        HealthEvent.OnHealthChanged -= HealthEvent_OnHealthLost;
+    }
+    
+    
+    /// <summary>
+    /// Handle health lost event
+    /// </summary>
+    private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
+    {
+        if (healthEventArgs.HealthAmount > 0) return;
+        
+        var destroyedEvent = GetComponent<DestroyedEvent>();
+        destroyedEvent.CallDestroyedEvent(false, Health.GetStartingHealth());
+    }
 
     /// <summary>
     /// Initialise the enemy
@@ -59,7 +82,7 @@ public class Enemy : MonoBehaviour
 
         // SetEnemyMovementUpdateFrame(enemySpawnNumber);
         //
-        // SetEnemyStartingHealth(dungeonLevel);
+        SetEnemyStartingHealth(mapLevel);
         //
         // SetEnemyStartingWeapon();
         //
@@ -80,6 +103,17 @@ public class Enemy : MonoBehaviour
     //     EnemyEnable(true);
     //
     // }
+    
+    /// <summary>
+    /// Set the starting health for the enemy
+    /// </summary>
+    private void SetEnemyStartingHealth(MapLevelSO mapLevel)
+    {
+        var matchingHealthDetails = EnemyDetails.EnemyHealthDetailsArray
+            .FirstOrDefault(e => e.MapLevel == mapLevel);
+
+        Health.SetStartingHealth(matchingHealthDetails?.EnemyHealthAmount ?? Settings.DefaultEnemyHealth);
+    }
     
     private void EnemyEnable(bool isEnabled)
     {

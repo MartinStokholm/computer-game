@@ -48,11 +48,15 @@ public class Sword : MonoBehaviour
         
         if (mousePos.x < playerScreenPoint.x)
         {
+            var pos = _activeWeapon.transform;
             _activeWeapon.transform.rotation = Quaternion.Euler(0,-180, angle);
+            
         }
         else
         {
             _activeWeapon.transform.rotation = Quaternion.Euler(0,0, angle);
+
         }
     }
+    
 }

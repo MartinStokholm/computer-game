@@ -38,7 +38,6 @@ public class AnimateEnemy : MonoBehaviour
     /// </summary>
     private void AimWeaponEvent_OnWeaponAim(AimWeaponEvent aimWeaponEvent, AimWeaponEventArgs aimWeaponEventArgs)
     {
-        Debug.Log("AIM FOr Enemy");
         InitialiseAimAnimationParameters();
         SetAimWeaponAnimationParameters(aimWeaponEventArgs.AimDirection);
     }

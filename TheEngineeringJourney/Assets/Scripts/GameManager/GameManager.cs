@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -44,9 +45,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public QuestEvents QuestEvents;
     public InputEvents InputEvents;
     
-    private Room _currentRoom;
+    
     public Player Player { get; private set; }
+    private Room _currentRoom;
     private Room _previousRoom;
+    private InstantiatedRoom _bossRoom;
     private PlayerDetailsSO _playerDetails;
     private GameState _gameState;
     private GameState _previousGameState;
@@ -60,7 +63,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             _gameState = value;
         }
     }
-    
     
     public Room CurrentRoom
     {
@@ -100,12 +102,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
         StaticSceneChangeEvent.OnEnterLevel += EnterLevelEvent_CallEnterLevelEvent;
+        StaticEventHandler.OnRoomEnemiesDefeated += StaticEventHandler_OnRoomEnemiesDefeated;
     }
     
     private void OnDisable()
     {
         StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
         StaticSceneChangeEvent.OnEnterLevel -= EnterLevelEvent_CallEnterLevelEvent;
+        StaticEventHandler.OnRoomEnemiesDefeated -= StaticEventHandler_OnRoomEnemiesDefeated;
     }
 
 
@@ -137,24 +141,37 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         switch (_gameState)
         {
             case GameState.GameStarted:
-
-                // Play first level
                 PlayMapLevel(currentMapLevelListIndex);
-
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.PlayingLevel:
-                if (Input.GetKeyDown(KeyCode.Escape))
-                    PauseGameMenu();
-                    break;
-            case GameState.LevelCompleted:
+                break;
+            case GameState.EnterLevel: 
                 PlayMapLevel(currentMapLevelListIndex);
                 _gameState = GameState.PlayingLevel;
                 break;
-            case GameState.GamePaused:
-                if (Input.GetKeyDown(KeyCode.Escape))
-                    PauseGameMenu();
+            case GameState.LevelCompleted:
+                PlayMapLevel(0);
+                _gameState = GameState.PlayingLevel;
                 break;
+            case GameState.GamePaused:
+                break;
+            case GameState.EngagingEnemies:
+                break;
+            case GameState.BossStage:
+                break;
+            case GameState.EngagingBoss:
+                break;
+            case GameState.GameWon:
+                break;
+            case GameState.GameLost:
+                break;
+            case GameState.MapOverviewMap:
+                break;
+            case GameState.RestartGame:
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -183,7 +200,81 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void EnterLevelEvent_CallEnterLevelEvent(SceneChangeArgs args)
     {
         currentMapLevelListIndex = args.Level;
-        _gameState = GameState.LevelCompleted;
+        _gameState = GameState.EnterLevel;
+    }
+    
+    /// <summary>
+    /// Handle room enemies defeated event
+    /// </summary>
+    private void StaticEventHandler_OnRoomEnemiesDefeated(RoomEnemiesDefeatedArgs roomEnemiesDefeatedArgs)
+    {
+        RoomEnemiesDefeated();
+    }
+    
+    /// <summary>
+    /// Room enemies defated - test if all dungeon rooms have been cleared of enemies - if so load
+    /// next first game level
+    /// </summary>
+    private void RoomEnemiesDefeated()
+    {
+        var isDungeonClearOfRegularEnemies = true;
+        _bossRoom = null;
+
+        // Loop through all dungeon rooms to see if cleared of enemies
+        foreach (var keyValuePair in MapBuilder.Instance.MapBuilderRoomDictionary)
+        {
+            // skip boss room for time being
+            if (keyValuePair.Value.RoomNodeType.isBossRoom)
+            {
+                _bossRoom = keyValuePair.Value.InstantiatedRoom;
+                continue;
+            }
+
+            // check if other rooms have been cleared of enemies
+            if (keyValuePair.Value.IsClearedOfEnemies) continue;
+            isDungeonClearOfRegularEnemies = false;
+            break;
+        }
+
+        switch (isDungeonClearOfRegularEnemies)
+        {
+            case true when _bossRoom is null:
+            case true when _bossRoom.Room.IsClearedOfEnemies:
+                GameState = currentMapLevelListIndex < MapLevelList.Count - 1 
+                    ? GameState.LevelCompleted 
+                    : GameState.GameWon;
+                break;
+
+            case true:
+                GameState = GameState.BossStage;
+                StartCoroutine(BossStage());
+                break;
+        }
+    }
+    
+    /// <summary>
+    /// Enter boss stage
+    /// </summary>
+    private IEnumerator BossStage()
+    {
+        // Activate boss room
+        _bossRoom.gameObject.SetActive(true);
+
+        // Unlock boss room
+        //_bossRoom.UnlockDoors(0f);
+
+        // Wait 2 seconds
+        yield return new WaitForSeconds(2f);
+
+        // Fade in canvas to display text message
+        //yield return StartCoroutine(Fade(0f, 1f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+
+        // Display boss message
+        //yield return StartCoroutine(DisplayMessageRoutine("WELL DONE  " + GameResources.Instance.currentPlayer.playerName + "!  YOU'VE SURVIVED ....SO FAR\n\nNOW FIND AND DEFEAT THE BOSS....GOOD LUCK!", Color.white, 5f));
+
+        // Fade out canvas
+        //yield return StartCoroutine(Fade(1f, 0f, 2f, new Color(0f, 0f, 0f, 0.4f)));
+
     }
     
     /// <summary>
