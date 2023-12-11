@@ -15,12 +15,14 @@ public class AnimateEnemy : MonoBehaviour
     {
         _enemy.MovementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
         _enemy.IdleEvent.OnIdle += IdleEvent_OnIdle;
+        _enemy.AimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
     }
     
     private void OnDisable()
     {
         _enemy.MovementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
         _enemy.IdleEvent.OnIdle -= IdleEvent_OnIdle;
+        _enemy.AimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
     }
     
     /// <summary>
@@ -29,6 +31,16 @@ public class AnimateEnemy : MonoBehaviour
     private void MovementToPositionEvent_OnMovementToPosition(MovementToPositionEvent movementToPositionEvent, MovementToPositionArgs movementToPositionArgs)
     {
         SetMovementAnimationParameters();
+    }
+    
+    /// <summary>
+    /// On weapon aim event handler
+    /// </summary>
+    private void AimWeaponEvent_OnWeaponAim(AimWeaponEvent aimWeaponEvent, AimWeaponEventArgs aimWeaponEventArgs)
+    {
+        Debug.Log("AIM FOr Enemy");
+        InitialiseAimAnimationParameters();
+        SetAimWeaponAnimationParameters(aimWeaponEventArgs.AimDirection);
     }
     
     /// <summary>
@@ -56,4 +68,39 @@ public class AnimateEnemy : MonoBehaviour
         _enemy.Animator.SetBool(Settings.IsIdle, true);
         _enemy.Animator.SetBool(Settings.IsMoving, false);
     }
+    
+    /// <summary>
+    /// Initialise aim animation parameters
+    /// </summary>
+    private void InitialiseAimAnimationParameters()
+    {
+        _enemy.Animator.SetBool(Settings.AimUp, false);
+        _enemy.Animator.SetBool(Settings.AimRight, false);
+        _enemy.Animator.SetBool(Settings.AimLeft, false);
+        _enemy.Animator.SetBool(Settings.AimDown, false);
+    }
+    
+    private void SetAimWeaponAnimationParameters(AimDirection aimDirection)
+    {
+        // Set aim direction
+        switch (aimDirection)
+        {
+            case AimDirection.Up:
+                _enemy.Animator.SetBool(Settings.AimUp, true);
+                break;
+
+            case AimDirection.Right:
+                _enemy.Animator.SetBool(Settings.AimRight, true);
+                break;
+
+            case AimDirection.Left:
+                _enemy.Animator.SetBool(Settings.AimLeft, true);
+                break;
+
+            case AimDirection.Down:
+                _enemy.Animator.SetBool(Settings.AimDown, true);
+                break;
+        }
+    }
+
 }

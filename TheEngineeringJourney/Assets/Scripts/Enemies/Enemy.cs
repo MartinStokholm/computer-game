@@ -1,7 +1,6 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Serialization;
+
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(SortingGroup))]
 [RequireComponent(typeof(HealthEvent))]
@@ -9,6 +8,7 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(EnemyWeaponAI))]
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(AnimateEnemy))]
@@ -20,8 +20,10 @@ public class Enemy : MonoBehaviour
 {
     public EnemyDetailsSO EnemyDetails;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
-    [HideInInspector] public Health Health;
+    public Health Health;
+    [HideInInspector] public AimWeaponEvent AimWeaponEvent;
     [HideInInspector] public MovementByVelocityEvent MovementByVelocityEvent;
+    [HideInInspector] public EnemyWeaponAI EnemyWeaponAI;
     [HideInInspector] public MovementToPositionEvent MovementToPositionEvent;
     [HideInInspector] public IdleEvent IdleEvent;
     [HideInInspector] public Animator Animator;
@@ -38,6 +40,8 @@ public class Enemy : MonoBehaviour
         HealthEvent = GetComponent<HealthEvent>();
         Health = GetComponent<Health>();
         MovementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        AimWeaponEvent = GetComponent<AimWeaponEvent>();
+        EnemyWeaponAI = GetComponent<EnemyWeaponAI>();
         IdleEvent = GetComponent<IdleEvent>();
         _enemyMovementAI = GetComponent<EnemyMovementAI>();
         circleCollider2D = GetComponent<CircleCollider2D>();
@@ -51,7 +55,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     public void EnemyInitialization(EnemyDetailsSO enemyDetails, int enemySpawnNumber, MapLevelSO mapLevel)
     {
-        this.EnemyDetails = enemyDetails;
+        EnemyDetails = enemyDetails;
 
         // SetEnemyMovementUpdateFrame(enemySpawnNumber);
         //
@@ -59,7 +63,7 @@ public class Enemy : MonoBehaviour
         //
         // SetEnemyStartingWeapon();
         //
-        // SetEnemyAnimationSpeed();
+        //SetEnemyAnimationSpeed();
 
         // Materialise enemy
         //StartCoroutine(MaterializeEnemy());
