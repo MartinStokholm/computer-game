@@ -22,9 +22,7 @@ public static class PlayerUtils
     public static AimDirection GetAimDirection(float angle) =>
         angle switch
         {
-            >= 22f and <= 67f => AimDirection.UpRight,
-            > 67f and <= 112f => AimDirection.Up,
-            > 112f and <= 158f => AimDirection.UpLeft,
+            >= 22f and <= 158f => AimDirection.Up,
             <= 180f and > 158f or > -180 and <= -135f => AimDirection.Left,
             > -135f and <= -45f => AimDirection.Down,
             > -45f and <= 0f or > 0 and < 22f => AimDirection.Right,

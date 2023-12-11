@@ -44,6 +44,8 @@ public class PlayerControl : MonoBehaviour
         // Don't move when dialogue system is play???
         if (DialogueManager.Instance.IsDialoguePlaying) return;
         MovementInput();
+        
+        WeaponInput();
     }
     
     /// <summary>
@@ -84,17 +86,29 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    // public void SubmitPressed()
-    // {
-    //     Debug.Log("Interact");
-    //     GameManager.Instance.InputEvents.SubmitPressed();
-    //     
-    // }
-    //
-    // public void QuestLogTogglePressed()
-    // {
-    //     GameManager.Instance.InputEvents.QuestLogTogglePressed();
-    // }
+    private void WeaponInput()
+    {
+        var mouseWorldPosition = GameUtilities.GetMouseWorldPosition();
+        var weaponDirection = (mouseWorldPosition);
+
+        // Calculate direction vector of mouse cursor from player transform position
+        var playerDirection = (mouseWorldPosition - transform.position);
+
+        // Get weapon to cursor angle
+        var weaponAngleDegrees = GameUtilities.GetAngleFromVector(weaponDirection);
+
+        // Get player to cursor angle
+        var playerAngleDegrees = GameUtilities.GetAngleFromVector(playerDirection);
+
+        // Set player aim direction
+        var playerAimDirection = PlayerUtils.GetAimDirection(playerAngleDegrees);
+        
+        
+        // Trigger weapon aim event
+        _player.AimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+    }
+
+
     
     #region Validation
 

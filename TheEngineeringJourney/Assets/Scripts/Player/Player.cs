@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Health Health;
     [HideInInspector] public MovementByVelocityEvent MovementByVelocityEvent;
     [HideInInspector] public MovementToPositionEvent MovementToPositionEvent;
+    [HideInInspector] public AimWeaponEvent AimWeaponEvent;
     [HideInInspector] public IdleEvent IdleEvent;
     [HideInInspector] public SpriteRenderer SpriteRenderer;
     [HideInInspector] public Animator Animator;
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
         Health = GetComponent<Health>();
         MovementByVelocityEvent = GetComponent<MovementByVelocityEvent>();
         MovementToPositionEvent = GetComponent<MovementToPositionEvent>();
+        AimWeaponEvent = GetComponent<AimWeaponEvent>();
         IdleEvent = GetComponent<IdleEvent>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         Animator = GetComponent<Animator>();

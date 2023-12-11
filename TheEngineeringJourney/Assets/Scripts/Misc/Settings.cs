@@ -23,8 +23,6 @@ public static class Settings
 
     public static int AimUp = Animator.StringToHash("AimUp");
     public static int AimDown = Animator.StringToHash("AimDown");
-    public static int AimUpRight = Animator.StringToHash("AimUpRight");
-    public static int AimUpLeft = Animator.StringToHash("AimUpLeft");
     public static int AimRight = Animator.StringToHash("AimRight");
     public static int AimLeft = Animator.StringToHash("AimLeft");
     public static int IsIdle = Animator.StringToHash("IsIdle");

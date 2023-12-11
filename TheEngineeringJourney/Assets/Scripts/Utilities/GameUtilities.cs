@@ -12,7 +12,7 @@ public static class GameUtilities
 
     public static Vector3 GetMouseWorldPosition()
     {
-        mainCamera ??= Camera.main;
+        if (mainCamera == null) mainCamera = Camera.main;
 
         var mouseScreenPosition = Input.mousePosition;
 
