@@ -1059,6 +1059,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 52a3ee99-2d76-4b63-996d-1def1a349dd6
     m_ActionName: Player/Inventory[/Keyboard/i]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 356438186}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: PauseGameMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b7296688-1359-4f8b-944a-4d1e4c32d5bc
+    m_ActionName: UI/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 004084d6-3a83-437c-9575-d197a596a3cb
+    m_ActionName: Combat/Attack[/Keyboard/space,/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1246,6 +1266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096d72558a12abc4cae367f58869f4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemiesToSpawn: 0
+  _currentEnemyCount: 0
+  _enemiesSpawnedSoFar: 0
+  _enemyMaxConcurrentSpawnNumber: 0
+  _roomEnemySpawnParameters: {mapLevel: {fileID: 0}, MinTotalEnemiesToSpawn: 0, MaxTotalEnemiesToSpawn: 0, MinConcurrentEnemies: 0, MaxConcurrentEnemies: 0, MinSpawnInterval: 0, MaxSpawnInterval: 0}
 --- !u!114 &175093238
 MonoBehaviour:
   m_ObjectHideFlags: 0
