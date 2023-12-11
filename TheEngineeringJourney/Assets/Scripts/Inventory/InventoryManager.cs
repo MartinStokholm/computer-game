@@ -20,6 +20,7 @@ public class InventoryManager : SingletonMonobehaviour<InventoryManager>
             if (itemSlot.IsFull is false && itemSlot.name == name || itemSlot._quantity is 0)
             {
                 var leftOverItems = itemSlot.AddItem(name, quantity, description, sprite);
+                
                 if (leftOverItems > 0)
                     leftOverItems = AddItem(name, leftOverItems, description, sprite);
                     
