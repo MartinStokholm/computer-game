@@ -18,15 +18,13 @@ public class AnimatePlayer : MonoBehaviour
         _player.MovementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvent_OnMovementByVelocity;
         _player.MovementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
         _player.IdleEvent.OnIdle += IdleEvent_OnIdle;
-        _player.AimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
     }
     
     private void OnDisable()
     {
         _player.MovementByVelocityEvent.OnMovementByVelocity -= MovementByVelocityEvent_OnMovementByVelocity;
         _player.MovementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
-        _player.IdleEvent.OnIdle -= IdleEvent_OnIdle;
-        _player.AimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+        _player.IdleEvent.OnIdle -= IdleEvent_OnIdle; ;
     }
 
     private void MovementByVelocityEvent_OnMovementByVelocity(MovementByVelocityEvent @event, MovementByVelocityArgs args)

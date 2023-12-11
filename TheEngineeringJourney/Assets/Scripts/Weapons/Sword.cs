@@ -29,8 +29,30 @@ public class Sword : MonoBehaviour
         _playerControls.Combat.Attack.started += _ => Attack();
     }
 
+    private void Update()
+    {
+        MouseFollowWithOffset();
+    }
+
     private void Attack()
     {
         _animator.SetTrigger(Attack1);
+    }
+
+    private void MouseFollowWithOffset()
+    {
+        var mousePos = Input.mousePosition;
+        var playerScreenPoint = Camera.main.WorldToScreenPoint(_player.transform.position);
+
+        var angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+        
+        if (mousePos.x < playerScreenPoint.x)
+        {
+            _activeWeapon.transform.rotation = Quaternion.Euler(0,-180, angle);
+        }
+        else
+        {
+            _activeWeapon.transform.rotation = Quaternion.Euler(0,0, angle);
+        }
     }
 }
