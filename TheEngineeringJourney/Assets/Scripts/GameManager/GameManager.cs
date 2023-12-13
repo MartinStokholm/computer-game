@@ -103,6 +103,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
         StaticSceneChangeEvent.OnEnterLevel += EnterLevelEvent_CallEnterLevelEvent;
         StaticEventHandler.OnRoomEnemiesDefeated += StaticEventHandler_OnRoomEnemiesDefeated;
+        StaticTeleportPositionEvent.OnTeleportEvent += StaticTeleportHandler_OnTeleportPosition;
     }
     
     private void OnDisable()
@@ -110,6 +111,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
         StaticSceneChangeEvent.OnEnterLevel -= EnterLevelEvent_CallEnterLevelEvent;
         StaticEventHandler.OnRoomEnemiesDefeated -= StaticEventHandler_OnRoomEnemiesDefeated;
+        StaticTeleportPositionEvent.OnTeleportEvent -= StaticTeleportHandler_OnTeleportPosition;
     }
 
 
@@ -305,6 +307,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         
         CurrentRoom = roomChangedEventArgs.Room;
+    }
+
+    private void StaticTeleportHandler_OnTeleportPosition(TeleportPositionArgs teleportPositionArgs)
+    {
+        Player.transform.position = teleportPositionArgs.TeleportPosition;
     }
     
     /// <summary>
