@@ -26,7 +26,7 @@ public class Destroyed : MonoBehaviour
     {
         if (destroyedEventArgs.PlayerDead)
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
         else
         {

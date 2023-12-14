@@ -18,7 +18,7 @@ public class AnimatePlayer : MonoBehaviour
         _player.MovementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvent_OnMovementByVelocity;
         _player.MovementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
         _player.IdleEvent.OnIdle += IdleEvent_OnIdle;
-        _player.AimWeaponEvent.OnWeaponAim += AimWeaponEvent_OnWeaponAim;
+        _player.weaponAimEvent.OnWeaponAim += WeaponAimEventOnWeaponAim;
         
     }
     
@@ -27,7 +27,7 @@ public class AnimatePlayer : MonoBehaviour
         _player.MovementByVelocityEvent.OnMovementByVelocity -= MovementByVelocityEvent_OnMovementByVelocity;
         _player.MovementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
         _player.IdleEvent.OnIdle -= IdleEvent_OnIdle; 
-        _player.AimWeaponEvent.OnWeaponAim -= AimWeaponEvent_OnWeaponAim;
+        _player.weaponAimEvent.OnWeaponAim -= WeaponAimEventOnWeaponAim;
     }
 
     private void MovementByVelocityEvent_OnMovementByVelocity(MovementByVelocityEvent @event, MovementByVelocityArgs args)
@@ -46,7 +46,7 @@ public class AnimatePlayer : MonoBehaviour
         SetIdleAnimationParameters();
     }
 
-    private void AimWeaponEvent_OnWeaponAim(AimWeaponEvent aimWeaponEvent, AimWeaponEventArgs aimWeaponEventArgs)
+    private void WeaponAimEventOnWeaponAim(WeaponAimEvent weaponAimEvent, AimWeaponEventArgs aimWeaponEventArgs)
     {
         InitializeAimAnimationParameters();
         SetAimWeaponAnimationParameters(aimWeaponEventArgs.AimDirection);

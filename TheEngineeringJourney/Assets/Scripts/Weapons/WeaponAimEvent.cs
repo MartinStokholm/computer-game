@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class AimWeaponEvent : MonoBehaviour
+public class WeaponAimEvent : MonoBehaviour
 {
-    public event Action<AimWeaponEvent, AimWeaponEventArgs> OnWeaponAim;
+    public event Action<WeaponAimEvent, AimWeaponEventArgs> OnWeaponAim;
 
     public void CallAimWeaponEvent(AimDirection aimDirection, float aimAngle, float weaponAimAngle, Vector3 WeaponAimDirectionVector)
     {

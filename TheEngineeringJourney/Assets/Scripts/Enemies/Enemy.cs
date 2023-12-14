@@ -1,19 +1,34 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 #region REQUIRE COMPONENTS
-[RequireComponent(typeof(SortingGroup))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AnimateEnemy))]
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(DealContactDamage))]
+[RequireComponent(typeof(Destroyed))]
+[RequireComponent(typeof(DestroyedEvent))]
+[RequireComponent(typeof(EnemyWeaponAI))]
+[RequireComponent(typeof(EnemyMovementAI))]
 [RequireComponent(typeof(HealthEvent))]
 [RequireComponent(typeof(Health))]
-[RequireComponent(typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(BoxCollider2D))]
-[RequireComponent(typeof(EnemyWeaponAI))]
+[RequireComponent(typeof(WeaponAimEvent))]
+[RequireComponent(typeof(WeaponAim))]
+[RequireComponent(typeof(WeaponReloadedEvent))]
+[RequireComponent(typeof(WeaponReloadEvent))]
+[RequireComponent(typeof(WeaponReload))]
+[RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(WeaponFire))]
+[RequireComponent(typeof(WeaponFiredEvent))]
+[RequireComponent(typeof(WeaponReload))]
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(AnimateEnemy))]
-[RequireComponent(typeof(EnemyMovementAI))]
+[RequireComponent(typeof(SetActiveWeaponEvent))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(SortingGroup))]
+
 [DisallowMultipleComponent]
 #endregion REQUIRE COMPONENTS
 
@@ -22,33 +37,42 @@ public class Enemy : MonoBehaviour
     public EnemyDetailsSO EnemyDetails;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
     public Health Health;
-    [HideInInspector] public AimWeaponEvent AimWeaponEvent;
     [HideInInspector] public MovementByVelocityEvent MovementByVelocityEvent;
     [HideInInspector] public EnemyWeaponAI EnemyWeaponAI;
     [HideInInspector] public MovementToPositionEvent MovementToPositionEvent;
     [HideInInspector] public IdleEvent IdleEvent;
     [HideInInspector] public Animator Animator;
+    [HideInInspector] public WeaponAimEvent WeaponAimEvent;
+    [HideInInspector] public FireWeaponEvent WeaponFireEvent;
 
     private HealthEvent HealthEvent;
     private MaterializeEffect MaterializeEffect;
     private CircleCollider2D circleCollider2D;
     private PolygonCollider2D polygonCollider2D;
     private EnemyMovementAI _enemyMovementAI;
+    private SetActiveWeaponEvent _setActiveWeaponEvent;
+    private WeaponFire _weaponFire;
 
     private void Awake()
     {
-        // Load components
         HealthEvent = GetComponent<HealthEvent>();
         Health = GetComponent<Health>();
-        MovementToPositionEvent = GetComponent<MovementToPositionEvent>();
-        AimWeaponEvent = GetComponent<AimWeaponEvent>();
-        EnemyWeaponAI = GetComponent<EnemyWeaponAI>();
+        
         IdleEvent = GetComponent<IdleEvent>();
         _enemyMovementAI = GetComponent<EnemyMovementAI>();
+        MovementToPositionEvent = GetComponent<MovementToPositionEvent>();
+
         circleCollider2D = GetComponent<CircleCollider2D>();
         polygonCollider2D = GetComponent<PolygonCollider2D>();
         spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         Animator = GetComponent<Animator>();
+        
+        EnemyWeaponAI = GetComponent<EnemyWeaponAI>();
+        WeaponAimEvent = GetComponent<WeaponAimEvent>();
+        WeaponFireEvent = GetComponent<FireWeaponEvent>();
+        WeaponAimEvent = GetComponent<WeaponAimEvent>();
+        _weaponFire = GetComponent<WeaponFire>();
+        _setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
     }
     
     private void OnEnable()
@@ -69,8 +93,7 @@ public class Enemy : MonoBehaviour
     {
         if (healthEventArgs.HealthAmount > 0) return;
         
-        var destroyedEvent = GetComponent<DestroyedEvent>();
-        destroyedEvent.CallDestroyedEvent(false, Health.GetStartingHealth());
+        GetComponent<DestroyedEvent>().CallDestroyedEvent(false, Health.StartingHealth);
     }
 
     /// <summary>
@@ -84,7 +107,7 @@ public class Enemy : MonoBehaviour
         //
         SetEnemyStartingHealth(mapLevel);
         //
-        // SetEnemyStartingWeapon();
+        SetEnemyStartingWeapon();
         //
         //SetEnemyAnimationSpeed();
 
@@ -105,6 +128,26 @@ public class Enemy : MonoBehaviour
     // }
     
     /// <summary>
+    /// Set enemy starting weapon as per the weapon details SO
+    /// </summary>
+    private void SetEnemyStartingWeapon()
+    {
+        // Process if enemy has a weapon
+        if (EnemyDetails.EnemyWeapon is null) return;
+        
+        var weapon = new Weapon()
+        {
+            WeaponDetails = EnemyDetails.EnemyWeapon, 
+            WeaponReloadTimer = 0f, 
+            WeaponClipRemainingAmmo = EnemyDetails.EnemyWeapon.WeaponClipAmmoCapacity, 
+            WeaponRemainingAmmo = EnemyDetails.EnemyWeapon.WeaponAmmoCapacity, 
+            IsWeaponReloading = false
+        };
+        
+        _setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
+    }
+    
+    /// <summary>
     /// Set the starting health for the enemy
     /// </summary>
     private void SetEnemyStartingHealth(MapLevelSO mapLevel)
@@ -120,11 +163,11 @@ public class Enemy : MonoBehaviour
         // Enable/Disable colliders
         circleCollider2D.enabled = isEnabled;
         polygonCollider2D.enabled = isEnabled;
-        //
+
         // // Enable/Disable movement AI
         _enemyMovementAI.enabled = isEnabled;
-        //
+
         // // Enable / Disable Fire Weapon
-        // fireWeapon.enabled = isEnabled;
+        _weaponFire.enabled = isEnabled;
     }
 }

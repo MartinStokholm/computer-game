@@ -29,5 +29,11 @@ public static class PlayerUtils
             _ => AimDirection.Right
         };
     
-    
+    /// <summary>
+    /// Get the direction vector from an angle in degrees
+    /// </summary>
+    public static Vector3 GetDirectionVectorFromAngle(float angle)
+    {
+        return new Vector3(Mathf.Cos(Mathf.Deg2Rad * angle), Mathf.Sin(Mathf.Deg2Rad * angle), 0f);;
+    }
 }

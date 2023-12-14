@@ -105,7 +105,7 @@ public class PlayerControl : MonoBehaviour
         
         
         // Trigger weapon aim event
-        _player.AimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+        _player.weaponAimEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
     }
 
 

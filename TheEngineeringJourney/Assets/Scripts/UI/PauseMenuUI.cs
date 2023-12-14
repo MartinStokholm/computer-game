@@ -19,17 +19,6 @@ public class PauseMenuUI : MonoBehaviour
         HideSubMenu();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void LoadMainMenu()
-    {
-        SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Additive);
-    }
-
     public void TutorialMenuButton()
     {
         TutorialMenu.SetActive(true);

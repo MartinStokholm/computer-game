@@ -46,6 +46,10 @@ public static class Settings
     public const int ExperienceToLevelUp = 100;
     #endregion
     
+    #region FIRING CONTROL
+    public const float UseAimAngleDistance = 3.5f; // if the target distance is less than this then the aim angle will be used (calculated from player), else the weapon aim angle will be used (calculated from the weapon). 
+    #endregion
+    
     #region ENEMY PARAMETERS
     public const int DefaultEnemyHealth = 20;
     #endregion

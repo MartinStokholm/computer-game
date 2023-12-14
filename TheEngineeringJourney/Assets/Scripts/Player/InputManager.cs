@@ -62,6 +62,14 @@ public class InputManager : SingletonMonobehaviour<InputManager>
             _moveDirection = context.ReadValue<Vector2>();
         } 
     }
+    
+    public void PauseMenuTogglePressed(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GameManager.Instance.InputEvents.QuestLogTogglePressed();
+        }
+    }
 
     
     public Vector2 GetMoveDirection() 

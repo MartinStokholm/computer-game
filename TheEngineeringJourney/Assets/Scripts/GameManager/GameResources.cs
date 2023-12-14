@@ -86,6 +86,14 @@ public class GameResources : MonoBehaviour
     #endregion
     public SoundEffectSO HealthPickup;
     
+    #region Header UI
+    [Space(10)]
+    [Header("UI")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Populate with heart image prefab")]
+    #endregion
+    public GameObject HeartPrefab;
     
        #region Validation
 #if UNITY_EDITOR

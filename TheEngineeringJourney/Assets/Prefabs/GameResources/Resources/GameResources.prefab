@@ -56,3 +56,4 @@ MonoBehaviour:
   DoorOpenCloseSoundEffect: {fileID: 0}
   ChestOpen: {fileID: 0}
   HealthPickup: {fileID: 0}
+  HeartPrefab: {fileID: 4863174711189498524, guid: e2245cbafb9f6ee439d43c15ad5eb661, type: 3}

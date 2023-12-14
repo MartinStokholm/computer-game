@@ -21,6 +21,20 @@ public static class StaticEventHandler
     {
         OnRoomEnemiesDefeated?.Invoke(new RoomEnemiesDefeatedArgs() { Room = room });
     }
+    
+    public static event Action<MultiplierArgs> OnMultiplier;
+
+    public static void CallMultiplierEvent(bool multiplier)
+    {
+        OnMultiplier?.Invoke(new MultiplierArgs() { Multiplier = multiplier });
+    }
+
+    public static event Action OnPlayerDead;
+    
+    public static void CallPlayerDead()
+    {
+        OnPlayerDead?.Invoke();
+    }
 } 
 
 public class RoomChangedEventArgs : EventArgs
@@ -31,4 +45,9 @@ public class RoomChangedEventArgs : EventArgs
 public class RoomEnemiesDefeatedArgs : EventArgs
 {
     public Room Room;
+}
+
+public class MultiplierArgs : EventArgs
+{
+    public bool Multiplier;
 }

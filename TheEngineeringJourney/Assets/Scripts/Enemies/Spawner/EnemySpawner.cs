@@ -14,13 +14,11 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
     
     private void OnEnable()
     {
-        // subscribe to room changed event
         StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
     }
 
     private void OnDisable()
     {
-        // unsubscribe from room changed event
         StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
     }
 
@@ -93,15 +91,14 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
         enemy.GetComponent<DestroyedEvent>().OnDestroyed += Enemy_OnDestroyed;
     }
     
- 
+
     /// <summary>
     /// Process enemy destroyed
     /// </summary>
     private void Enemy_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
     {
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
-    
-        // reduce current enemy count
+        
         --_currentEnemyCount;
     
         // Score points - call points scored event

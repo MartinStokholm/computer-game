@@ -48,7 +48,7 @@ public class EnemyMovementAI : MovingObjects
         // Movement cooldown timer
         _currentEnemyPathRebuildCooldown -= Time.deltaTime;
         
-        if (!_chasePlayer || Vector3.Distance(transform.position, GetPlayerPosition()) < _enemy.EnemyDetails.chaseDistance)
+        if (!_chasePlayer || Vector3.Distance(transform.position, GetPlayerPosition()) < _enemy.EnemyDetails.ChaseDistance)
         {
             _chasePlayer = true;
         }
@@ -145,7 +145,7 @@ public class EnemyMovementAI : MovingObjects
 
     private bool IsPlayerMovedMoreThanRequiredDistance() =>
         Vector3.Distance(transform.position, GetPlayerPosition()) <
-        _enemy.EnemyDetails.chaseDistance;
+        _enemy.EnemyDetails.ChaseDistance;
     
     private Vector3 GetPlayerPosition() => GameManager.Instance.Player.GetPlayerPosition();
     

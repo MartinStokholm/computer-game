@@ -29,7 +29,7 @@ public class EnemyWeaponAI : MonoBehaviour
         
         var enemyAimDirection = PlayerUtils.GetAimDirection(enemyAngleDegrees);
         
-        _enemy.AimWeaponEvent.CallAimWeaponEvent(enemyAimDirection, enemyAngleDegrees, 0f, new Vector3(0,0,0));
+        _enemy.WeaponAimEvent.CallAimWeaponEvent(enemyAimDirection, enemyAngleDegrees, 0f, new Vector3(0,0,0));
     }
     
     private void FireWeapon()

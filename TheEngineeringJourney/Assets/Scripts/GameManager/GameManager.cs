@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -104,6 +102,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         StaticSceneChangeEvent.OnEnterLevel += EnterLevelEvent_CallEnterLevelEvent;
         StaticEventHandler.OnRoomEnemiesDefeated += StaticEventHandler_OnRoomEnemiesDefeated;
         StaticTeleportPositionEvent.OnTeleportEvent += StaticTeleportHandler_OnTeleportPosition;
+        Player.DestroyedEvent.OnDestroyed += Player_OnDestroyed;
     }
     
     private void OnDisable()
@@ -112,6 +111,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         StaticSceneChangeEvent.OnEnterLevel -= EnterLevelEvent_CallEnterLevelEvent;
         StaticEventHandler.OnRoomEnemiesDefeated -= StaticEventHandler_OnRoomEnemiesDefeated;
         StaticTeleportPositionEvent.OnTeleportEvent -= StaticTeleportHandler_OnTeleportPosition;
+        Player.DestroyedEvent.OnDestroyed -= Player_OnDestroyed;
     }
 
 
@@ -131,7 +131,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             _gameState = GameState.GameStarted;
         }
-
     }
 
     /// <summary>
@@ -147,6 +146,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.PlayingLevel:
+                Pause();
                 break;
             case GameState.EnterLevel: 
                 PlayMapLevel(currentMapLevelListIndex);
@@ -156,17 +156,23 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 PlayMapLevel(0);
                 _gameState = GameState.PlayingLevel;
                 break;
+            case GameState.LevelLost:
+                PlayMapLevel(0);
+                _gameState = GameState.PlayingLevel;
+                break;
             case GameState.GamePaused:
+                Pause();
                 break;
             case GameState.EngagingEnemies:
+                Pause();
                 break;
             case GameState.BossStage:
+                Pause();
                 break;
             case GameState.EngagingBoss:
+                Pause();
                 break;
             case GameState.GameWon:
-                break;
-            case GameState.GameLost:
                 break;
             case GameState.MapOverviewMap:
                 break;
@@ -198,6 +204,18 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         }
     }
     
+    /// <summary>
+    /// Handle player destroyed event
+    /// </summary>
+    private void Player_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
+    {
+        var enemyArray = FindObjectsOfType<Enemy>();
+        foreach (var enemy in enemyArray)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+        _gameState = GameState.LevelLost;
+    }
 
     private void EnterLevelEvent_CallEnterLevelEvent(SceneChangeArgs args)
     {
@@ -284,6 +302,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     public void PauseGameMenu()
     {
+        Debug.Log($"PauseGameMenu {GameState}");
         if (GameState != GameState.GamePaused)
         {
               pauseMenu.SetActive(true);
@@ -313,7 +332,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         Player.transform.position = teleportPositionArgs.TeleportPosition;
     }
-    
+
+    private void Pause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGameMenu();
+        }
+    }
+
     /// <summary>
     /// Get the current map level
     /// </summary>

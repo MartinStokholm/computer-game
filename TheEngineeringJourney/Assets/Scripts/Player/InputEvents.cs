@@ -15,6 +15,12 @@ public class InputEvents : MonoBehaviour
         OnQuestLogTogglePressed?.Invoke();
     }
     
+    public event Action OnPauseMenuTogglePressed;
+    public void PauseMenuTogglePressed()
+    {
+        OnPauseMenuTogglePressed?.Invoke();
+    }
+    
     public event Action OnInventoryTogglePressed;
     public void InventoryTogglePressed()
     {

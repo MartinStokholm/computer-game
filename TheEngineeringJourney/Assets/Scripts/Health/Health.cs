@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(HealthEvent))]
 [DisallowMultipleComponent]
@@ -25,8 +25,54 @@ public class Health : MonoBehaviour
     private const float _spriteFlashInterval = 0.2f;
     private WaitForSeconds _waitForSecondsSpriteFlashInterval = new(_spriteFlashInterval);
     [HideInInspector] public bool IsDamageable = true;
-    [HideInInspector] public Enemy enemy;
+    [FormerlySerializedAs("enemy")] [HideInInspector] public Enemy _enemy;
 
+    private void Awake()
+    {
+        _healthEvent = GetComponent<HealthEvent>();
+    }
+
+    private void Start()
+    {
+        // Trigger a health event for UI update
+        CallHealthEvent(0);
+
+        // Attempt to load enemy / player components
+        _player = GetComponent<Player>();
+        _enemy = GetComponent<Enemy>();
+
+
+        // Get player / enemy hit immunity details
+        if (_player is not null)
+        {
+            // if (_player.PlayerDetails.IsImmuneAfterHit)
+            // {
+            //     _isImmuneAfterHit = true;
+            //     //_immunityTime = _player.PlayerDetails.HitImmunityTime;
+            //     _spriteRenderer = _player.SpriteRenderer;
+            // }
+        }
+        else if (_enemy is not null)
+        {
+            if (_enemy.EnemyDetails.IsImmuneAfterHit)
+            {
+                _isImmuneAfterHit = true;
+                _immunityTime = _enemy.EnemyDetails.HitImmunityTime;
+                _spriteRenderer = _enemy.spriteRendererArray[0];
+            }
+        }
+
+        // Enable the health bar if required
+        if (_enemy != null && _enemy.EnemyDetails.IsHealthBarDisplayed == true && _healthBar != null)
+        {
+            _healthBar.EnableHealthBar();
+        }
+        else if (_healthBar != null)
+        {
+            _healthBar.DisableHealthBar();
+        }
+    }
+    
     /// <summary>
     /// Set starting health 
     /// </summary>
@@ -35,11 +81,6 @@ public class Health : MonoBehaviour
         StartingHealth = startingHealth;
         _currentHealth = startingHealth;
     }
-
-    /// <summary>
-    /// Get the starting health
-    /// </summary>
-    public int GetStartingHealth() => StartingHealth;
 
     public void LoseHealth(int damage)
     {
@@ -51,7 +92,8 @@ public class Health : MonoBehaviour
     /// </summary>
     public void TakeDamage(int damageAmount)
     {
-        if (!(IsDamageable)) return;
+        Debug.Log("TakeDamage: " + damageAmount);
+        if (!IsDamageable) return;
         
         _currentHealth -= damageAmount;
         CallHealthEvent(damageAmount);
@@ -129,6 +171,7 @@ public class Health : MonoBehaviour
             ? StartingHealth 
             : totalHealth;
 
+        Debug.Log($"Curren amount of health{_currentHealth}");
         CallHealthEvent(0);
     }
 }

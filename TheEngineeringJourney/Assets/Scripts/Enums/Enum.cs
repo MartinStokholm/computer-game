@@ -17,7 +17,7 @@ public enum GameState
     EngagingBoss,
     LevelCompleted,
     GameWon,
-    GameLost,
+    LevelLost,
     GamePaused,
     MapOverviewMap,
     RestartGame
