@@ -29,3 +29,5 @@ MonoBehaviour:
     IsUnavailable: 0
   SpawnPositions:
   - {x: -1, y: -1}
+  EnemiesByLevelList: []
+  RoomEnemySpawnParametersList: []

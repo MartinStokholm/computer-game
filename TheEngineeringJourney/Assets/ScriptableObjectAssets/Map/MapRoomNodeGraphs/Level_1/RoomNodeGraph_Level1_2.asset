@@ -21,8 +21,8 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: -71
-    y: 850
+    x: 162
+    y: 690
     width: 160
     height: 160
   isLeftClickDragging: 0
@@ -72,12 +72,12 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 1036
-    y: 383
+    x: 1269
+    y: 210
     width: 160
     height: 160
   isLeftClickDragging: 0
-  isSelected: 1
+  isSelected: 0
 --- !u!114 &2911113637251096737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,8 +100,8 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 785
-    y: 372
+    x: 1018
+    y: 212
     width: 160
     height: 160
   isLeftClickDragging: 0
@@ -129,8 +129,8 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 504
-    y: 369
+    x: 737
+    y: 209
     width: 160
     height: 160
   isLeftClickDragging: 0
@@ -156,8 +156,8 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 512
-    y: 147
+    x: 745
+    y: -13
     width: 160
     height: 160
   isLeftClickDragging: 0
@@ -184,8 +184,8 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: 224
-    y: 371
+    x: 457
+    y: 211
     width: 160
     height: 160
   isLeftClickDragging: 0
@@ -212,8 +212,8 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: -59
-    y: 611
+    x: 174
+    y: 451
     width: 160
     height: 160
   isLeftClickDragging: 0
@@ -240,8 +240,8 @@ MonoBehaviour:
   roomNodeTypeList: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   rect:
     serializedVersion: 2
-    x: -60
-    y: 370
+    x: 173
+    y: 210
     width: 160
     height: 160
   isLeftClickDragging: 0
