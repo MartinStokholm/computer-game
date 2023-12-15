@@ -88,7 +88,7 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            Debug.Log(status.ToString());
+            //Debug.Log(status.ToString());
         }
         
     }
@@ -114,7 +114,6 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         // Process open room nodes queue
         var noRoomOverlaps = ProcessRoomsInOpenRoomNodeQueue(roomNodeGraph, openRoomNodeQueue, mapBuilderRoomDictionary, roomTemplates, roomNodeTypes);
         
-        Debug.Log($"Overlapping?: {noRoomOverlaps.ToString()}");
         // If all the room nodes have been processed and there hasn't been a room overlap then return true
         return openRoomNodeQueue.IsQueueEmpty() && noRoomOverlaps is RoomOverlapping.Overlapping
             ? Attempt.RetryBuild

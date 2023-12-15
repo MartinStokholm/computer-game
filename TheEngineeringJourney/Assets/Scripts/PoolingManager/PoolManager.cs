@@ -30,7 +30,6 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
         {
             CreatePool(poolArray[i].prefab, poolArray[i].poolSize, poolArray[i].componentType);
         }
-
     }
 
     /// <summary>
@@ -69,10 +68,10 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
 
         if (!poolDictionary.ContainsKey(poolKey))
         {
-            Debug.Log("No object pool for " + prefab);
+            Debug.Log($"No object pool for {prefab} and ");
             return null;
         }
-
+        Debug.Log($" ReuseComponent prefab {prefab} and poolkey {poolKey}");
         // Get object from pool queue
         var componentToReuse = GetComponentFromPool(poolKey);
 
@@ -86,7 +85,9 @@ public class PoolManager : SingletonMonobehaviour<PoolManager>
     /// </summary>
     private Component GetComponentFromPool(int poolKey)
     {
+        Debug.Log($" GetComponentFromPool  poolkey {poolKey}");
         var componentToReuse = poolDictionary[poolKey].Dequeue();
+        Debug.Log($" GetComponentFromPool  poolDictionary[poolKey] {componentToReuse.gameObject}");
         poolDictionary[poolKey].Enqueue(componentToReuse);
 
         if (componentToReuse.gameObject.activeSelf)

@@ -106,7 +106,7 @@ public static class RoomNodeHelper
             DoorWayList = roomTemplate.Doorways.CopyDoorwayList()
         };
         
-        Debug.Log("Enemies to spawn in tiles: " + room.RoomEnemySpawnParametersList.FindAll(x => x.MaxTotalEnemiesToSpawn != 0).Count);
+        //Debug.Log("Enemies to spawn in tiles: " + room.RoomEnemySpawnParametersList.FindAll(x => x.MaxTotalEnemiesToSpawn != 0).Count);
     
         if (room.GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel()) == 0)
         {

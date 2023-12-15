@@ -91,8 +91,11 @@ public class Enemy : MonoBehaviour
     /// </summary>
     private void HealthEvent_OnHealthLost(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
+        Debug.Log($"Health lost for enemy {healthEventArgs.HealthAmount } of {Health._currentHealth}" );
+        
         if (healthEventArgs.HealthAmount > 0) return;
         
+        Debug.Log("DESTROY ENEMY");
         GetComponent<DestroyedEvent>().CallDestroyedEvent(false, Health.StartingHealth);
     }
 

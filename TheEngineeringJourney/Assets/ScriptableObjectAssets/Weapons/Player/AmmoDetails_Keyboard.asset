@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dce7b7409f54f5ea7d94e960dae5a42, type: 3}
+  m_Name: AmmoDetails_Keyboard
+  m_EditorClassIdentifier: 
+  AmmoName: Keyboard Ammo
+  isPlayerAmmo: 1
+  AmmoSprite: {fileID: 21300000, guid: c3c05c70a0c5e3d4abdbaae70ee5c814, type: 3}
+  AmmoPrefabArray:
+  - {fileID: 3704831762367981905, guid: f580578d82bdfe141aa023a63f1f626c, type: 3}
+  AmmoMaterial: {fileID: 2100000, guid: bca41060a49f1344391d83e188d04d60, type: 2}
+  AmmoChargeTime: 0
+  AmmoChargeMaterial: {fileID: 0}
+  AmmoHitEffect: {fileID: 11400000, guid: f822fa2a44786be4490ee50b9cc034a0, type: 2}
+  AmmoDamage: 1
+  AmmoSpeedMin: 25
+  AmmoSpeedMax: 25
+  AmmoRange: 20
+  AmmoRotationSpeed: 1
+  AmmoSpreadMin: 0.5
+  AmmoSpreadMax: 1.5
+  AmmoSpawnAmountMin: 1
+  AmmoSpawnAmountMax: 1
+  AmmoSpawnIntervalMin: 0
+  AmmoSpawnIntervalMax: 0
+  IsAmmoTrail: 0
+  AmmoTrailTime: 0
+  AmmoTrailMaterial: {fileID: 0}
+  AmmoTrailStartWidth: 0
+  AmmoTrailEndWidth: 0

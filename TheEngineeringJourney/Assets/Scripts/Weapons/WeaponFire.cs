@@ -119,7 +119,6 @@ public class WeaponFire : MonoBehaviour
     private void FireAmmo(float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
     {
         var currentAmmo = _activeWeapon.GetCurrentAmmo();
-
         if (currentAmmo is not null)
         {
             // Fire ammo routine.
@@ -156,7 +155,8 @@ public class WeaponFire : MonoBehaviour
 
             // Get Gameobject with IFireable component
             var ammo = (IFireAble)PoolManager.Instance.ReuseComponent(ammoPrefab, _activeWeapon.GetShootPosition(), Quaternion.identity);
-
+            Debug.Log($"ammo {ammo.GetGameObject()} and {ammo}");
+            
             // Initialise Ammo
             ammo.InitialiseAmmo(currentAmmo, aimAngle, weaponAimAngle, ammoSpeed, weaponAimDirectionVector);
 
@@ -193,10 +193,10 @@ public class WeaponFire : MonoBehaviour
         
         // Get weapon shoot effect gameobject from the pool with particle system component
         var weaponShootEffect = (WeaponShootEffect)PoolManager.Instance.ReuseComponent(_activeWeapon.GetCurrentWeapon().WeaponDetails.WeaponShootEffect.WeaponShootEffectPrefab, _activeWeapon.GetShootEffectPosition(), Quaternion.identity);
-
+        //Debug.Log($"Shoot {weaponShootEffect}");
         // Set shoot effect
         weaponShootEffect.SetShootEffect(_activeWeapon.CurrentWeapon.WeaponDetails.WeaponShootEffect, aimAngle);
-
+        
         // Set gameobject active (the particle system is set to automatically disable the
         // gameobject once finished)
         weaponShootEffect.gameObject.SetActive(true);
@@ -209,7 +209,7 @@ public class WeaponFire : MonoBehaviour
     {
         if (_activeWeapon.CurrentWeapon.WeaponDetails.WeaponFiringSoundEffect is not null)
         {
-            SoundEffectManager.Instance.PlaySoundEffect(_activeWeapon.GetCurrentWeapon().WeaponDetails.WeaponFiringSoundEffect);
+            //SoundEffectManager.Instance.PlaySoundEffect(_activeWeapon.GetCurrentWeapon().WeaponDetails.WeaponFiringSoundEffect);
         }
         else
         {

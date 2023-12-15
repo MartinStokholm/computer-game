@@ -187,7 +187,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void PlayMapLevel(int MapLevelListIndex)
     {
         var statusGenerateMap = MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex]);
-        Debug.Log($"Status for generate map: {statusGenerateMap}");
+        //Debug.Log($"Status for generate map: {statusGenerateMap}");
         
         switch (statusGenerateMap)
         {
