@@ -152,15 +152,4 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
         _currentRoom.RoomNodeType.isEntrance;
     
     private bool IsSpawnPositionArrayLessThanZero() => _currentRoom.SpawnPositionArray.Length <= 0;
-    
-    private bool CheckIfRoomsClearedNow()
-    {
-        if (_enemiesToSpawn != 0) return false;
-        
-        // Mark the room as cleared
-        _currentRoom.IsClearedOfEnemies = true;
-
-        return true;
-    }
-
 }

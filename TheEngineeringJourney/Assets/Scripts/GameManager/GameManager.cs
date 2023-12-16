@@ -36,6 +36,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #endregion Tooltip
 
     [SerializeField] public int currentMapLevelListIndex = 0;
+    
+    #region Tooltip
+    
+    [Tooltip("Quest")]
+
+    #endregion Tooltip
+
+    [SerializeField] public GameObject QuestEnables;
 
     public PlayerEvents PlayerEvents;
     public GoldEvents GoldEvents;
@@ -138,6 +146,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     /// </summary>
     private void HandleGameState()
     {
+        var questChildren = new List<GameObject>();
         // Handle game state
         switch (_gameState)
         {
@@ -148,19 +157,24 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             case GameState.PlayingLevel:
                 Pause();
                 break;
-            case GameState.EnterLevel: 
+            case GameState.EnterLevel:
+                questChildren = GetAllChildren(QuestEnables);
+                questChildren.ForEach(x => x.GetComponentInChildren<SpriteRenderer>().enabled = false);
                 PlayMapLevel(currentMapLevelListIndex);
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.LevelCompleted:
                 Player.Health.AddHealth(100);
-                Debug.Log(GameState.LevelCompleted);
                 PlayMapLevel(0);
+                questChildren = GetAllChildren(QuestEnables);
+                questChildren.ForEach(x => x.GetComponentInChildren<SpriteRenderer>().enabled = true);
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.LevelLost:
                 Player.Health.AddHealth(100);
                 PlayMapLevel(0);
+                questChildren = GetAllChildren(QuestEnables);
+                questChildren.ForEach(x => x.GetComponentInChildren<SpriteRenderer>().enabled = true);
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.GamePaused:
@@ -190,7 +204,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void PlayMapLevel(int MapLevelListIndex)
     {
         var statusGenerateMap = MapBuilder.Instance.GenerateMap(MapLevelList[MapLevelListIndex]);
-        //Debug.Log($"Status for generate map: {statusGenerateMap}");
+        Debug.Log($"Status for generate map: {MapLevelListIndex}");
         
         switch (statusGenerateMap)
         {
@@ -269,7 +283,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         }
         else if (isDungeonClearOfRegularEnemies && _bossRoom.Room.IsClearedOfEnemies)
         {
-            Debug.Log(_gameState);
+            MiscEvents.BossKilled();
             GameState = currentMapLevelListIndex < MapLevelList.Count - 1
                 ? GameState.LevelCompleted
                 : GameState.GameWon;
@@ -350,6 +364,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             PauseGameMenu();
         }
+    }
+    
+    List<GameObject> GetAllChildren(GameObject obj) {
+        var children = new List<GameObject>();
+    
+        foreach(Transform child in obj.transform) {
+            children.Add(child.gameObject);
+            children.AddRange(GetAllChildren(child.gameObject));
+        }
+    
+        return children;
     }
 
     /// <summary>
