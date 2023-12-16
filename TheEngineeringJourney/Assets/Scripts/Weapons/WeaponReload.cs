@@ -120,7 +120,6 @@ public class WeaponReload : MonoBehaviour
     /// </summary>
     private void SetActiveWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
-        Debug.Log("SetActiveWeaponEvent_OnSetActiveWeapon" + setActiveWeaponEventArgs.Weapon.IsWeaponReloading);
         if (!setActiveWeaponEventArgs.Weapon.IsWeaponReloading) return;
         if (_reloadWeaponCoroutine is not null)
         {

@@ -52,7 +52,7 @@ public static class EditorUtilities
     /// <summary>
     /// positive value debug check- if zero is allowed set isZeroAllowed to true. Returns true if there is an error
     /// </summary>
-    public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, int valueToCheck, bool isZeroAllowed)
+    public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
     {
         if (isZeroAllowed ? valueToCheck >= 0 : valueToCheck > 0) return false;
         
@@ -72,9 +72,9 @@ public static class EditorUtilities
             return true;
         }
 
-        if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, (int)valueToCheckMinimum, isZeroAllowed)) return true;
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, valueToCheckMinimum, isZeroAllowed)) return true;
 
-        if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, (int)valueToCheckMaximum, isZeroAllowed)) return true;
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, valueToCheckMaximum, isZeroAllowed)) return true;
 
         return false;
     }

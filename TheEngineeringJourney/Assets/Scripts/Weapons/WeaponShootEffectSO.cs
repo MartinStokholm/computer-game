@@ -80,10 +80,10 @@ public class WeaponShootEffectSO : ScriptableObject
 
     private void OnValidate()
     {
-        EditorUtilities.ValidateCheckPositiveValue(this, nameof(Duration), (int)Duration, false);
-        EditorUtilities.ValidateCheckPositiveValue(this, nameof(StartParticleSize), (int)StartParticleSize, false);
-        EditorUtilities.ValidateCheckPositiveValue(this, nameof(StartParticleSpeed), (int)StartParticleSpeed, false);
-        EditorUtilities.ValidateCheckPositiveValue(this, nameof(StartLifetime), (int)StartLifetime, false);
+        EditorUtilities.ValidateCheckPositiveValue(this, nameof(Duration), Duration, false);
+        EditorUtilities.ValidateCheckPositiveValue(this, nameof(StartParticleSize), StartParticleSize, false);
+        EditorUtilities.ValidateCheckPositiveValue(this, nameof(StartParticleSpeed), StartParticleSpeed, false);
+        EditorUtilities.ValidateCheckPositiveValue(this, nameof(StartLifetime), StartLifetime, false);
         EditorUtilities.ValidateCheckPositiveValue(this, nameof(MaxParticleNumber), MaxParticleNumber, false);
         EditorUtilities.ValidateCheckPositiveValue(this, nameof(EmissionRate), EmissionRate, true);
         EditorUtilities.ValidateCheckPositiveValue(this, nameof(BurstParticleNumber), BurstParticleNumber, true);

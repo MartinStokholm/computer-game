@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerDetails_", menuName = "Scriptable Objects/Player/Player Details")]
@@ -31,6 +32,27 @@ public class PlayerDetailsSO : ScriptableObject
     [Tooltip("Player starting health amount")]
     #endregion
     public int PlayerHealthAmount;
+    #region Tooltip
+    [Tooltip("Select if has immunity period immediately after being hit.  If so specify the immunity time in seconds in the other field")]
+    #endregion
+    public bool IsImmuneAfterHit = false;
+    #region Tooltip
+    [Tooltip("Immunity time in seconds after being hit")]
+    #endregion
+    public float HitImmunityTime;
+    
+    #region Header WEAPON
+    [Space(10)]
+    [Header("WEAPON")]
+    #endregion
+    #region Tooltip
+    [Tooltip("Player  initial starting weapon")]
+    #endregion
+    public WeaponDetailsSO StartingWeapon;
+    #region Tooltip
+    [Tooltip("Populate with the list of starting weapons")]
+    #endregion
+    public List<WeaponDetailsSO> StartingWeaponList;
 
     #region Header OTHER
     [Space(10)]

@@ -20,6 +20,7 @@ public class PlayerControl : MonoBehaviour
     private float _moveSpeed;
     private Coroutine _playerRollCoroutine;
     private WaitForFixedUpdate _waitForFixedUpdate;
+    private bool leftMouseDownPreviousFrame = false;
     //private bool _isPlayerRolling = false;
     //private float _playerRollCooldownTimer = 0f;
 
@@ -45,6 +46,8 @@ public class PlayerControl : MonoBehaviour
         if (DialogueManager.Instance.IsDialoguePlaying) return;
         MovementInput();
         
+        //AimWeaponInput();
+
         WeaponInput();
     }
     
@@ -86,10 +89,10 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void WeaponInput()
+    private (Vector3, float, float, AimDirection) AimWeaponInput()
     {
         var mouseWorldPosition = GameUtilities.GetMouseWorldPosition();
-        var weaponDirection = (mouseWorldPosition);
+        var weaponDirection = (mouseWorldPosition - _player.weaponActive.GetShootPosition());
 
         // Calculate direction vector of mouse cursor from player transform position
         var playerDirection = (mouseWorldPosition - transform.position);
@@ -106,6 +109,44 @@ public class PlayerControl : MonoBehaviour
         
         // Trigger weapon aim event
         _player.weaponAimEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+        return (playerDirection, weaponAngleDegrees, playerAngleDegrees, playerAimDirection);
+    }
+    
+    /// <summary>
+    /// Weapon Input
+    /// </summary>
+    private void WeaponInput()
+    {
+        // Vector3 weaponDirection;
+        // float weaponAngleDegrees, playerAngleDegrees;
+        // AimDirection playerAimDirection;
+
+        // Aim weapon input
+        var (weaponDirection, weaponAngleDegrees, playerAngleDegrees, playerAimDirection) =  AimWeaponInput();
+
+        // Fire weapon input
+        FireWeaponInput(weaponDirection, weaponAngleDegrees, playerAngleDegrees, playerAimDirection);
+
+        // Switch weapon input
+        // SwitchWeaponInput();
+        //
+        // // Reload weapon input
+        // ReloadWeaponInput();
+    }
+    
+    private void FireWeaponInput(Vector3 weaponDirection, float weaponAngleDegrees, float playerAngleDegrees, AimDirection playerAimDirection)
+    {
+        // Fire when left mouse button is clicked
+        if (Input.GetMouseButton(0))
+        {
+            // Trigger fire weapon event
+            _player.WeaponFireEvent.CallFireWeaponEvent(true, leftMouseDownPreviousFrame, playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+            leftMouseDownPreviousFrame = true;
+        }
+        else
+        {
+            leftMouseDownPreviousFrame = false;
+        }
     }
 
 

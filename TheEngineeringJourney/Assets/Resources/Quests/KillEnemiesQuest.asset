@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <id>k__BackingField: KillEnemiesQuest
   DisplayName: 
-  LevelRequirement: 0
+  LevelRequirement: 1
   QuestPrerequisites: []
   QuestStepPrefabs:
   - {fileID: 1762674904696133573, guid: 8e1164a5e4a834861a6814f0483efcd5, type: 3}

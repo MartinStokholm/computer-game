@@ -15,7 +15,7 @@ public class Health : MonoBehaviour
     #endregion
     [SerializeField] private HealthBar _healthBar;
     public int StartingHealth { get; private set; }
-    private int _currentHealth;
+    public int _currentHealth { get; private set; }
     private HealthEvent _healthEvent;
     private Player _player;
     private Coroutine _immunityCoroutine;

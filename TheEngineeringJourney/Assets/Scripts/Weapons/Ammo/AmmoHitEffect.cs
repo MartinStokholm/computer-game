@@ -88,15 +88,6 @@ public class AmmoHitEffect : MonoBehaviour
         textureSheetAnimationModule.SetSprite(0, sprite);
     }
 
-
-    /// <summary>
-    /// Set the rotation of the emitter to match the aim angle
-    /// </summary>
-    private void SetEmitterRotation(float aimAngle)
-    {
-        transform.eulerAngles = new Vector3(0f, 0f, aimAngle);
-    }
-
     /// <summary>
     /// Set the ammo effect velocity over lifetime
     /// </summary>

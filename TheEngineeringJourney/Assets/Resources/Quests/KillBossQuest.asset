@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a9a59303f1a4b8458475cf6b99f7e5b, type: 3}
   m_Name: KillBossQuest
   m_EditorClassIdentifier: 
-  <id>k__BackingField: 
+  <id>k__BackingField: KillBossQuest
   DisplayName: 
-  LevelRequirement: 0
+  LevelRequirement: 1
   QuestPrerequisites: []
-  QuestStepPrefabs: []
+  QuestStepPrefabs:
+  - {fileID: 888844793870914905, guid: 98bafef144ec0457fb4f5fbc7141c611, type: 3}
   GoldReward: 0
   ExperienceReward: 0

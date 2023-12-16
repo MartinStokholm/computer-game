@@ -1175,10 +1175,10 @@ MonoBehaviour:
     m_ActionName: Player/Inventory[/Keyboard/i]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 356438186}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: PauseGameMenu
-        m_Mode: 1
+      - m_Target: {fileID: 126468420}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: PauseMenuTogglePressed
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1193,6 +1193,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 004084d6-3a83-437c-9575-d197a596a3cb
     m_ActionName: Combat/Attack[/Keyboard/space,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 40b83e90-42e6-46d8-94e4-9d78d0b19f51
+    m_ActionName: Player/QuestLog[/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -1452,8 +1456,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 175093236}
-  - component: {fileID: 175093237}
   - component: {fileID: 175093238}
+  - component: {fileID: 175093239}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -1477,18 +1481,6 @@ Transform:
   - {fileID: 716390196}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &175093237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 175093235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 096d72558a12abc4cae367f58869f4e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &175093238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1499,6 +1491,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 46af95d5431ae8b4487c12d77146ac07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &175093239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 175093235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c68bc0a0f7fda340bd4d4dd80a8f8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &195856873
@@ -5280,7 +5284,7 @@ Transform:
   m_GameObject: {fileID: 721334654}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 168, y: -41, z: 0}
+  m_LocalPosition: {x: 173, y: -19, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8679,7 +8683,7 @@ Transform:
   m_GameObject: {fileID: 1124496843}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -318, y: -40, z: 0}
+  m_LocalPosition: {x: -333, y: -30, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8747,7 +8751,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ff256e4f714bff8f8345417ad0d600, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolArray: []
+  poolArray:
+  - poolSize: 30
+    prefab: {fileID: 3203528340405410516, guid: aebabbb72785dea42849504d91d07d89, type: 3}
+    componentType: IFireAble
+  - poolSize: 20
+    prefab: {fileID: 7423881068129889936, guid: 6e4e98fca3a7aa54dbc96f07cfcef337, type: 3}
+    componentType: SoundEffect
+  - poolSize: 20
+    prefab: {fileID: 7853615770937549561, guid: fd95e1459eafae34399e9f8893a3c717, type: 3}
+    componentType: WeaponShootEffect
 --- !u!1 &1141515585
 GameObject:
   m_ObjectHideFlags: 0
@@ -10818,7 +10831,7 @@ Transform:
   m_GameObject: {fileID: 1447025000}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -917, y: 500, z: 0}
+  m_LocalPosition: {x: -917, y: 517.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

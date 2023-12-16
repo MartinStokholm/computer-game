@@ -62,7 +62,11 @@ public class Ammo : MonoBehaviour, IFireAble
     private void OnTriggerEnter2D(Collider2D collision)
     {
         // If already colliding with something return
-        if (IsColliding) return;
+        Debug.Log($"OnTriggerEnter2D enemyHit  IsColliding! {IsColliding}");
+        Debug.Log($"OnTriggerEnter2D enemyHit  to me! {collision.gameObject}");
+        Debug.Log($"OnTriggerEnter2D enemyHit  IsColliding! {IsColliding}");
+        
+        //if (IsColliding) return;
 
         // Deal Damage To Collision Object
         DealDamage(collision);
@@ -76,19 +80,20 @@ public class Ammo : MonoBehaviour, IFireAble
     private void DealDamage(Collider2D collision)
     {
         var health = collision.GetComponent<Health>();
-
+        Debug.Log($"DealDamage enemy healt! {health}");
         var enemyHit = false;
 
         if (health is not null)
         {
             // Set isColliding to prevent ammo dealing damage multiple times
             IsColliding = true;
-
+            Debug.Log($"Damage to me! {collision.gameObject}, and take {AmmoDetails.AmmoDamage}");
             health.TakeDamage(AmmoDetails.AmmoDamage);
 
             // Enemy hit
             if (health._enemy != null)
             {
+                Debug.Log($"enemyHit  to me! {collision.gameObject}");
                 enemyHit = true;
             }
         }
@@ -211,6 +216,8 @@ public class Ammo : MonoBehaviour, IFireAble
     {
         // Process if a hit effect has been specified
         if (AmmoDetails.AmmoHitEffect == null || AmmoDetails.AmmoHitEffect.AmmoHitEffectPrefab == null) return;
+        Debug.Log($"AmmoDetails.AmmoHitEffect: {AmmoDetails.AmmoHitEffect}");
+        Debug.Log($"AmmoDetails.AmmoHitEffectAmmoHitEffectPrefab: {AmmoDetails.AmmoHitEffect.AmmoHitEffectPrefab}");
         
         // Get ammo hit effect gameobject from the pool (with particle system component)
         var ammoHitEffect = (AmmoHitEffect)PoolManager.Instance.ReuseComponent(AmmoDetails.AmmoHitEffect.AmmoHitEffectPrefab, transform.position, Quaternion.identity);

@@ -18,7 +18,6 @@ public class HealthUI : MonoBehaviour
 
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-        Debug.Log("HealthEvent_OnHealthChanged");
         SetHealthBar(healthEventArgs);
     }
 

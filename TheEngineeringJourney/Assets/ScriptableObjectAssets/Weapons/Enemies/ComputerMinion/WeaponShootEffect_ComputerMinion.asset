@@ -50,7 +50,7 @@ MonoBehaviour:
   EmissionRate: 100
   BurstParticleNumber: 20
   EffectGravity: -0.01
-  Sprite: {fileID: 0}
+  Sprite: {fileID: 21300000, guid: 0b20335e5074cae4c9087bf037e3eb65, type: 3}
   VelocityOverLifetimeMin: {x: 0, y: 0, z: 0}
   VelocityOverLifetimeMax: {x: 0, y: 0, z: 0}
-  WeaponShootEffectPrefab: {fileID: 0}
+  WeaponShootEffectPrefab: {fileID: 1495175244542072646, guid: 50104caf45e50d74c9e89bec7c5eea21, type: 3}

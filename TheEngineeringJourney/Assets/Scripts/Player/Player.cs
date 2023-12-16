@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     
     [HideInInspector] public PlayerControl playerControl;
     [FormerlySerializedAs("AimWeaponEvent")] [HideInInspector] public WeaponAimEvent weaponAimEvent;
-    [HideInInspector] public FireWeaponEvent fireWeaponEvent;
+    [FormerlySerializedAs("fireWeaponEvent")] [HideInInspector] public FireWeaponEvent WeaponFireEvent;
     [HideInInspector] public SetActiveWeaponEvent setActiveWeaponEvent;
     [HideInInspector] public WeaponActive weaponActive;
     [HideInInspector] public WeaponFiredEvent weaponFiredEvent;
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         DestroyedEvent = GetComponent<DestroyedEvent>();
         playerControl = GetComponent<PlayerControl>();
         weaponAimEvent = GetComponent<WeaponAimEvent>();
-        fireWeaponEvent = GetComponent<FireWeaponEvent>();
+        WeaponFireEvent = GetComponent<FireWeaponEvent>();
         setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
         weaponActive = GetComponent<WeaponActive>();
         weaponFiredEvent = GetComponent<WeaponFiredEvent>();
@@ -88,7 +88,8 @@ public class Player : MonoBehaviour
     public void Initialize(PlayerDetailsSO playerDetails)
     {
         PlayerDetails = playerDetails;
-
+        
+        CreatePlayerStartingWeapons();
         // Set player starting health
         SetPlayerHealth(playerDetails);
     }
@@ -136,15 +137,15 @@ public class Player : MonoBehaviour
     /// </summary>
     private void CreatePlayerStartingWeapons()
     {
-        // Clear list
-        // weaponList.Clear();
-        //
-        // // Populate weapon list from starting weapons
-        // foreach (WeaponDetailsSO weaponDetails in PlayerDetails.StartingWeaponList)
-        // {
-        //     // Add weapon to player
-        //     AddWeaponToPlayer(weaponDetails);
-        // }
+        //Clear list
+        Weapons.Clear();
+        
+        // Populate weapon list from starting weapons
+        foreach (var weaponDetails in PlayerDetails.StartingWeaponList)
+        {
+            // Add weapon to player
+            AddWeaponToPlayer(weaponDetails);
+        }
     }
     
     
@@ -170,7 +171,6 @@ public class Player : MonoBehaviour
         setActiveWeaponEvent.CallSetActiveWeaponEvent(weapon);
 
         return weapon;
-
     }
 
 
