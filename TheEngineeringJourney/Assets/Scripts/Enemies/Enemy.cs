@@ -93,6 +93,8 @@ public class Enemy : MonoBehaviour
     {
         if (healthEventArgs.HealthAmount > 0) return;
         
+        GameManager.Instance.MiscEvents.EnemyKilled();
+        
         GetComponent<DestroyedEvent>().CallDestroyedEvent(false, Health.StartingHealth);
     }
 
