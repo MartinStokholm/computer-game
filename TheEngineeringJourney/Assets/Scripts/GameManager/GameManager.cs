@@ -153,10 +153,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.LevelCompleted:
+                Player.Health.AddHealth(100);
+                Debug.Log(GameState.LevelCompleted);
                 PlayMapLevel(0);
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.LevelLost:
+                Player.Health.AddHealth(100);
                 PlayMapLevel(0);
                 _gameState = GameState.PlayingLevel;
                 break;
@@ -239,6 +242,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         var isDungeonClearOfRegularEnemies = true;
         _bossRoom = null;
+        Debug.Log("isDungeonClearOfRegularEnemies: " + isDungeonClearOfRegularEnemies);
 
         // Loop through all dungeon rooms to see if cleared of enemies
         foreach (var keyValuePair in MapBuilder.Instance.MapBuilderRoomDictionary)
@@ -255,20 +259,26 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             isDungeonClearOfRegularEnemies = false;
             break;
         }
+        
+        Debug.Log($"GameState clear: {_gameState} and isDungeonClearOfRegularEnemies {isDungeonClearOfRegularEnemies}");
 
-        switch (isDungeonClearOfRegularEnemies)
+        if (isDungeonClearOfRegularEnemies && _bossRoom is null)
         {
-            case true when _bossRoom is null:
-            case true when _bossRoom.Room.IsClearedOfEnemies:
-                GameState = currentMapLevelListIndex < MapLevelList.Count - 1 
-                    ? GameState.LevelCompleted 
-                    : GameState.GameWon;
-                break;
-
-            case true:
-                GameState = GameState.BossStage;
-                StartCoroutine(BossStage());
-                break;
+            GameState = GameState.LevelCompleted;
+            Debug.Log("Boss room is missing");
+        }
+        else if (isDungeonClearOfRegularEnemies && _bossRoom.Room.IsClearedOfEnemies)
+        {
+            Debug.Log(_gameState);
+            GameState = currentMapLevelListIndex < MapLevelList.Count - 1
+                ? GameState.LevelCompleted
+                : GameState.GameWon;
+        }
+        else if (isDungeonClearOfRegularEnemies)
+        {
+            GameState = GameState.BossStage;
+            Debug.Log(GameState.BossStage);
+            StartCoroutine(BossStage());
         }
     }
     
@@ -279,6 +289,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         // Activate boss room
         _bossRoom.gameObject.SetActive(true);
+        Debug.Log("Bossroom active");
 
         // Unlock boss room
         //_bossRoom.UnlockDoors(0f);

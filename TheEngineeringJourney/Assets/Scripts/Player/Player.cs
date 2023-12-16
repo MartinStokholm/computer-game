@@ -154,6 +154,7 @@ public class Player : MonoBehaviour
     /// </summary>
     public Weapon AddWeaponToPlayer(WeaponDetailsSO weaponDetails)
     {
+        Debug.Log($"AddWeaponToPlayer: {weaponDetails.WeaponShootPosition}");
         var weapon = new Weapon() { 
             WeaponDetails = weaponDetails, 
             WeaponReloadTimer = 0f, 

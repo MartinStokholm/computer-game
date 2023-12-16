@@ -24,10 +24,16 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
 
     private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
     {
+        _enemiesSpawnedSoFar = 0;
+        _currentEnemyCount = 0;
+        
         _currentRoom = roomChangedEventArgs.Room;
         _enemiesToSpawn = _currentRoom.GetNumberOfEnemiesToSpawn(GameManager.Instance.GetCurrentMapLevel());
         
-        if (IsCorridorOrEntrance()) return;
+        //MusicManager.Instance.PlayMusic(_currentRoom.ambientMusic, 0.2f, 2f);
+        //if (IsCorridorOrEntrance()) return;
+        
+        Debug.Log("_currentRoom.IsClearedOfEnemies: " + _currentRoom.IsClearedOfEnemies);
         
         if (_currentRoom.IsClearedOfEnemies) return;
         
@@ -35,7 +41,11 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
        
         _enemyMaxConcurrentSpawnNumber = _roomEnemySpawnParameters.MaxTotalEnemiesToSpawn;
 
-        if (CheckIfRoomsClearedNow()) return;
+        if (_enemiesToSpawn == 0)
+        {
+            _currentRoom.IsClearedOfEnemies = true;
+            return;
+        }
         
         SpawnEnemies();
     }

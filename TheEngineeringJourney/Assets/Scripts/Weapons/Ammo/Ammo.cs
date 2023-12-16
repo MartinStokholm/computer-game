@@ -50,11 +50,11 @@ public class Ammo : MonoBehaviour, IFireAble
         AmmoRange -= distanceVector.magnitude;
 
         if (!(AmmoRange < 0f)) return;
-        if (AmmoDetails.isPlayerAmmo)
-        {
-            // no multiplier
-            StaticEventHandler.CallMultiplierEvent(false);
-        }
+        // if (AmmoDetails.isPlayerAmmo)
+        // {
+        //     // no multiplier
+        //     StaticEventHandler.CallMultiplierEvent(false);
+        // }
 
         DisableAmmo();
     }
@@ -66,7 +66,7 @@ public class Ammo : MonoBehaviour, IFireAble
         Debug.Log($"OnTriggerEnter2D enemyHit  to me! {collision.gameObject}");
         Debug.Log($"OnTriggerEnter2D enemyHit  IsColliding! {IsColliding}");
         
-        //if (IsColliding) return;
+        if (IsColliding) return;
 
         // Deal Damage To Collision Object
         DealDamage(collision);
@@ -81,26 +81,26 @@ public class Ammo : MonoBehaviour, IFireAble
     {
         var health = collision.GetComponent<Health>();
         Debug.Log($"DealDamage enemy healt! {health}");
-        var enemyHit = false;
+        //var enemyHit = false;
 
         if (health is not null)
         {
             // Set isColliding to prevent ammo dealing damage multiple times
             IsColliding = true;
-            Debug.Log($"Damage to me! {collision.gameObject}, and take {AmmoDetails.AmmoDamage}");
+            Debug.Log($"DealDamage to: {collision.gameObject}, and take {AmmoDetails.AmmoDamage}");
             health.TakeDamage(AmmoDetails.AmmoDamage);
 
             // Enemy hit
-            if (health._enemy != null)
-            {
-                Debug.Log($"enemyHit  to me! {collision.gameObject}");
-                enemyHit = true;
-            }
+            // if (health._enemy != null)
+            // {
+            //     Debug.Log($"enemyHit  to me! {collision.gameObject}");
+            //     enemyHit = true;
+            // }
         }
 
         // If player ammo then update multiplier
-        if (!AmmoDetails.isPlayerAmmo) return;
-        StaticEventHandler.CallMultiplierEvent(enemyHit);
+        // if (!AmmoDetails.isPlayerAmmo) return;
+        // StaticEventHandler.CallMultiplierEvent(enemyHit);
     }
 
 

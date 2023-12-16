@@ -8767,7 +8767,7 @@ MonoBehaviour:
   - poolSize: 20
     prefab: {fileID: 7853615770937549561, guid: 9ee883cc5f2becf4a9a2de44e30cc878, type: 3}
     componentType: IFireAble
-  - poolSize: 20
+  - poolSize: 200
     prefab: {fileID: 3704831762367981905, guid: f580578d82bdfe141aa023a63f1f626c, type: 3}
     componentType: IFireAble
 --- !u!1 &1141515585

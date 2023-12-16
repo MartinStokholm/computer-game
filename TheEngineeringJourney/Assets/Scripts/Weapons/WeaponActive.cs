@@ -46,6 +46,7 @@ public class WeaponActive : MonoBehaviour
 
     private void SetWeaponEvent_OnSetActiveWeapon(SetActiveWeaponEvent setActiveWeaponEvent, SetActiveWeaponEventArgs setActiveWeaponEventArgs)
     {
+        Debug.Log($"SetWeaponEvent_OnSetActiveWeapon {setActiveWeaponEventArgs.Weapon}");
         SetWeapon(setActiveWeaponEventArgs.Weapon);
     }
 
@@ -69,6 +70,7 @@ public class WeaponActive : MonoBehaviour
         }
 
         // Set weapon shoot position
+        Debug.Log($"SetWeapon: ${CurrentWeapon.WeaponDetails.WeaponShootPosition}");
         WeaponShootPositionTransform.localPosition = CurrentWeapon.WeaponDetails.WeaponShootPosition;
     }
 

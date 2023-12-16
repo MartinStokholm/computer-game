@@ -8,14 +8,14 @@ public class PlayerControl : MonoBehaviour
     #endregion
     [SerializeField] private MovementDetailsSO _movementDetail;
     
-    #region Tooltip
-
-    [Tooltip("The player WeaponShootPosition game object in the hierarchy")]
-
-    #endregion Tooltip
-
-    [SerializeField] private Transform weaponShootPosition;
-    
+    // #region Tooltip
+    //
+    // [Tooltip("The player WeaponShootPosition game object in the hierarchy")]
+    //
+    // #endregion Tooltip
+    //
+    // [SerializeField] private Transform weaponShootPosition;
+    private int _currentWeaponIndex = 1;
     private Player _player;
     private float _moveSpeed;
     private Coroutine _playerRollCoroutine;
@@ -37,6 +37,7 @@ public class PlayerControl : MonoBehaviour
     private void Start()
     {
         _waitForFixedUpdate = new WaitForFixedUpdate();
+        SetStartingWeapon();
     }
 
     private void Update()
@@ -49,6 +50,33 @@ public class PlayerControl : MonoBehaviour
         //AimWeaponInput();
 
         WeaponInput();
+    }
+    
+    /// <summary>
+    /// Set the player starting weapon
+    /// </summary>
+    private void SetStartingWeapon()
+    {
+        var index = 1;
+
+        foreach (var weapon in _player.Weapons)
+        {
+            if (weapon.WeaponDetails == _player.PlayerDetails.StartingWeapon)
+            {
+                SetWeaponByIndex(index);
+                break;
+            }
+            index++;
+        }
+    }
+    
+    private void SetWeaponByIndex(int weaponIndex)
+    {
+        if (weaponIndex - 1 < _player.Weapons.Count)
+        {
+            _currentWeaponIndex = weaponIndex;
+            _player.setActiveWeaponEvent.CallSetActiveWeaponEvent(_player.Weapons[weaponIndex - 1]);
+        }
     }
     
     /// <summary>

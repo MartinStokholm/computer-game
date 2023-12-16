@@ -61,7 +61,7 @@ Transform:
   m_GameObject: {fileID: 1341893150120660674}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -253,7 +253,7 @@ Transform:
   m_GameObject: {fileID: 3075873638737284522}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.7, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -466,6 +466,8 @@ GameObject:
   - component: {fileID: -2133032269955521772}
   - component: {fileID: 3559807234564324066}
   - component: {fileID: 2202538860754144341}
+  - component: {fileID: 1250640744797445692}
+  - component: {fileID: 2645328966793815540}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -482,7 +484,7 @@ Transform:
   m_GameObject: {fileID: 8967308391485091835}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -516,7 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthBar: {fileID: 0}
   IsDamageable: 1
-  enemy: {fileID: 0}
+  _enemy: {fileID: 0}
 --- !u!212 &51919452629398909
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -717,7 +719,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 0.99785197
+  m_Mass: 0.9978519
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
@@ -745,13 +747,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerDetails: {fileID: 0}
+  HealthEvent: {fileID: 0}
   Health: {fileID: 0}
   MovementByVelocityEvent: {fileID: 0}
   MovementToPositionEvent: {fileID: 0}
-  weaponAimEvent: {fileID: 0}
   IdleEvent: {fileID: 0}
   SpriteRenderer: {fileID: 0}
   Animator: {fileID: 0}
+  DestroyedEvent: {fileID: 0}
+  playerControl: {fileID: 0}
+  weaponAimEvent: {fileID: 0}
+  WeaponFireEvent: {fileID: 0}
+  setActiveWeaponEvent: {fileID: 0}
+  weaponActive: {fileID: 0}
+  weaponFiredEvent: {fileID: 0}
+  reloadWeaponEvent: {fileID: 0}
+  weaponReloadedEvent: {fileID: 0}
 --- !u!114 &2792486794094560747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,7 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2abe5679dfe78414ca0473b628a99832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRotationPointTransform: {fileID: 0}
+  weaponRotationPointTransform: {fileID: 633486449219505554}
 --- !u!114 &4472294821794180865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,5 +1025,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d07289676e44100b9ba4426d9863b51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1250640744797445692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967308391485091835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d01e1db9b57f4de4a2f8cbd77a786161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2645328966793815540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8967308391485091835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7bc33bec07244408bdebfc629fec490, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
