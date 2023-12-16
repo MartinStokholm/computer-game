@@ -121,7 +121,112 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: boss_1_side_walk_sword_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 0
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18fb83e9bf72bc4489fad0abfc39dd5c
+      internalID: 667885921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_side_walk_sword_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 0
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56838c9d25383a149b16256955d0767e
+      internalID: 1981950403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_side_walk_sword_2
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 0
+        width: 17
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a4da90cafaa23f458afa674ad7cfc2c
+      internalID: -2076152613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_side_walk_sword_3
+      rect:
+        serializedVersion: 2
+        x: 86
+        y: 0
+        width: 19
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a13668690747d84f9ea5962209b1699
+      internalID: 569373568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_1_side_walk_sword_4
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 18
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8949edf231aabae4fb36d89de605e982
+      internalID: 720659518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -132,7 +237,12 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      boss_1_side_walk_sword_0: 667885921
+      boss_1_side_walk_sword_1: 1981950403
+      boss_1_side_walk_sword_2: -2076152613
+      boss_1_side_walk_sword_3: 569373568
+      boss_1_side_walk_sword_4: 720659518
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

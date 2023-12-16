@@ -4,7 +4,7 @@ using UnityEngine;
 public class KillEnemiesQuest : QuestStep
 {
     private int _enemiesKilled = 0;
-    private const int EnemiesToKill = 5;
+    private const int EnemiesToKill = 1;
     
     private void OnEnable()
     {
@@ -20,7 +20,8 @@ public class KillEnemiesQuest : QuestStep
     {
         if (_enemiesKilled < EnemiesToKill)
         {
-            _enemiesKilled++;
+            ++_enemiesKilled;
+            Debug.Log(_enemiesKilled);
             UpdateState();
         }
         
