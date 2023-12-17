@@ -1197,6 +1197,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 40b83e90-42e6-46d8-94e4-9d78d0b19f51
     m_ActionName: Player/QuestLog[/Keyboard/tab]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 126468420}
+        m_TargetAssemblyTypeName: InputManager, Assembly-CSharp
+        m_MethodName: ExitDialogButtonPressed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: bc754a47-cc73-4118-8b46-b7e472ed2f00
+    m_ActionName: Player/ExitDialog[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
@@ -15243,9 +15259,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.70277774
+    width: 0.34375003
+    height: 0.34375
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
