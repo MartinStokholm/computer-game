@@ -4,7 +4,7 @@ using UnityEngine;
 public class KillEnemiesQuest : QuestStep
 {
     private int _enemiesKilled = 0;
-    private const int EnemiesToKill = 1;
+    private const int EnemiesToKill = 10;
     
     private void OnEnable()
     {

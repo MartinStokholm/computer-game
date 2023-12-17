@@ -95,7 +95,6 @@ public class EnemyWeaponAI : MonoBehaviour
         // Set enemy aim direction
         AimDirection enemyAimDirection = PlayerUtils.GetAimDirection(enemyAngleDegrees);
         
-        Debug.Log($"enemyAimDirection: {enemyAimDirection}, enemyAngleDegrees: {enemyAngleDegrees}, weaponAngleDegrees: {weaponAngleDegrees}, weaponDirection: {weaponDirection}");
         // Trigger weapon aim event
         enemy.WeaponAimEvent.CallAimWeaponEvent(enemyAimDirection, enemyAngleDegrees, weaponAngleDegrees, weaponDirection);
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EnemyName: Computer Minion
   enemyPrefab: {fileID: 2141953704171476164, guid: b619a74230167d547855e2695d532a7c, type: 3}
-  ChaseDistance: 50
+  ChaseDistance: 250
   enemyStandardMaterial: {fileID: 2100000, guid: 1e8c28f47bdb8094f9b73074fe3dec92, type: 2}
   enemyMaterializeTime: 3
   enemyMaterializeShader: {fileID: -6465566751694194690, guid: aa23da36d7d66e346b69617b1d2e18b2, type: 3}

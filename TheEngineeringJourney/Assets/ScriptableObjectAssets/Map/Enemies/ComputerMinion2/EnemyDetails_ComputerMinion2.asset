@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21aa399e358b97e49a63913b8a04d0a1, type: 3}
+  m_Name: EnemyDetails_ComputerMinion2
+  m_EditorClassIdentifier: 
+  EnemyName: Computer Minion2
+  enemyPrefab: {fileID: 8144231739223978952, guid: 73e4b38a68f7fae40bd8fb98a3cf54a6, type: 3}
+  ChaseDistance: 50
+  enemyStandardMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  enemyMaterializeTime: 3
+  enemyMaterializeShader: {fileID: -6465566751694194690, guid: aa23da36d7d66e346b69617b1d2e18b2, type: 3}
+  enemyMaterializeColor: {r: 8.47419, g: 0, b: 6.122713, a: 1}
+  EnemyWeapon: {fileID: 11400000, guid: c28533c8b485dd047a0ec1104027a646, type: 2}
+  FiringIntervalMin: 0.1
+  FiringIntervalMax: 1
+  FiringDurationMin: 1
+  FiringDurationMax: 2
+  FiringLineOfSightRequired: 0
+  EnemyHealthDetailsArray:
+  - MapLevel: {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
+    EnemyHealthAmount: 30
+  IsImmuneAfterHit: 0
+  HitImmunityTime: 0
+  IsHealthBarDisplayed: 1

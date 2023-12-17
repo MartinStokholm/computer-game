@@ -27,7 +27,7 @@ MonoBehaviour:
   FiringLineOfSightRequired: 0
   EnemyHealthDetailsArray:
   - MapLevel: {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
-    EnemyHealthAmount: 20
+    EnemyHealthAmount: 45
   IsImmuneAfterHit: 0
   HitImmunityTime: 0
   IsHealthBarDisplayed: 1
