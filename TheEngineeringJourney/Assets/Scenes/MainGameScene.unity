@@ -9690,6 +9690,15 @@ MonoBehaviour:
   - poolSize: 200
     prefab: {fileID: 3704831762367981905, guid: f580578d82bdfe141aa023a63f1f626c, type: 3}
     componentType: IFireAble
+  - poolSize: 20
+    prefab: {fileID: 3588207929763646340, guid: 5d3f01deb5777344eb51218664df3a93, type: 3}
+    componentType: IFireAble
+  - poolSize: 20
+    prefab: {fileID: 3588207929763646340, guid: 62edaf96e8239d24f885c1d0866e6b37, type: 3}
+    componentType: IFireAble
+  - poolSize: 20
+    prefab: {fileID: 3203528340405410516, guid: 160ebe994bb4d8b4d9d363951d5bce12, type: 3}
+    componentType: IFireAble
 --- !u!1 &1141515585
 GameObject:
   m_ObjectHideFlags: 0
@@ -15124,9 +15133,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.70277774
-    width: 0.34375003
-    height: 0.34375
+    y: 0.47314814
+    width: 0.25572917
+    height: 0.25572917
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
