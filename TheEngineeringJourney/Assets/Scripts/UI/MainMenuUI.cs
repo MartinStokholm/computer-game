@@ -20,7 +20,8 @@ public class MainMenuUI : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("MainGameScene");
+        gameObject.SetActive(false);
+        //SceneManager.LoadScene("MainGameScene");
     }
 
     public void TutorialMenuButton()
