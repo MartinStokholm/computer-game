@@ -22,11 +22,11 @@ public static class AStar
 
         var startNode = gridNodes.GetGridNode(startGridPosition.x, startGridPosition.y);
         var targetNode = gridNodes.GetGridNode(endGridPosition.x, endGridPosition.y);
-        Debug.Log("GetGridNode" + startNode.gridPosition);
+        //Debug.Log("GetGridNode" + startNode.gridPosition);
 
         var endPathNode = FindShortestPath(startNode, targetNode, gridNodes, openNodeList, closedNodeHashSet, room.InstantiatedRoom);
 
-        Debug.Log("BuildPath" + endPathNode.gridPosition);
+        //Debug.Log("BuildPath" + endPathNode.gridPosition);
         
         return endPathNode is not null 
             ? CreatePathStack(endPathNode, room) 

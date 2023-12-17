@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void HealthEvent_OnHealthChanged(HealthEvent healthEvent, HealthEventArgs healthEventArgs)
     {
-
+        Debug.Log("Deal dmg to player" + healthEventArgs.HealthAmount);
         if (!(healthEventArgs.HealthAmount <= 0f)) return;
 
         SetPlayerHealth(PlayerDetails);

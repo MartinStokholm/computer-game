@@ -45,12 +45,12 @@ public class Health : MonoBehaviour
         // Get player / enemy hit immunity details
         if (_player is not null)
         {
-            if (_player.PlayerDetails.IsImmuneAfterHit)
-            {
-                _isImmuneAfterHit = true;
-                _immunityTime = _player.PlayerDetails.HitImmunityTime;
-                _spriteRenderer = _player.SpriteRenderer;
-            }
+            // if (_player.PlayerDetails.IsImmuneAfterHit)
+            // {
+            //     _isImmuneAfterHit = true;
+            //     _immunityTime = _player.PlayerDetails.HitImmunityTime;
+            //     _spriteRenderer = _player.SpriteRenderer;
+            // }
         }
         else if (_enemy is not null)
         {

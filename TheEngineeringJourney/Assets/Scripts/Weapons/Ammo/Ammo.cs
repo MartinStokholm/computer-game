@@ -81,7 +81,7 @@ public class Ammo : MonoBehaviour, IFireAble
     {
         var health = collision.GetComponent<Health>();
         Debug.Log($"DealDamage enemy healt! {health}");
-        //var enemyHit = false;
+        var enemyHit = false;
 
         if (health is not null)
         {

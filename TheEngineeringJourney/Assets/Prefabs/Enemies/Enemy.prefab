@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 1968113596444823816}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -258,7 +258,7 @@ Transform:
   m_GameObject: {fileID: 3867688658275807749}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -338,7 +338,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -653709415
   m_SortingLayer: 4
-  m_SortingOrder: 10
+  m_SortingOrder: 6
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -458,7 +458,7 @@ Transform:
   m_GameObject: {fileID: 7373351919331419221}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 202.70718, y: 475.9136, z: -19.969515}
+  m_LocalPosition: {x: 202.70718, y: 475.9136, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -612,9 +612,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.01}
+  m_Offset: {x: 0, y: -0.66030884}
   serializedVersion: 2
-  m_Radius: 0.01
+  m_Radius: 0.0001
 --- !u!60 &209247400653765729
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -644,7 +644,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -666,7 +666,7 @@ PolygonCollider2D:
       - {x: -0.2495575, y: -0.43618774}
       - {x: 0.18661499, y: -0.43930054}
       - {x: 0.25408936, y: -0.0018005371}
-      - {x: 0.4397583, y: -0.0017089844}
+      - {x: 0.4397583, y: 0.012969971}
   m_UseDelaunayMesh: 0
 --- !u!95 &6585032187802602773
 Animator:
@@ -900,7 +900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2abe5679dfe78414ca0473b628a99832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponRotationPointTransform: {fileID: 1421805942003808780}
+  weaponRotationPointTransform: {fileID: 661642439524906635}
 --- !u!114 &2390708516227776859
 MonoBehaviour:
   m_ObjectHideFlags: 0
