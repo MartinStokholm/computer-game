@@ -9793,8 +9793,8 @@ MonoBehaviour:
   ReturnToMainMenu: {fileID: 699098670}
   OptionsMenu: {fileID: 1932706905}
   QuitMenu: {fileID: 303124177}
-  musicLevelText: {fileID: 855241392}
-  soundsLevelText: {fileID: 1387784026}
+  musicLevelText: {fileID: 0}
+  soundsLevelText: {fileID: 0}
 --- !u!224 &1145689770 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 67173774083770921, guid: 15d7961bd681ca64eab0197c55cb96d0, type: 3}
@@ -16490,11 +16490,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9734c0cbbdb08614d966fabde7bd6348, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TypingSpeed: 0.04
-  _loadGlobalsJSON: {fileID: 0}
-  _dialoguePanel: {fileID: 852177031}
-  _dialogueText: {fileID: 439724316}
-  _choices:
+  typingSpeed: 0.04
+  loadGlobalsJSON: {fileID: 0}
+  dialoguePanel: {fileID: 852177031}
+  dialogueText: {fileID: 439724316}
+  displayNameText: {fileID: 0}
+  choices:
   - {fileID: 1382184124}
   - {fileID: 2124438655}
   - {fileID: 2126991189}

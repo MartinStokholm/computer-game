@@ -7,6 +7,9 @@ public class DialogueTrigger : MonoBehaviour
 {
     [Header("Visual Cue")] 
     [SerializeField] private GameObject _visualCue;
+    
+    [Header("Emote Animator")]
+    [SerializeField] private Animator emoteAnimator;
 
     [Header("Ink JSON")] 
     [SerializeField] private TextAsset _inkJSON;
@@ -47,8 +50,8 @@ public class DialogueTrigger : MonoBehaviour
         
         switch (_playerIsNear)
         {
-            case true when !DialogueManager.Instance.IsDialoguePlaying:
-                DialogueManager.Instance.EnterDialogueMode(_inkJSON);
+            case true when !DialogueManager.GetInstance().dialogueIsPlaying:
+                DialogueManager.GetInstance().EnterDialogueMode(_inkJSON, emoteAnimator);
                 break;
             case false :
                 break;

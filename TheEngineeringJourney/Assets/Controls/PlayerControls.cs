@@ -89,6 +89,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitDialog"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc754a47-cc73-4118-8b46-b7e472ed2f00"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -386,6 +395,17 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""QuestLog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""abe71967-4d97-4351-bb62-0c3d18c05656"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ExitDialog"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1061,6 +1081,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Submit = m_Player.FindAction("Submit", throwIfNotFound: true);
         m_Player_Inventory = m_Player.FindAction("Inventory", throwIfNotFound: true);
         m_Player_QuestLog = m_Player.FindAction("QuestLog", throwIfNotFound: true);
+        m_Player_ExitDialog = m_Player.FindAction("ExitDialog", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1145,6 +1166,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Submit;
     private readonly InputAction m_Player_Inventory;
     private readonly InputAction m_Player_QuestLog;
+    private readonly InputAction m_Player_ExitDialog;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -1156,6 +1178,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Submit => m_Wrapper.m_Player_Submit;
         public InputAction @Inventory => m_Wrapper.m_Player_Inventory;
         public InputAction @QuestLog => m_Wrapper.m_Player_QuestLog;
+        public InputAction @ExitDialog => m_Wrapper.m_Player_ExitDialog;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1186,6 +1209,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @QuestLog.started += instance.OnQuestLog;
             @QuestLog.performed += instance.OnQuestLog;
             @QuestLog.canceled += instance.OnQuestLog;
+            @ExitDialog.started += instance.OnExitDialog;
+            @ExitDialog.performed += instance.OnExitDialog;
+            @ExitDialog.canceled += instance.OnExitDialog;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1211,6 +1237,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @QuestLog.started -= instance.OnQuestLog;
             @QuestLog.performed -= instance.OnQuestLog;
             @QuestLog.canceled -= instance.OnQuestLog;
+            @ExitDialog.started -= instance.OnExitDialog;
+            @ExitDialog.performed -= instance.OnExitDialog;
+            @ExitDialog.canceled -= instance.OnExitDialog;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1454,6 +1483,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSubmit(InputAction.CallbackContext context);
         void OnInventory(InputAction.CallbackContext context);
         void OnQuestLog(InputAction.CallbackContext context);
+        void OnExitDialog(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
