@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponName: Keyboard
   WeaponSprite: {fileID: 21300000, guid: c70815c128cfd8c49853b478e9ed0b78, type: 3}
-  WeaponShootPosition: {x: 0.7, y: 0.2, z: 0}
+  WeaponShootPosition: {x: 1, y: 0, z: 0}
   WeaponCurrentAmmo: {fileID: 11400000, guid: f0c3855680f33cf46a434cc0c3476118, type: 2}
   WeaponShootEffect: {fileID: 11400000, guid: ef19bddda2c0696409fc4d83fffebed4, type: 2}
   WeaponFiringSoundEffect: {fileID: 11400000, guid: a29712e1ac9fb874c839414cc6d38b15, type: 2}

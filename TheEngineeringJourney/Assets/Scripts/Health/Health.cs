@@ -82,11 +82,6 @@ public class Health : MonoBehaviour
         _currentHealth = startingHealth;
     }
 
-    public void LoseHealth(int damage)
-    {
-        _currentHealth -= damage;
-    }
-
     /// <summary>
     /// Public method called when damage is taken
     /// </summary>
@@ -103,7 +98,7 @@ public class Health : MonoBehaviour
         // Set health bar as the percentage of health remaining
         if (_healthBar == null) return;
         
-        _healthBar.SetHealthBarValue((float)_currentHealth / StartingHealth);
+        _healthBar.SetHealthBarValue((float)_currentHealth / (float)StartingHealth);
     }
     
     /// <summary>

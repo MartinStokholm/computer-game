@@ -155,6 +155,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.PlayingLevel:
+                MusicManager.Instance.PlayMusic(GameResources.Instance.MainMenuMusic, 0f, 2f);
                 Pause();
                 break;
             case GameState.EnterLevel:

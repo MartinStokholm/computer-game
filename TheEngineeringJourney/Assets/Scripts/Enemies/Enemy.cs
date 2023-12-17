@@ -1,12 +1,12 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Serialization;
 
 #region REQUIRE COMPONENTS
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AnimateEnemy))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(DealContactDamage))]
 [RequireComponent(typeof(Destroyed))]
 [RequireComponent(typeof(DestroyedEvent))]
@@ -14,6 +14,7 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(EnemyMovementAI))]
 [RequireComponent(typeof(HealthEvent))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(WeaponActive))]
 [RequireComponent(typeof(WeaponAimEvent))]
 [RequireComponent(typeof(WeaponAim))]
 [RequireComponent(typeof(WeaponReloadedEvent))]
@@ -31,12 +32,11 @@ using UnityEngine.Serialization;
 
 [DisallowMultipleComponent]
 #endregion REQUIRE COMPONENTS
-
 public class Enemy : MonoBehaviour
 {
-    public EnemyDetailsSO EnemyDetails;
+    [HideInInspector] public EnemyDetailsSO EnemyDetails;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
-    public Health Health;
+    [HideInInspector] public Health Health;
     [HideInInspector] public MovementByVelocityEvent MovementByVelocityEvent;
     [HideInInspector] public EnemyWeaponAI EnemyWeaponAI;
     [HideInInspector] public MovementToPositionEvent MovementToPositionEvent;
@@ -70,7 +70,6 @@ public class Enemy : MonoBehaviour
         EnemyWeaponAI = GetComponent<EnemyWeaponAI>();
         WeaponAimEvent = GetComponent<WeaponAimEvent>();
         WeaponFireEvent = GetComponent<FireWeaponEvent>();
-        WeaponAimEvent = GetComponent<WeaponAimEvent>();
         _weaponFire = GetComponent<WeaponFire>();
         _setActiveWeaponEvent = GetComponent<SetActiveWeaponEvent>();
     }
@@ -108,29 +107,53 @@ public class Enemy : MonoBehaviour
     {
         EnemyDetails = enemyDetails;
 
-        // SetEnemyMovementUpdateFrame(enemySpawnNumber);
+        SetEnemyMovementUpdateFrame(enemySpawnNumber);
         //
         SetEnemyStartingHealth(mapLevel);
         //
         SetEnemyStartingWeapon();
         //
-        //SetEnemyAnimationSpeed();
+        SetEnemyAnimationSpeed();
 
         // Materialise enemy
+        EnemyEnable(true);
         //StartCoroutine(MaterializeEnemy());
     }
     
-    // private IEnumerator MaterializeEnemy()
-    // {
-    //     // Disable collider, Movement AI and Weapon AI
-    //     EnemyEnable(false);
-    //
-    //     //yield return StartCoroutine(MaterializeEffect.MaterializeRoutine(EnemyDetails.enemyMaterializeShader, EnemyDetails.enemyMaterializeColor, EnemyDetails.enemyMaterializeTime, spriteRendererArray, EnemyDetails.enemyStandardMaterial));
-    //
-    //     // Enable collider, Movement AI and Weapon AI
-    //     EnemyEnable(true);
-    //
-    // }
+    /// <summary>
+    /// Set enemy movement update frame
+    /// </summary>
+    private void SetEnemyMovementUpdateFrame(int enemySpawnNumber)
+    {
+        // Set frame number that enemy should process it's updates
+        _enemyMovementAI.SetUpdateFrameNumber(enemySpawnNumber % Settings.TargetFrameRateToSpreadPathfindingOver);
+    }
+    
+    /// <summary>
+    /// Set enemy animator speed to match movement speed
+    /// </summary>
+    private void SetEnemyAnimationSpeed()
+    {
+        // Set animator speed to match movement speed
+        Animator.speed = _enemyMovementAI.MoveSpeed / Settings.BaseSpeedForEnemyAnimations;
+    }
+    
+    private IEnumerator MaterializeEnemy()
+    {
+        // Disable collider, Movement AI and Weapon AI
+        EnemyEnable(false);
+        Debug.Log("MaterializeEnemy" );
+        Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeShader" + EnemyDetails.enemyMaterializeShader);
+        Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeColor" + EnemyDetails.enemyMaterializeColor);
+        Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeTime" + EnemyDetails.enemyMaterializeTime);
+        Debug.Log("MaterializeEnemy spriteRendererArray" + spriteRendererArray.Length + spriteRendererArray.FirstOrDefault());
+        Debug.Log("MaterializeEnemy EnemyDetails.enemyStandardMaterial" + EnemyDetails.enemyStandardMaterial);
+        yield return StartCoroutine(MaterializeEffect.MaterializeRoutine(EnemyDetails.enemyMaterializeShader, EnemyDetails.enemyMaterializeColor, EnemyDetails.enemyMaterializeTime, spriteRendererArray, EnemyDetails.enemyStandardMaterial));
+    
+        // Enable collider, Movement AI and Weapon AI
+        EnemyEnable(true);
+    
+    }
     
     /// <summary>
     /// Set enemy starting weapon as per the weapon details SO
@@ -173,6 +196,6 @@ public class Enemy : MonoBehaviour
         _enemyMovementAI.enabled = isEnabled;
 
         // // Enable / Disable Fire Weapon
-        _weaponFire.enabled = isEnabled;
+        _weaponFire.enabled = false;
     }
 }

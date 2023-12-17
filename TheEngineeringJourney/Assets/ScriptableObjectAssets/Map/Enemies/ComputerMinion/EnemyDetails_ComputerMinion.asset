@@ -12,18 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21aa399e358b97e49a63913b8a04d0a1, type: 3}
   m_Name: EnemyDetails_ComputerMinion
   m_EditorClassIdentifier: 
-  enemyName: Computer Minion
+  EnemyName: Computer Minion
   enemyPrefab: {fileID: 7373351919331419221, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
-  chaseDistance: 50
+  ChaseDistance: 50
   enemyStandardMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   enemyMaterializeTime: 3
   enemyMaterializeShader: {fileID: -6465566751694194690, guid: aa23da36d7d66e346b69617b1d2e18b2, type: 3}
-  enemyMaterializeColor: {r: 0, g: 0, b: 0, a: 0}
-  firingIntervalMin: 0.1
-  firingIntervalMax: 1
-  firingDurationMin: 1
-  firingDurationMax: 2
-  firingLineOfSightRequired: 0
-  isImmuneAfterHit: 0
-  hitImmunityTime: 0
-  isHealthBarDisplayed: 0
+  enemyMaterializeColor: {r: 8.47419, g: 0, b: 6.122713, a: 1}
+  EnemyWeapon: {fileID: 11400000, guid: c28533c8b485dd047a0ec1104027a646, type: 2}
+  FiringIntervalMin: 0.1
+  FiringIntervalMax: 1
+  FiringDurationMin: 1
+  FiringDurationMax: 2
+  FiringLineOfSightRequired: 0
+  EnemyHealthDetailsArray:
+  - MapLevel: {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
+    EnemyHealthAmount: 20
+  IsImmuneAfterHit: 0
+  HitImmunityTime: 0
+  IsHealthBarDisplayed: 1

@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: EnemyDetails_Boss1
   m_EditorClassIdentifier: 
   EnemyName: Deault
-  enemyPrefab: {fileID: 7373351919331419221, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
+  enemyPrefab: {fileID: 7381073143554931405, guid: c5cb0f60636e13d41b91096ff2a3b0fc, type: 3}
   ChaseDistance: 50
+  enemyStandardMaterial: {fileID: 2100000, guid: 1e8c28f47bdb8094f9b73074fe3dec92, type: 2}
+  enemyMaterializeTime: 3
+  enemyMaterializeShader: {fileID: -6465566751694194690, guid: aa23da36d7d66e346b69617b1d2e18b2, type: 3}
+  enemyMaterializeColor: {r: 0, g: 0, b: 0, a: 0}
   EnemyWeapon: {fileID: 11400000, guid: c28533c8b485dd047a0ec1104027a646, type: 2}
   FiringIntervalMin: 0.1
   FiringIntervalMax: 1

@@ -47,6 +47,13 @@ MonoBehaviour:
   RoomNodeTypes: {fileID: 11400000, guid: aa05269759a2fc04ab5bb0e7cc6858d0, type: 2}
   CurrentPlayer: {fileID: 11400000, guid: 2a3afe81264b6514bad95673485bc0cb, type: 2}
   DimmedMaterial: {fileID: 2100000, guid: de88fd1a9926ce94d85925e33dcb508e, type: 2}
+  LitMaterial: {fileID: 2100000, guid: 1e8c28f47bdb8094f9b73074fe3dec92, type: 2}
+  VariableLitShader: {fileID: -6465566751694194690, guid: 4867248457ee89f418e48ae273eaf6f8, type: 3}
+  MaterializeShader: {fileID: -6465566751694194690, guid: aa23da36d7d66e346b69617b1d2e18b2, type: 3}
+  EnemyUnwalkableCollisionTilesArray:
+  - {fileID: 11400000, guid: ec3d48d5c22c4a7499434437a2f0b826, type: 2}
+  - {fileID: 11400000, guid: e43b9cd455c6a7c42819d5f2caba2d75, type: 2}
+  PreferredEnemyPathTile: {fileID: 11400000, guid: b7f6b7c169467704db59c95155e8517f, type: 2}
   MusicMasterMixerGroup: {fileID: -7206380732494497733, guid: 27c31a9fa15d6ac40b3c1def96612e0e, type: 2}
   MainMenuMusic: {fileID: 11400000, guid: 7f478c30f82c34747b50e11de55f3703, type: 2}
   MusicOnFullSnapshot: {fileID: 24500006, guid: 27c31a9fa15d6ac40b3c1def96612e0e, type: 2}

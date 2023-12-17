@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Serialization;
+using UnityEngine.Tilemaps;
 
 public class GameResources : MonoBehaviour
 {
@@ -38,6 +39,33 @@ public class GameResources : MonoBehaviour
     [Tooltip("Dimmed Material")]
     #endregion
     public Material DimmedMaterial;
+    
+    #region Tooltip
+    [Tooltip("Sprite-Lit-Default Material")]
+    #endregion
+    public Material LitMaterial;
+
+    #region Tooltip
+    [Tooltip("Populate with the Variable Lit Shader")]
+    #endregion
+    public Shader VariableLitShader;
+    #region Tooltip
+    [Tooltip("Populate with the Materialize Shader")]
+    #endregion
+    public Shader MaterializeShader;
+
+    #region Header SPECIAL TILEMAP TILES
+    [Space(10)]
+    [Header("SPECIAL TILEMAP TILES")]
+    #endregion Header SPECIAL TILEMAP TILES
+    #region Tooltip
+    [Tooltip("Collision tiles that the enemies can navigate to")]
+    #endregion Tooltip
+    public TileBase[] EnemyUnwalkableCollisionTilesArray;
+    #region Tooltip
+    [Tooltip("Preferred path tile for enemy navigation")]
+    #endregion Tooltip
+    public TileBase PreferredEnemyPathTile;
 
     
     #region Header MUSIC

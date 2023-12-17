@@ -25,33 +25,33 @@ public class EnemyDetailsSO : ScriptableObject
     #endregion
     public float ChaseDistance = 50f;
 
-    // #region Header ENEMY MATERIAL
-    // [Space(10)]
-    // [Header("ENEMY MATERIAL")]
-    // #endregion
-    // #region Tooltip
-    // [Tooltip("This is the standard lit shader material for the enemy (used after the enemy materializes")]
-    // #endregion
-    // public Material enemyStandardMaterial;
+    #region Header ENEMY MATERIAL
+    [Space(10)]
+    [Header("ENEMY MATERIAL")]
+    #endregion
+    #region Tooltip
+    [Tooltip("This is the standard lit shader material for the enemy (used after the enemy materializes")]
+    #endregion
+    public Material enemyStandardMaterial;
 
-    // #region Header ENEMY MATERIALIZE SETTINGS
-    // [Space(10)]
-    // [Header("ENEMY MATERIALIZE SETTINGS")]
-    // #endregion
-    // #region Tooltip
-    // [Tooltip("The time in seconds that it takes the enemy to materialize")]
-    // #endregion
-    // public float enemyMaterializeTime;
-    // #region Tooltip
-    // [Tooltip("The shader to be used when the enemy materializes")]
-    // #endregion
-    // public Shader enemyMaterializeShader;
-    // [ColorUsage(true, true)]
-    // #region Tooltip
-    // [Tooltip("The colour to use when the enemy materializes.  This is an HDR color so intensity can be set to cause glowing / bloom")]
-    // #endregion
-    // public Color enemyMaterializeColor;
-    //
+    #region Header ENEMY MATERIALIZE SETTINGS
+    [Space(10)]
+    [Header("ENEMY MATERIALIZE SETTINGS")]
+    #endregion
+    #region Tooltip
+    [Tooltip("The time in seconds that it takes the enemy to materialize")]
+    #endregion
+    public float enemyMaterializeTime;
+    #region Tooltip
+    [Tooltip("The shader to be used when the enemy materializes")]
+    #endregion
+    public Shader enemyMaterializeShader;
+    [ColorUsage(true, true)]
+    #region Tooltip
+    [Tooltip("The colour to use when the enemy materializes.  This is an HDR color so intensity can be set to cause glowing / bloom")]
+    #endregion
+    public Color enemyMaterializeColor;
+    
     #region Header ENEMY WEAPON SETTINGS
     [Space(10)]
     [Header("ENEMY WEAPON SETTINGS")]
@@ -111,10 +111,10 @@ public class EnemyDetailsSO : ScriptableObject
     {
         EditorUtilities.ValidateCheckEmptyString(this, nameof(EnemyName), EnemyName);
         EditorUtilities.ValidateCheckNullValue(this, nameof(enemyPrefab), enemyPrefab);
-        EditorUtilities.ValidateCheckPositiveValue(this, nameof(ChaseDistance), (int)ChaseDistance, false);
-        //EditorUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);
-        //EditorUtilities.ValidateCheckPositiveValue(this, nameof(enemyMaterializeTime), enemyMaterializeTime, true);
-        //EditorUtilities.ValidateCheckNullValue(this, nameof(enemyMaterializeShader), enemyMaterializeShader);
+        EditorUtilities.ValidateCheckPositiveValue(this, nameof(ChaseDistance), (int)ChaseDistance, false); 
+        EditorUtilities.ValidateCheckNullValue(this, nameof(enemyStandardMaterial), enemyStandardMaterial);
+        EditorUtilities.ValidateCheckPositiveValue(this, nameof(enemyMaterializeTime), enemyMaterializeTime, true);
+        EditorUtilities.ValidateCheckNullValue(this, nameof(enemyMaterializeShader), enemyMaterializeShader);
         EditorUtilities.ValidateCheckPositiveRange(
             this, 
             nameof(FiringIntervalMin), 

@@ -123,16 +123,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d49b4d6adb64e60ba31417fa2d34f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grid: {fileID: 0}
-  groundTilemap: {fileID: 0}
-  decoration1Tilemap: {fileID: 0}
-  decoration2Tilemap: {fileID: 0}
-  frontTilemap: {fileID: 0}
-  collisionTilemap: {fileID: 0}
-  minimapTilemap: {fileID: 0}
-  roomColliderBounds:
+  Grid: {fileID: 0}
+  GroundTilemap: {fileID: 0}
+  Decoration1Tilemap: {fileID: 0}
+  Decoration2Tilemap: {fileID: 0}
+  FrontTilemap: {fileID: 0}
+  CollisionTilemap: {fileID: 0}
+  MinimapTilemap: {fileID: 0}
+  RoomColliderBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+  moveableItemsList: []
+  environmentGameObject: {fileID: 581830793060238705}
 --- !u!1 &2150579554788913346
 GameObject:
   m_ObjectHideFlags: 0

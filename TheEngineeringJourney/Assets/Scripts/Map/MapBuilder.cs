@@ -21,6 +21,18 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         RetryCreateNodeGraph,
         CreateNodeGraph
     }
+    
+    private void OnEnable()
+    {
+        // Set dimmed material to off
+        GameResources.Instance.DimmedMaterial.SetFloat("Alpha_Slider", 0f);
+    }
+
+    private void OnDisable()
+    {
+        // Set dimmed material to fully visible
+        GameResources.Instance.DimmedMaterial.SetFloat("Alpha_Slider", 1f);
+    }
 
     protected override void Awake()
     {
@@ -30,7 +42,6 @@ public class MapBuilder : SingletonMonobehaviour<MapBuilder>
         LoadRoomNodeTypeList();
 
         // Set dimmed material to fully visible
-        GameResources.Instance.DimmedMaterial.SetFloat("Alpha_Slider", 1f);
     }
 
     /// <summary>

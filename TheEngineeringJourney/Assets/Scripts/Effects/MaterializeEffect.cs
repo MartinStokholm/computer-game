@@ -9,34 +9,37 @@ public class MaterializeEffect : MonoBehaviour
     /// </summary>
     public IEnumerator MaterializeRoutine(Shader materializeShader, Color materializeColor, float materializeTime, SpriteRenderer[] spriteRendererArray, Material normalMaterial)
     {
-        Material materializeMaterial = new Material(materializeShader);
+        Debug.LogError($"MaterializeRoutine materializeShader: ");
+        var materializeMaterial = new Material(materializeShader);
 
-        // materializeMaterial.SetColor("_EmissionColor", materializeColor);
-        //
-        // // Set materialize material in sprite renderers
-        // foreach (SpriteRenderer spriteRenderer in spriteRendererArray)
-        // {
-        //     spriteRenderer.material = materializeMaterial;
-        // }
-        //
-        // var dissolveAmount = 0f;
-        //
-        // // materialize enemy
-        // while (dissolveAmount < 1f)
-        // {
-        //     dissolveAmount += Time.deltaTime / materializeTime;
-        //
-        //     materializeMaterial.SetFloat("_DissolveAmount", dissolveAmount);
-        //
-        //     yield return null;
-        //
-        // }
+        materializeMaterial.SetColor("_EmissionColor", materializeColor);
+        Debug.LogError("MaterializeRoutine");
+        // Set materialize material in sprite renderers
+        foreach (var spriteRenderer in spriteRendererArray)
+        {
+            spriteRenderer.material = materializeMaterial;
+            Debug.LogError($"MaterializeRoutine: {materializeMaterial}");
+        }
+        
+        var dissolveAmount = 0f;
+        
+        // materialize enemy
+        while (dissolveAmount < 1f)
+        {
+            dissolveAmount += Time.deltaTime / materializeTime;
+            Debug.LogError($"dissolveAmount: {dissolveAmount}");
+            materializeMaterial.SetFloat("_DissolveAmount", dissolveAmount);
+        
+            yield return null;
+        
+        }
 
 
         // Set standard material in sprite renderers
         foreach (var spriteRenderer in spriteRendererArray)
         {
             spriteRenderer.material = normalMaterial;
+            Debug.LogError($"spriteRenderer.material: {spriteRenderer.material}");
         }
 
         yield return spriteRendererArray;

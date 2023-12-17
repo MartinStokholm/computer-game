@@ -133,6 +133,8 @@ MonoBehaviour:
   RoomColliderBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+  moveableItemsList: []
+  environmentGameObject: {fileID: 581830793060238705}
 --- !u!1 &2150579554788913346
 GameObject:
   m_ObjectHideFlags: 0
@@ -2761,7 +2763,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 13
-      m_TileSpriteIndex: 13
+      m_TileSpriteIndex: 18
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2871,7 +2873,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 12
-      m_TileSpriteIndex: 12
+      m_TileSpriteIndex: 17
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2931,7 +2933,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 14
-      m_TileSpriteIndex: 14
+      m_TileSpriteIndex: 16
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3318,20 +3320,20 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: b7fcbce3e067745d6b2b2b16051caa1e, type: 3}
   - m_RefCount: 11
     m_Data: {fileID: 21300000, guid: 07f6d4e120bc446ebbabb11f5a67d143, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: e634c697cbdc1ce4baa2c2d0b8356e8d, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: 6b4c116a1e06a414b98fcd3048f1d32e, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: a80f4c3e8f8004ca7b487bf94d446835, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: ba185638d062b43f8b6dabfadfce4968, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: 6b4c116a1e06a414b98fcd3048f1d32e, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 21300000, guid: e634c697cbdc1ce4baa2c2d0b8356e8d, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 5
     m_Data: {fileID: 21300000, guid: 8b494409a464144dcae3d567af7f61e3, type: 3}
   - m_RefCount: 5

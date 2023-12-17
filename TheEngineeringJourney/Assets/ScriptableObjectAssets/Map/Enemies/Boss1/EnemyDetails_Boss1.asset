@@ -15,7 +15,11 @@ MonoBehaviour:
   EnemyName: Computer Minion
   enemyPrefab: {fileID: 2141953704171476164, guid: b619a74230167d547855e2695d532a7c, type: 3}
   ChaseDistance: 50
-  EnemyWeapon: {fileID: 0}
+  enemyStandardMaterial: {fileID: 2100000, guid: 1e8c28f47bdb8094f9b73074fe3dec92, type: 2}
+  enemyMaterializeTime: 3
+  enemyMaterializeShader: {fileID: -6465566751694194690, guid: aa23da36d7d66e346b69617b1d2e18b2, type: 3}
+  enemyMaterializeColor: {r: 8.47419, g: 0, b: 6.122713, a: 1}
+  EnemyWeapon: {fileID: 11400000, guid: c28533c8b485dd047a0ec1104027a646, type: 2}
   FiringIntervalMin: 0.1
   FiringIntervalMax: 1
   FiringDurationMin: 1
@@ -24,6 +28,6 @@ MonoBehaviour:
   EnemyHealthDetailsArray:
   - MapLevel: {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
     EnemyHealthAmount: 100
-  IsImmuneAfterHit: 0
-  HitImmunityTime: 0
-  IsHealthBarDisplayed: 0
+  IsImmuneAfterHit: 1
+  HitImmunityTime: 2
+  IsHealthBarDisplayed: 1

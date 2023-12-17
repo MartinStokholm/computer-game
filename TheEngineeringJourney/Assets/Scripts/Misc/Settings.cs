@@ -2,6 +2,11 @@ using UnityEngine;
 
 public static class Settings 
 {
+    #region UNITS
+    public const float PixelsPerUnit = 16f;
+    public const float TileSizePixels = 16f;
+    #endregion
+    
     #region MAP BUILD SETTINGS
     public const int MaxMapRebuildAttemptsForRoomGraph = 1000;
     public const int MaxMapBuildAttempts = 10;
@@ -27,11 +32,18 @@ public static class Settings
     public static int AimLeft = Animator.StringToHash("AimLeft");
     public static int IsIdle = Animator.StringToHash("IsIdle");
     public static int IsMoving = Animator.StringToHash("IsMoving");
+    
+    // Animator parameters - Door
+    public static int Open = Animator.StringToHash("open");
+    
+    // Animator parameters - Enemy
+    public static float BaseSpeedForEnemyAnimations = 3f;
 
     #endregion
     
     #region GAMEOBJECT TAGS
     public const string PlayerTag = "Player";
+    public const string PlayerWeapon = "PlayerWeapon";
     #endregion
     
     #region ASTAR PATHFINDING PARAMETERS

@@ -133,6 +133,8 @@ MonoBehaviour:
   RoomColliderBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+  moveableItemsList: []
+  environmentGameObject: {fileID: 581830793060238705}
 --- !u!1 &2150579554788913346
 GameObject:
   m_ObjectHideFlags: 0
@@ -2071,7 +2073,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 10
-      m_TileSpriteIndex: 10
+      m_TileSpriteIndex: 11
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2121,7 +2123,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 4
-      m_TileSpriteIndex: 4
+      m_TileSpriteIndex: 10
       m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2171,7 +2173,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileSpriteIndex: 9
       m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -3310,10 +3312,10 @@ Tilemap:
     m_Data: {fileID: 1426442486, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -321812941, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 1639044187, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: -313211879, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 93b57f34137e6864597b655db26faafa, type: 3}
   - m_RefCount: 5
@@ -3322,12 +3324,12 @@ Tilemap:
     m_Data: {fileID: 1725074470, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: 21300000, guid: 015c7c4d90d909842aac8f3a6dfbbfa1, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 1639044187, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: -313211879, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -929460489, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
   - m_RefCount: 6
     m_Data: {fileID: -1211384454, guid: c97927b9c3af5d64aab1c45ab558172e, type: 3}
   - m_RefCount: 6
