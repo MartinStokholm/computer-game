@@ -158,16 +158,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 Pause();
                 break;
             case GameState.EnterLevel:
-                questChildren = GetAllChildren(QuestEnables);
-                questChildren.ForEach(x => x.GetComponentInChildren<SpriteRenderer>().enabled = false);
+                QuestEnables.transform.position = new Vector3(1000, 1000, 0);
                 PlayMapLevel(currentMapLevelListIndex);
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.LevelCompleted:
                 Player.Health.AddHealth(100);
                 PlayMapLevel(0);
-                questChildren = GetAllChildren(QuestEnables);
-                questChildren.ForEach(x => x.GetComponentInChildren<SpriteRenderer>().enabled = true);
+                QuestEnables.transform.position = new Vector3(0, 0, 0);
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.LevelLost:
