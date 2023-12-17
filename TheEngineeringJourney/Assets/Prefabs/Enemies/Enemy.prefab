@@ -857,10 +857,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc477c0a747d1ba4a9790cd68303c333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 0
-  _movementDetails: {fileID: 11400000, guid: 566c902d3d79ffa42b2883710995b8d9, type: 2}
-  _movementSpeed: 0
-  UpdateFrameNumber: 1
+  movementDetails: {fileID: 11400000, guid: 566c902d3d79ffa42b2883710995b8d9, type: 2}
+  moveSpeed: 0
+  updateFrameNumber: 1
 --- !u!114 &-4963088647124776914
 MonoBehaviour:
   m_ObjectHideFlags: 0

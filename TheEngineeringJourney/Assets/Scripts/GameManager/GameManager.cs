@@ -155,7 +155,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 _gameState = GameState.PlayingLevel;
                 break;
             case GameState.PlayingLevel:
-                MusicManager.Instance.PlayMusic(GameResources.Instance.MainMenuMusic, 0f, 2f);
                 Pause();
                 break;
             case GameState.EnterLevel:
@@ -216,6 +215,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
                 StaticEventHandler.CallRoomChangedEvent(CurrentRoom);
                 Player.gameObject.transform.position = _currentRoom.GetRoomAsVector3();
                 Player.gameObject.transform.position = PlayerUtils.GetSpawnPosition(Player.gameObject.transform.position);
+                if (MapLevelListIndex == 0)
+                    MusicManager.Instance.PlayMusic(GameResources.Instance.MainMenuMusic, 0f, 2f);
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

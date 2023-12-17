@@ -209,7 +209,7 @@ public class WeaponFire : MonoBehaviour
     {
         if (_activeWeapon.CurrentWeapon.WeaponDetails.WeaponFiringSoundEffect is not null)
         {
-            //SoundEffectManager.Instance.PlaySoundEffect(_activeWeapon.GetCurrentWeapon().WeaponDetails.WeaponFiringSoundEffect);
+            SoundEffectManager.Instance.PlaySoundEffect(_activeWeapon.GetCurrentWeapon().WeaponDetails.WeaponFiringSoundEffect);
         }
         else
         {

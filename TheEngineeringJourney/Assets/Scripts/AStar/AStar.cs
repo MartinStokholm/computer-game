@@ -65,7 +65,6 @@ public static class AStar
         }
 
         return null;
-
     }
 
 
@@ -175,6 +174,7 @@ public static class AStar
 
         // Get neighbour node
         var neighbourNode = gridNodes.GetGridNode(neighbourNodeXPosition, neighbourNodeYPosition);
+        // Debug.Log($"GetValidNodeNeighbour neighbourNode{neighbourNode.gridPosition}");
 
         // check for obstacle at that position
         var movementPenaltyForGridSpace = instantiatedRoom.AStarMovementPenalty[neighbourNodeXPosition, neighbourNodeYPosition];
@@ -182,14 +182,18 @@ public static class AStar
         // check for moveable obstacle at that position
         var itemObstacleForGridSpace = instantiatedRoom.AStarItemObstacles[neighbourNodeXPosition, neighbourNodeYPosition];
 
-
+        // Debug.Log($"GetValidNodeNeighbour is movementPenaltyForGridSpace is {movementPenaltyForGridSpace}");
+        // Debug.Log($"GetValidNodeNeighbour is itemObstacleForGridSpace is {itemObstacleForGridSpace}");
+        // Debug.Log($"GetValidNodeNeighbour is closedNodeHashSet.Contains(neighbourNode) is {closedNodeHashSet.Contains(neighbourNode)}");
         // if neighbour is an obstacle or neighbour is in the closed list then skip
-        if (movementPenaltyForGridSpace == 0 || itemObstacleForGridSpace == 0 || closedNodeHashSet.Contains(neighbourNode))
+        if (movementPenaltyForGridSpace == 0 /*|| itemObstacleForGridSpace == 0*/ || closedNodeHashSet.Contains(neighbourNode))
         {
+            //Debug.Log($"GetValidNodeNeighbour is null");
             return null;
         }
         else
         {
+            //Debug.Log($"GetValidNodeNeighbour is {neighbourNode.gridPosition}");
             return neighbourNode;
         }
 

@@ -9,35 +9,37 @@ using Random = UnityEngine.Random;
 [DisallowMultipleComponent]
 public class EnemyMovementAI : MonoBehaviour
 {
-
-    #region Tooltip
-    [Tooltip("MovementDetailsSO scriptable object containing movement details")]
+#region Tooltip
+    [Tooltip("MovementDetailsSO scriptable object containing movement details such as speed")]
     #endregion Tooltip
-    [HideInInspector] public float MoveSpeed;
-    
-    [SerializeField] private MovementDetailsSO _movementDetails;
-    
-    private Enemy _enemy;
-    private Stack<Vector3> movementSteps = new();
-    private Vector3 _playerReferencePosition;
+    [SerializeField] private MovementDetailsSO movementDetails;
+    private Enemy enemy;
+    private Stack<Vector3> movementSteps = new Stack<Vector3>();
+    private Vector3 playerReferencePosition;
     private Coroutine moveEnemyRoutine;
-    private float _currentEnemyPathRebuildCooldown;
-    private WaitForFixedUpdate _waitForFixedUpdate;
-    [HideInInspector] public float _movementSpeed;
-    private bool _chasePlayer = false;
-    [HideInInspector] public int UpdateFrameNumber = 1; //This is set by the enemy spawner.
-    private List<Vector2Int> surroundingPositionList = new();
+    private float currentEnemyPathRebuildCooldown;
+    private WaitForFixedUpdate waitForFixedUpdate;
+    [HideInInspector] public float moveSpeed;
+    private bool chasePlayer = false;
+    [HideInInspector] public int updateFrameNumber = 1; // default value.  This is set by the enemy spawner.
+    private List<Vector2Int> surroundingPositionList = new List<Vector2Int>();
 
     private void Awake()
     {
-        _enemy = GetComponent<Enemy>();
-        _movementSpeed = _movementDetails.GetMovementSpeed();
+        // Load components
+        enemy = GetComponent<Enemy>();
+
+        moveSpeed = movementDetails.GetMovementSpeed();
     }
 
-    protected void Start()
+    private void Start()
     {
-        _waitForFixedUpdate = new WaitForFixedUpdate();
-        _playerReferencePosition = GameManager.Instance.Player.GetPlayerPosition();
+        // Create waitforfixed update for use in coroutine
+        waitForFixedUpdate = new WaitForFixedUpdate();
+
+        // Reset player reference position
+        playerReferencePosition = GameManager.Instance.Player.GetPlayerPosition();
+
     }
 
     private void Update()
@@ -45,35 +47,37 @@ public class EnemyMovementAI : MonoBehaviour
         MoveEnemy();
     }
 
+
+    /// <summary>
+    /// Use AStar pathfinding to build a path to the player - and then move the enemy to each grid location on the path
+    /// </summary>
     private void MoveEnemy()
     {
         // Movement cooldown timer
-        _currentEnemyPathRebuildCooldown -= Time.deltaTime;
+        currentEnemyPathRebuildCooldown -= Time.deltaTime;
 
         // Check distance to player to see if enemy should start chasing
-        if (!_chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.Player.GetPlayerPosition()) < _enemy.EnemyDetails.ChaseDistance)
+        if (!chasePlayer && Vector3.Distance(transform.position, GameManager.Instance.Player.GetPlayerPosition()) < enemy.EnemyDetails.ChaseDistance)
         {
-            Debug.Log("MoveEnemy _chasePlayer: " + _chasePlayer);
-            _chasePlayer = true;
+            chasePlayer = true;
         }
 
         // If not close enough to chase player then return
-        if (!_chasePlayer)
+        if (!chasePlayer)
             return;
 
-        Debug.Log("MoveEnemy A Star path rebuild on certain frames to spread the load between enemies: " + (Time.frameCount % Settings.TargetFrameRateToSpreadPathfindingOver != UpdateFrameNumber));
         // Only process A Star path rebuild on certain frames to spread the load between enemies
-        if (Time.frameCount % Settings.TargetFrameRateToSpreadPathfindingOver != UpdateFrameNumber) return;
+        if (Time.frameCount % Settings.TargetFrameRateToSpreadPathfindingOver != updateFrameNumber) return;
 
         // if the movement cooldown timer reached or player has moved more than required distance
         // then rebuild the enemy path and move the enemy
-        if (_currentEnemyPathRebuildCooldown <= 0f || (Vector3.Distance(_playerReferencePosition, GameManager.Instance.Player.GetPlayerPosition()) > Settings.PlayerMoveDistanceToRebuildPath))
+        if (currentEnemyPathRebuildCooldown <= 0f || (Vector3.Distance(playerReferencePosition, GameManager.Instance.Player.GetPlayerPosition()) > Settings.PlayerMoveDistanceToRebuildPath))
         {
             // Reset path rebuild cooldown timer
-            _currentEnemyPathRebuildCooldown = Settings.EnemyPathRebuildCooldown;
+            currentEnemyPathRebuildCooldown = Settings.EnemyPathRebuildCooldown;
 
             // Reset player reference position
-            _playerReferencePosition = GameManager.Instance.Player.GetPlayerPosition();
+            playerReferencePosition = GameManager.Instance.Player.GetPlayerPosition();
 
             // Move the enemy using AStar pathfinding - Trigger rebuild of path to player
             CreatePath();
@@ -84,7 +88,7 @@ public class EnemyMovementAI : MonoBehaviour
                 if (moveEnemyRoutine != null)
                 {
                     // Trigger idle event
-                    _enemy.IdleEvent.CallIdleEvent();
+                    enemy.IdleEvent.CallIdleEvent();
                     StopCoroutine(moveEnemyRoutine);
                 }
 
@@ -94,7 +98,8 @@ public class EnemyMovementAI : MonoBehaviour
             }
         }
     }
-    
+
+
     /// <summary>
     /// Coroutine to move the enemy to the next location on the path
     /// </summary>
@@ -102,32 +107,32 @@ public class EnemyMovementAI : MonoBehaviour
     {
         while (movementSteps.Count > 0)
         {
-            var nextPosition = movementSteps.Pop();
+            Vector3 nextPosition = movementSteps.Pop();
 
             // while not very close continue to move - when close move onto the next step
             while (Vector3.Distance(nextPosition, transform.position) > 0.2f)
             {
                 // Trigger movement event
-                _enemy.MovementToPositionEvent.CallMovementToPositionEvent(nextPosition, transform.position, MoveSpeed, (nextPosition - transform.position).normalized);
+                enemy.MovementToPositionEvent.CallMovementToPositionEvent(nextPosition, transform.position, moveSpeed, (nextPosition - transform.position).normalized);
 
-                yield return _waitForFixedUpdate;  // moving the enmy using 2D physics so wait until the next fixed update
+                yield return waitForFixedUpdate;  // moving the enmy using 2D physics so wait until the next fixed update
 
             }
 
-            yield return _waitForFixedUpdate;
+            yield return waitForFixedUpdate;
         }
 
         // End of path steps - trigger the enemy idle event
-        _enemy.IdleEvent.CallIdleEvent();
-    }
+        enemy.IdleEvent.CallIdleEvent();
 
+    }
 
     /// <summary>
     /// Use the AStar static class to create a path for the enemy
     /// </summary>
     private void CreatePath()
     {
-        var currentRoom = GameManager.Instance.CurrentRoom;
+        Room currentRoom = GameManager.Instance.CurrentRoom;
 
         Grid grid = currentRoom.InstantiatedRoom.Grid;
 
@@ -149,11 +154,19 @@ public class EnemyMovementAI : MonoBehaviour
         else
         {
             // Trigger idle event - no path
-            _enemy.IdleEvent.CallIdleEvent();
+            enemy.IdleEvent.CallIdleEvent();
         }
     }
-    
-        /// <summary>
+
+    /// <summary>
+    /// Set the frame number that the enemy path will be recalculated on - to avoid performance spikes
+    /// </summary>
+    public void SetUpdateFrameNumber(int updateFrameNumber)
+    {
+        this.updateFrameNumber = updateFrameNumber;
+    }
+
+    /// <summary>
     /// Get the nearest position to the player that isn't on an obstacle
     /// </summary>
     private Vector3Int GetNearestNonObstaclePlayerPosition(Room currentRoom)
@@ -162,13 +175,9 @@ public class EnemyMovementAI : MonoBehaviour
 
         Vector3Int playerCellPosition = currentRoom.InstantiatedRoom.Grid.WorldToCell(playerPosition);
 
-        Vector2Int adjustedPlayerCellPositon = new Vector2Int(
-            playerCellPosition.x - currentRoom.TemplateLowerBounds.x, 
-            playerCellPosition.y - currentRoom.TemplateLowerBounds.y);
+        Vector2Int adjustedPlayerCellPositon = new Vector2Int(playerCellPosition.x - currentRoom.TemplateLowerBounds.x, playerCellPosition.y - currentRoom.TemplateLowerBounds.y);
 
-        int obstacle = Mathf.Min(
-            currentRoom.InstantiatedRoom.AStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], 
-            currentRoom.InstantiatedRoom.AStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
+        int obstacle = Mathf.Min(currentRoom.InstantiatedRoom.AStarMovementPenalty[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y], currentRoom.InstantiatedRoom.AStarItemObstacles[adjustedPlayerCellPositon.x, adjustedPlayerCellPositon.y]);
 
         // if the player isn't on a cell square marked as an obstacle then return that position
         if (obstacle != 0)
@@ -203,21 +212,12 @@ public class EnemyMovementAI : MonoBehaviour
                 // See if there is an obstacle in the selected surrounding position
                 try
                 {
-                    obstacle = Mathf.Min(
-                        currentRoom.InstantiatedRoom.AStarMovementPenalty[
-                            adjustedPlayerCellPositon.x + surroundingPositionList[index].x, 
-                            adjustedPlayerCellPositon.y + surroundingPositionList[index].y], 
-                        currentRoom.InstantiatedRoom.AStarItemObstacles[
-                            adjustedPlayerCellPositon.x + surroundingPositionList[index].x, 
-                            adjustedPlayerCellPositon.y + surroundingPositionList[index].y]);
+                    obstacle = Mathf.Min(currentRoom.InstantiatedRoom.AStarMovementPenalty[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y], currentRoom.InstantiatedRoom.AStarItemObstacles[adjustedPlayerCellPositon.x + surroundingPositionList[index].x, adjustedPlayerCellPositon.y + surroundingPositionList[index].y]);
 
                     // If no obstacle return the cell position to navigate to
                     if (obstacle != 0)
                     {
-                        return new Vector3Int(
-                            playerCellPosition.x + surroundingPositionList[index].x, 
-                            playerCellPosition.y + surroundingPositionList[index].y, 
-                            0);
+                        return new Vector3Int(playerCellPosition.x + surroundingPositionList[index].x, playerCellPosition.y + surroundingPositionList[index].y, 0);
                     }
 
                 }
@@ -237,23 +237,7 @@ public class EnemyMovementAI : MonoBehaviour
 
         }
     }
-        
-    /// <summary>
-    /// Set the frame number that the enemy path will be recalculated on - to avoid performance spikes
-    /// </summary>
-    public void SetUpdateFrameNumber(int updateFrameNumber)
-    {
-        UpdateFrameNumber = updateFrameNumber;
-    }
-    
-    private bool IsAStarPathRebuildRequired() => Time.frameCount % Settings.TargetFrameRateToSpreadPathfindingOver != UpdateFrameNumber;
-    private bool IsMovementCooldownTimerReached() => _currentEnemyPathRebuildCooldown <= 0f;
 
-    private bool IsPlayerMovedMoreThanRequiredDistance() =>
-        Vector3.Distance(transform.position, GetPlayerPosition()) <
-        _enemy.EnemyDetails.ChaseDistance;
-    
-    private Vector3 GetPlayerPosition() => GameManager.Instance.Player.GetPlayerPosition();
     
     #region Validation
 
@@ -261,7 +245,7 @@ public class EnemyMovementAI : MonoBehaviour
 
     private void OnValidate()
     {
-        EditorUtilities.ValidateCheckNullValue(this, nameof(_movementDetails), _movementDetails);
+        EditorUtilities.ValidateCheckNullValue(this, nameof(movementDetails), movementDetails);
     }
 
 #endif

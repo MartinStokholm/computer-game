@@ -116,8 +116,8 @@ public class Enemy : MonoBehaviour
         SetEnemyAnimationSpeed();
 
         // Materialise enemy
-        EnemyEnable(true);
-        //StartCoroutine(MaterializeEnemy());
+        //EnemyEnable(true);
+        StartCoroutine(MaterializeEnemy());
     }
     
     /// <summary>
@@ -135,24 +135,68 @@ public class Enemy : MonoBehaviour
     private void SetEnemyAnimationSpeed()
     {
         // Set animator speed to match movement speed
-        Animator.speed = _enemyMovementAI.MoveSpeed / Settings.BaseSpeedForEnemyAnimations;
+        Animator.speed = _enemyMovementAI.moveSpeed / Settings.BaseSpeedForEnemyAnimations;
     }
     
     private IEnumerator MaterializeEnemy()
     {
         // Disable collider, Movement AI and Weapon AI
-        EnemyEnable(false);
-        Debug.Log("MaterializeEnemy" );
-        Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeShader" + EnemyDetails.enemyMaterializeShader);
-        Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeColor" + EnemyDetails.enemyMaterializeColor);
-        Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeTime" + EnemyDetails.enemyMaterializeTime);
-        Debug.Log("MaterializeEnemy spriteRendererArray" + spriteRendererArray.Length + spriteRendererArray.FirstOrDefault());
-        Debug.Log("MaterializeEnemy EnemyDetails.enemyStandardMaterial" + EnemyDetails.enemyStandardMaterial);
-        yield return StartCoroutine(MaterializeEffect.MaterializeRoutine(EnemyDetails.enemyMaterializeShader, EnemyDetails.enemyMaterializeColor, EnemyDetails.enemyMaterializeTime, spriteRendererArray, EnemyDetails.enemyStandardMaterial));
+        //EnemyEnable(false);
+        // Debug.Log("MaterializeEnemy" );
+        // Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeShader: " + EnemyDetails.enemyMaterializeShader);
+        // Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeColor: " + EnemyDetails.enemyMaterializeColor);
+        // Debug.Log("MaterializeEnemy EnemyDetails.enemyMaterializeTime: " + EnemyDetails.enemyMaterializeTime);
+        // Debug.Log("MaterializeEnemy spriteRendererArray: " + spriteRendererArray.Length + spriteRendererArray.FirstOrDefault());
+        // Debug.Log("MaterializeEnemy EnemyDetails.enemyStandardMaterial: " + EnemyDetails.enemyStandardMaterial);
+        
+        //Test(EnemyDetails.enemyMaterializeShader, EnemyDetails.enemyMaterializeColor, EnemyDetails.enemyMaterializeTime, spriteRendererArray, EnemyDetails.enemyStandardMaterial);
+        yield return StartCoroutine(
+            MaterializeEffect.MaterializeRoutine(
+                EnemyDetails.enemyMaterializeShader, 
+                EnemyDetails.enemyMaterializeColor, 
+                EnemyDetails.enemyMaterializeTime, 
+                spriteRendererArray, 
+                EnemyDetails.enemyStandardMaterial));
     
         // Enable collider, Movement AI and Weapon AI
         EnemyEnable(true);
     
+    }
+
+    private void Test(Shader materializeShader, Color materializeColor, float materializeTime, SpriteRenderer[] spriteRendererArray, Material normalMaterial)
+    {
+        Debug.LogError($"MaterializeRoutine materializeShader: ");
+        var materializeMaterial = new Material(materializeShader);
+
+        materializeMaterial.SetColor("_EmissionColor", materializeColor);
+        Debug.LogError("MaterializeRoutine");
+        Debug.LogError($"spriteRendererArray {spriteRendererArray.Length}");
+        // Set materialize material in sprite renderers
+        foreach (var spriteRenderer in spriteRendererArray)
+        {
+            spriteRenderer.material = materializeMaterial;
+            Debug.LogError($"MaterializeRoutine loop: {materializeMaterial}");
+        }
+        
+        var dissolveAmount = 0f;
+        
+        //materialize enemy
+        while (dissolveAmount < 1f)
+        {
+            dissolveAmount += Time.deltaTime / materializeTime;
+            Debug.LogError($"dissolveAmount: {dissolveAmount}");
+            materializeMaterial.SetFloat("_DissolveAmount", dissolveAmount);
+            
+        
+        }
+
+
+        //Set standard material in sprite renderers
+        foreach (var spriteRenderer in spriteRendererArray)
+        {
+            spriteRenderer.material = normalMaterial;
+            Debug.LogError($"spriteRenderer.material: {spriteRenderer.material}");
+        }
     }
     
     /// <summary>
@@ -196,6 +240,6 @@ public class Enemy : MonoBehaviour
         _enemyMovementAI.enabled = isEnabled;
 
         // // Enable / Disable Fire Weapon
-        _weaponFire.enabled = false;
+        _weaponFire.enabled = isEnabled;
     }
 }
