@@ -175,7 +175,7 @@ public class DialogueManager : MonoBehaviour
             // handle case where the last line is an external function
             if (nextLine.Equals("") && !currentStory.canContinue)
             {
-                StartCoroutine(ExitDialogueMode());
+                ExitDialog();
             }
             // otherwise, handle the normal case for continuing the story
             else 
@@ -185,7 +185,7 @@ public class DialogueManager : MonoBehaviour
                 displayLineCoroutine = StartCoroutine(DisplayLine(nextLine));
             }
         }
-        else 
+        else
         {
             StartCoroutine(ExitDialogueMode());
         }

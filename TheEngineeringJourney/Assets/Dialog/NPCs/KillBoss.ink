@@ -1,0 +1,1 @@
+To Complete this quest you have to kill the boss in the first level. 
