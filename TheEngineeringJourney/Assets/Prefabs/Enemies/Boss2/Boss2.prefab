@@ -11,14 +11,14 @@ PrefabInstance:
     - target: {fileID: -6377574721701651045, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -318538185, guid: 8b7614e9b6037f044886338b816a5cbb, type: 3}
+      objectReference: {fileID: 1865168242, guid: 30ae6aa36ae36d94e9fb63679b79aa01, type: 3}
     - target: {fileID: 209247400653765729, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.75
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 209247400653765729, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 3.8125
+      value: 1.9375
       objectReference: {fileID: 0}
     - target: {fileID: 1628554154373667830, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_LocalScale.x
@@ -94,11 +94,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4960552367460693948, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.02
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 4960552367460693948, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.24
+      value: 1.21
       objectReference: {fileID: 0}
     - target: {fileID: 6443208583000740896, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_SortingOrder
@@ -107,18 +107,18 @@ PrefabInstance:
     - target: {fileID: 6585032187802602773, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: bfd7cab701717e947bc983b002af39dc, type: 2}
+      objectReference: {fileID: 9100000, guid: 87dd43de6e8b94a41b19e7b7955de21c, type: 2}
     - target: {fileID: 7373351919331419221, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_Name
       value: Boss1
       objectReference: {fileID: 0}
     - target: {fileID: 8361831128393145010, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.75
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8361831128393145010, guid: a58c486d1f4a60b469c82ee7753f95f8, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 3.8125
+      value: 1.9375
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
