@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +8,8 @@ public class InputManager : SingletonMonobehaviour<InputManager>
     private Vector2 _moveDirection = Vector2.zero;
     private bool _interactPressed = false;
     private bool _submitPressed = false;
+    
+    private static InputManager instance;
     public void SubmitPressed(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -18,6 +21,16 @@ public class InputManager : SingletonMonobehaviour<InputManager>
             _submitPressed = false;
         }
     }
+    
+    // private void Awake()
+    // {
+    //     if (instance != null)
+    //     {
+    //         Debug.LogError("Found more than one Input Manager in the scene.");
+    //     }
+    //     instance = this;
+    // }
+    
     
     // public void SubmitPressed(InputAction.CallbackContext context)
     // {
@@ -48,6 +61,14 @@ public class InputManager : SingletonMonobehaviour<InputManager>
         if (context.started)
         {
             GameManager.Instance.InputEvents.SubmitPressed();
+        }
+    }
+    
+    public void ExitDialogButtonPressed(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            DialogueManager.GetInstance().ExitDialog();
         }
     }
     

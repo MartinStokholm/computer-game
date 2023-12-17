@@ -44,7 +44,7 @@ public class PlayerControl : MonoBehaviour
     {
 
         // Don't move when dialogue system is play???
-        if (DialogueManager.Instance.IsDialoguePlaying) return;
+        //if (DialogueManager.GetInstance().dialogueIsPlaying) return;
         MovementInput();
         
         //AimWeaponInput();
