@@ -37,3 +37,5 @@ MonoBehaviour:
     IsUnavailable: 0
   SpawnPositions:
   - {x: -3, y: 7}
+  EnemiesByLevelList: []
+  RoomEnemySpawnParametersList: []

@@ -59,9 +59,11 @@ MonoBehaviour:
   EnemiesByLevelList:
   - MapLevel: {fileID: 11400000, guid: 87bf280339160f34993ca93c44dd9274, type: 2}
     SpawnAbleObjectRatios:
-    - MapObject: {fileID: 11400000, guid: df48b5c1d5b8c8f42aaf22d253e6f3ba, type: 2}
-      Ratio: 5
+    - MapObject: {fileID: 11400000, guid: b91e50ed0d3417d429cdf8777409323d, type: 2}
+      Ratio: 1
     - MapObject: {fileID: 11400000, guid: f9f1e2acce27e9742b2b809612f8f67a, type: 2}
+      Ratio: 5
+    - MapObject: {fileID: 11400000, guid: b91e50ed0d3417d429cdf8777409323d, type: 2}
       Ratio: 5
   RoomEnemySpawnParametersList:
   - mapLevel: {fileID: 11400000, guid: 87bf280339160f34993ca93c44dd9274, type: 2}

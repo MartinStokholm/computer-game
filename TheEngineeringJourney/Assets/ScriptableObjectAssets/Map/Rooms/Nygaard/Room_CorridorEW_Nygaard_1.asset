@@ -37,3 +37,12 @@ MonoBehaviour:
     IsUnavailable: 0
   SpawnPositions:
   - {x: 4, y: 2}
+  EnemiesByLevelList: []
+  RoomEnemySpawnParametersList:
+  - mapLevel: {fileID: 11400000, guid: 87bf280339160f34993ca93c44dd9274, type: 2}
+    MinTotalEnemiesToSpawn: 1
+    MaxTotalEnemiesToSpawn: 2
+    MinConcurrentEnemies: 1
+    MaxConcurrentEnemies: 1
+    MinSpawnInterval: 1
+    MaxSpawnInterval: 1
