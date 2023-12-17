@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262a69e47952f374995af5c2b363a7cc, type: 3}
   m_Name: MovementDetails_ComputerMinion
   m_EditorClassIdentifier: 
-  minMoveSpeed: 8
-  maxMoveSpeed: 15
+  minMoveSpeed: 10
+  maxMoveSpeed: 20

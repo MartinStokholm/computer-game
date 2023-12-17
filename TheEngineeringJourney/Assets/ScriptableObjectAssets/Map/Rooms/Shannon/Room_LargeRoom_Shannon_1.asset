@@ -70,7 +70,7 @@ MonoBehaviour:
   RoomEnemySpawnParametersList:
   - mapLevel: {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
     MinTotalEnemiesToSpawn: 5
-    MaxTotalEnemiesToSpawn: 30
+    MaxTotalEnemiesToSpawn: 40
     MinConcurrentEnemies: 4
     MaxConcurrentEnemies: 7
     MinSpawnInterval: 1

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7392f9625374408d89677fcc0f20655a, type: 3}
+  m_Name: WeaponDetails_Boss1
+  m_EditorClassIdentifier: 
+  WeaponName: Fire ball
+  WeaponSprite: {fileID: 21300000, guid: f0086ae7d8698ab46804eee99177e3c3, type: 3}
+  WeaponShootPosition: {x: 2.5, y: 0, z: 0}
+  WeaponCurrentAmmo: {fileID: 11400000, guid: 973c2d6daa0e54249bb9fe52f74f2a4c, type: 2}
+  WeaponShootEffect: {fileID: 11400000, guid: eed97e55fe78315438227532bacfc7e3, type: 2}
+  WeaponFiringSoundEffect: {fileID: 11400000, guid: 4660b306d0306a74b8413a78f429b3e2, type: 2}
+  WeaponReloadingSoundEffect: {fileID: 0}
+  HasInfiniteAmmo: 0
+  HasInfiniteClipCapacity: 0
+  WeaponClipAmmoCapacity: 6
+  WeaponAmmoCapacity: 100
+  WeaponFireRate: 2
+  WeaponPrechargeTime: 0
+  WeaponReloadTime: 0

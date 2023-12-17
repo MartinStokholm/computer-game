@@ -57,7 +57,7 @@ MonoBehaviour:
   - {x: 5, y: 6}
   - {x: 21, y: 6}
   EnemiesByLevelList:
-  - MapLevel: {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
+  - MapLevel: {fileID: 11400000, guid: 87bf280339160f34993ca93c44dd9274, type: 2}
     SpawnAbleObjectRatios:
     - MapObject: {fileID: 11400000, guid: df48b5c1d5b8c8f42aaf22d253e6f3ba, type: 2}
       Ratio: 5

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dce7b7409f54f5ea7d94e960dae5a42, type: 3}
+  m_Name: AmmoDetails_Boss1
+  m_EditorClassIdentifier: 
+  AmmoName: Boss Fireball
+  isPlayerAmmo: 0
+  AmmoSprite: {fileID: 21300000, guid: f0086ae7d8698ab46804eee99177e3c3, type: 3}
+  AmmoPrefabArray:
+  - {fileID: 3203528340405410516, guid: e971ce54bd97db8408f808639546765f, type: 3}
+  - {fileID: 3588207929763646340, guid: 62edaf96e8239d24f885c1d0866e6b37, type: 3}
+  AmmoMaterial: {fileID: 2100000, guid: 0c086c1f1c7a2e644b2f16d20f30e63c, type: 2}
+  AmmoChargeTime: 0.1
+  AmmoChargeMaterial: {fileID: 2100000, guid: 19da9572091a30b4b9a5c0046adf2838, type: 2}
+  AmmoHitEffect: {fileID: 11400000, guid: e9849b45773b5974586e18353c328c2a, type: 2}
+  AmmoDamage: 30
+  AmmoSpeedMin: 7
+  AmmoSpeedMax: 12
+  AmmoRange: 30
+  AmmoRotationSpeed: 120
+  AmmoSpreadMin: 1
+  AmmoSpreadMax: 2
+  AmmoSpawnAmountMin: 1
+  AmmoSpawnAmountMax: 1
+  AmmoSpawnIntervalMin: 0
+  AmmoSpawnIntervalMax: 0
+  IsAmmoTrail: 0
+  AmmoTrailTime: 0
+  AmmoTrailMaterial: {fileID: 0}
+  AmmoTrailStartWidth: 0
+  AmmoTrailEndWidth: 0
