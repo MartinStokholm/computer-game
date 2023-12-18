@@ -56,15 +56,17 @@ MonoBehaviour:
   - {x: 5, y: 27}
   - {x: 19, y: 27}
   EnemiesByLevelList:
-  - MapLevel: {fileID: 11400000, guid: 4f5ab75fa12fbfd4e8a86b428b180347, type: 2}
+  - MapLevel: {fileID: 11400000, guid: 87bf280339160f34993ca93c44dd9274, type: 2}
     SpawnAbleObjectRatios:
-    - MapObject: {fileID: 11400000, guid: 9742533d03d9e1745a14cb102d462101, type: 2}
-      Ratio: 0
+    - MapObject: {fileID: 11400000, guid: 0a601bebb7eca1a419f2afeb906bebd5, type: 2}
+      Ratio: 1
+    - MapObject: {fileID: 11400000, guid: 59b1b208bc87cb9418db2ad59d2b2df9, type: 2}
+      Ratio: 1
   RoomEnemySpawnParametersList:
-  - mapLevel: {fileID: 11400000, guid: 4f5ab75fa12fbfd4e8a86b428b180347, type: 2}
-    MinTotalEnemiesToSpawn: 0
-    MaxTotalEnemiesToSpawn: 0
-    MinConcurrentEnemies: 0
-    MaxConcurrentEnemies: 0
-    MinSpawnInterval: 0
-    MaxSpawnInterval: 0
+  - mapLevel: {fileID: 11400000, guid: 87bf280339160f34993ca93c44dd9274, type: 2}
+    MinTotalEnemiesToSpawn: 1
+    MaxTotalEnemiesToSpawn: 2
+    MinConcurrentEnemies: 2
+    MaxConcurrentEnemies: 2
+    MinSpawnInterval: 1
+    MaxSpawnInterval: 3
