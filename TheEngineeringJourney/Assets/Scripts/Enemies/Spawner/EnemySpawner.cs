@@ -108,6 +108,8 @@ public class EnemeySpawner : SingletonMonobehaviour<EnemeySpawner>
     private void Enemy_OnDestroyed(DestroyedEvent destroyedEvent, DestroyedEventArgs destroyedEventArgs)
     {
         destroyedEvent.OnDestroyed -= Enemy_OnDestroyed;
+        GameManager.Instance.Player.Health.AddHealth(5);
+        GameManager.Instance.PlayerEvents.ExperienceGained(5);
         
         --_currentEnemyCount;
     

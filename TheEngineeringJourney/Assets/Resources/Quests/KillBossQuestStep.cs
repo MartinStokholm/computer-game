@@ -38,6 +38,14 @@ public class KillBossQuestStep : QuestStep
     
     protected override void SetQuestStepState(string state)
     {
-        throw new System.NotImplementedException();
+        try
+        {
+            _bossKilled = int.Parse(state);
+            UpdateState();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError("Failed to insert state KillEnemiesQuest : " + e);
+        }
     }
 }

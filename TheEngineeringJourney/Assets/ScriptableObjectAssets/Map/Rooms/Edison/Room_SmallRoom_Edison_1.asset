@@ -63,6 +63,8 @@ MonoBehaviour:
       Ratio: 5
     - MapObject: {fileID: 11400000, guid: f9f1e2acce27e9742b2b809612f8f67a, type: 2}
       Ratio: 5
+    - MapObject: {fileID: 11400000, guid: b91e50ed0d3417d429cdf8777409323d, type: 2}
+      Ratio: 5
   RoomEnemySpawnParametersList:
   - mapLevel: {fileID: 11400000, guid: 6aef53d0a544c8e489610da608704edd, type: 2}
     MinTotalEnemiesToSpawn: 5
