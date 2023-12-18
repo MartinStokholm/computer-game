@@ -5276,9 +5276,9 @@ RectTransform:
   - {fileID: 911500128}
   - {fileID: 1241959004}
   - {fileID: 230562398}
-  - {fileID: 1758024587}
   - {fileID: 388482081}
   - {fileID: 460643836}
+  - {fileID: 1758024587}
   m_Father: {fileID: 1016215364}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5515,7 +5515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61fe12bb47b0b3f43a97ad4616cd9c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundsVolume: 8
+  soundsVolume: 4
 --- !u!1001 &527093747
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17956,7 +17956,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1758024587
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17984,7 +17984,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1758024586}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -18828,9 +18828,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.70277774
+    width: 0.34375003
+    height: 0.34375
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -21435,6 +21435,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7891094804813417006, guid: 8c3b951d43caac14ebfe40ff867b725d, type: 3}
+      propertyPath: musicVolume
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8527103969488363512, guid: 8c3b951d43caac14ebfe40ff867b725d, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bc903a10e7b1f8544aa7355890c3badf, type: 3}
     - target: {fileID: 8752057110553401484, guid: 8c3b951d43caac14ebfe40ff867b725d, type: 3}
       propertyPath: m_Name
       value: MusicManager

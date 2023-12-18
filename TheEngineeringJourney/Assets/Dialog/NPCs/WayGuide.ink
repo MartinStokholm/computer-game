@@ -1,1 +1,1 @@
-Straight Forward is the second level, to the Left is the thrid level
+Straight Forward is the second level, to the Left is the third level

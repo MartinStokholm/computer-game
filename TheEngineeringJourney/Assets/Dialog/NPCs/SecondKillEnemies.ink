@@ -1,0 +1,1 @@
+To complete this quest you have to kill 10 enemies in the second level

@@ -5,7 +5,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
 {
-    public int soundsVolume = 8;
+    public int soundsVolume = 4;
 
     private void Start()
     {
@@ -51,7 +51,7 @@ public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
     /// </summary>
     public void IncreaseSoundsVolume()
     {
-        int maxSoundsVolume = 20;
+        int maxSoundsVolume = 10;
 
         if (soundsVolume >= maxSoundsVolume) return;
 

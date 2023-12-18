@@ -1,0 +1,1 @@
+To complete this quest you have to kill the second level boss.
